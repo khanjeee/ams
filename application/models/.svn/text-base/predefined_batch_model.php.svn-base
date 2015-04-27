@@ -140,7 +140,7 @@ SQL;
 
 		UPDATE campaign_batches SET
                 title='$sTitle',description='$sDesc',last_updated_on='$dDate',last_updated_by='$iUserId'
-                WHERE campaign_batch_id='$iBatchId';        
+                WHERE predefined_campaign_batch_id='$iBatchId';        
 			
 				 
 SQL;
@@ -211,7 +211,7 @@ SQL;
     function CheckBatchElementData($aData = array())
     {
         #Handling Data
-        $iCampaignBatchId   =   $aData['campaign_batch_id'];
+        $iCampaignBatchId   =   $aData['predefined_campaign_batch_id'];
         $iTemplateId        =   $aData['template_id'];
         $iTemplateFoldId    =   $aData['template_fold_id'];
         $iTemplateElementId =   $aData['template_element_id'];
@@ -239,7 +239,7 @@ SQL;
     {
         #Handling Data
         $aData              =   $aGivenData['aData'];
-        $iCampaignBatchId   =   $aData['campaign_batch_id'];
+        $iCampaignBatchId   =   $aData['predefined_campaign_batch_id'];
         $iTemplateId        =   $aData['template_id'];
         $iTemplateFoldId    =   $aData['template_fold_id'];
         $iTemplateElementId =   $aData['template_element_id'];
@@ -430,7 +430,7 @@ SQL;
             if($aData)
             {
                 #Handling Data
-                $iCampaignBatchId       =   $aData['campaign_batch_id'];
+                $iCampaignBatchId       =   $aData['predefined_campaign_batch_id'];
             }
         }
 
@@ -442,7 +442,7 @@ SQL;
                         template_id
                 FROM
                                         campaign_batches
-                WHERE   campaign_batch_id='$iCampaignBatchId'
+                WHERE   predefined_campaign_batch_id='$iCampaignBatchId'
                 LIMIT 1
 SQL;
 
@@ -462,7 +462,7 @@ SQL;
 
                 DELETE
                 FROM    predefined_template_content
-                WHERE   campaign_batch_id  = '$iCampaignBatchId'
+                WHERE   predefined_campaign_batch_id  = '$iCampaignBatchId'
 SQL;
 
             return $this->db->query($SQL);
@@ -476,7 +476,7 @@ SQL;
         {
             #Handling Data
             $aData                  =   $aData['aData'];
-            $iCampaignBatchId       =   $aData['campaign_batch_id'];
+            $iCampaignBatchId       =   $aData['predefined_campaign_batch_id'];
             $dScheduleDate          =   $aData['schedule_date'];
             $dScheduleTime          =   $aData['schedule_time'];
             $dCutOffDate            =   date('Y-m-d', strtotime('-'.$aData['iCutOffPeriod'].' day', strtotime($dScheduleDate)));
@@ -504,14 +504,14 @@ SQL;
         $SQL = <<<SQL
 
          SELECT
-                campaign_batch_id
+                predefined_campaign_batch_id
         FROM    campaign_batches
         WHERE current_status='$sBatchStatus'
-        ORDER BY campaign_batch_id DESC
+        ORDER BY predefined_campaign_batch_id DESC
 
 SQL;
         $DbResult                           =   $this->db->query($SQL);
-        return $DbResult->result_array('campaign_batch_id');
+        return $DbResult->result_array('predefined_campaign_batch_id');
     }
 
     function getBatchSummary($iCampaignBatchId = 0)
@@ -526,8 +526,8 @@ SQL;
                    cb.title as batch_title,
                    cb.description as batch_description,
                    cb.schedule_date ,
-                   cb.campaign_batch_id ,
-                   cb.campaign_batch_id ,
+                   cb.predefined_campaign_batch_id ,
+                   cb.predefined_campaign_batch_id ,
                    cb.last_preview_images ,
                    cb.cut_off_date ,
                    cb.cut_off_date ,
@@ -558,7 +558,7 @@ SQL;
                   templates t
 
             WHERE
-                  cb.campaign_batch_id  =   '$iCampaignBatchId'
+                  cb.predefined_campaign_batch_id  =   '$iCampaignBatchId'
             AND   u.user_id             =   cb.user_id
             AND   c.campaign_id         =   cb.campaign_id
             AND   p.product_id          =   cb.product_id
@@ -589,7 +589,7 @@ SQL;
                    cb.title as batch_title,
                    cb.description as batch_description,
                    cb.schedule_date ,
-                   cb.campaign_batch_id ,
+                   cb.predefined_campaign_batch_id ,
                    cb.campaign_id,
                    cb.product_id,
                    cb.template_id, 
@@ -606,7 +606,7 @@ SQL;
                   templates t
                   
             WHERE
-                  cb.campaign_batch_id  =   '$iCampaignBatchId'
+                  cb.predefined_campaign_batch_id  =   '$iCampaignBatchId'
             AND   t.template_id         =   cb.template_id        
                         
             LIMIT 1
@@ -638,7 +638,7 @@ SQL;
                 (
                    SELECT l.list_id,l.title AS list_title , COUNT(lm.contact_id) AS contacts_count
                    FROM lists l,list_members lm 
-                        WHERE l.list_id IN  ( SELECT list_id FROM  campaign_batches_lists WHERE campaign_batch_id= '$iCampaignBatchId' )
+                        WHERE l.list_id IN  ( SELECT list_id FROM  campaign_batches_lists WHERE predefined_campaign_batch_id= '$iCampaignBatchId' )
                         AND l.list_id = lm.list_id
                         GROUP BY   l.list_id   
                 ) tempTableListCount;         
@@ -659,7 +659,7 @@ SQL;
     function updateTotalPrintingPrice($iPrice,$iCampaignBatchId)
     {
         $data = array('total_printing_cost' => $iPrice);
-        $this->db->where('campaign_batch_id', $iCampaignBatchId);
+        $this->db->where('predefined_campaign_batch_id', $iCampaignBatchId);
         if($this->db->update('campaign_batches', $data))   
         {
             return $iPrice;
@@ -684,7 +684,7 @@ SQL;
               (
                   SELECT list_id
                   FROM  campaign_batches_lists
-                  WHERE campaign_batch_id='$iCampaignBatchId'
+                  WHERE predefined_campaign_batch_id='$iCampaignBatchId'
               )
 SQL;
             $DbResult                           =   $this->db->query($SQL);
@@ -708,7 +708,7 @@ SQL;
               (
                   SELECT list_id
                   FROM  campaign_batches_lists
-                  WHERE campaign_batch_id='$iCampaignBatchId'
+                  WHERE predefined_campaign_batch_id='$iCampaignBatchId'
               )
 SQL;
             $DbResult                           =   $this->db->query($SQL);
@@ -758,7 +758,7 @@ SQL;
 //               element_position ,
 //               element_data
 //        FROM  predefined_template_content
-//        WHERE template_fold_id = '$iTemplateFoldId' AND campaign_batch_id='$iCampaignBatchId'
+//        WHERE template_fold_id = '$iTemplateFoldId' AND predefined_campaign_batch_id='$iCampaignBatchId'
         
         
         $SQL = <<<SQL
@@ -770,7 +770,7 @@ SQL;
         FROM        predefined_template_content e
         INNER JOIN  template_elements t 
         ON          t.template_element_id = e.template_element_id     
-        WHERE e.template_fold_id = '$iTemplateFoldId' AND e.campaign_batch_id='$iCampaignBatchId'
+        WHERE e.template_fold_id = '$iTemplateFoldId' AND e.predefined_campaign_batch_id='$iCampaignBatchId'
 
 SQL;
 
@@ -786,7 +786,7 @@ SQL;
 
             SELECT list_id FROM list_members WHERE list_id IN
             (
-              SELECT list_id FROM campaign_batches_lists WHERE campaign_batch_id = '$BatchId'
+              SELECT list_id FROM campaign_batches_lists WHERE predefined_campaign_batch_id = '$BatchId'
             )
             LIMIT 1
 SQL;
@@ -834,7 +834,7 @@ SQL;
             (
                 SELECT  template_element_id  FROM  template_elements  WHERE  html_control_type  = 'image'
             )
-            AND  campaign_batch_id  = '$BatchId'
+            AND  predefined_campaign_batch_id  = '$BatchId'
 SQL;
         }
 
@@ -858,7 +858,7 @@ SQL;
             SELECT template_fold_id FROM  `template_folds` WHERE template_id
             IN
             (
-            SELECT `template_id` FROM `campaign_batches` WHERE `campaign_batch_id` = '$BatchId'
+            SELECT `template_id` FROM `campaign_batches` WHERE `predefined_campaign_batch_id` = '$BatchId'
             )
             )
 SQL;
@@ -878,7 +878,7 @@ SQL;
             set
                     last_preview_images  = '$Preview_Data'
 
-            where  campaign_batch_id  = '$iCampaignBatchId'
+            where  predefined_campaign_batch_id  = '$iCampaignBatchId'
             LIMIT 1
 SQL;
             if ($this->db->query($SQL)) {return $this->db->affected_rows();}
@@ -893,7 +893,7 @@ SQL;
         {
             $SQL = <<<SQL
 
-           SELECT last_preview_images FROM campaign_batches where campaign_batch_id='$iCampaignBatchId'
+           SELECT last_preview_images FROM campaign_batches where predefined_campaign_batch_id='$iCampaignBatchId'
 SQL;
             $Result   =   $this->db->query($SQL);
             return $Result->row('last_preview_images');
@@ -920,7 +920,7 @@ SQL;
                         element_data as provided_data
                   FROM  predefined_template_content
                   WHERE
-                              campaign_batch_id             = '$iCampaignBatchId'
+                              predefined_campaign_batch_id  = '$iCampaignBatchId'
                         AND   template_id                   = '$iTemplateId'
                         AND   template_fold_id              = '$iFoldId'
                         AND   template_element_id           = '$iElementId'
@@ -1047,14 +1047,14 @@ SQL;
       {
           //updating status in campaign batches table
             $dataBatch = array('current_status' =>  $aData['status']);
-            $this->db->where('campaign_batch_id', $aData['campaign_batch_id']);
+            $this->db->where('predefined_campaign_batch_id', $aData['predefined_campaign_batch_id']);
             $this->db->update('campaign_batches', $dataBatch); 
           
             $dDate              = date(DATE_FORMAT_MYSQL);
           
          //insertion of log in campaign logs table
             $data = array(
-                        'campaign_batch_id' => $aData['campaign_batch_id'] ,
+                        'predefined_campaign_batch_id' => $aData['predefined_campaign_batch_id'] ,
                         'status'        =>  $aData['status'] ,
                         'comments'      =>  $aData['comments'],
                         'created_on'    =>  $dDate,
@@ -1094,7 +1094,7 @@ SQL;
     
     function getBatchesForCuttOff()
     {
-         $this->db->select('campaign_batch_id');       
+         $this->db->select('predefined_campaign_batch_id');       
          $this->db->where('cut_off_date',date(DATE_ONLY_FORMAT_MYSQL,time()));
          $this->db->where('current_status',"".BATCH_IS_IN_EDIT_MODE);
          $query = $this->db->get('campaign_batches');

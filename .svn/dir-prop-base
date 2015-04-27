@@ -1,7 +1,9 @@
 K 10
 svn:ignore
-V 16
+V 42
 nbproject
 .idea
+.gitignore
+.gitattributes
 
 END

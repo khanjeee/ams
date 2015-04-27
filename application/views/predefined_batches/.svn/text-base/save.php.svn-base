@@ -178,6 +178,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
                             predefined_campaign_id:''+$scope.campaign_id,
                             list:$scope.batch_list,
                             user_batch_id:$scope.batch_id,
+                            template_id:$scope.selected_template_id,
                             predefined_campaign_batch_id:$scope.predefined_campaign_batch_id,
                             user_id:'<?php echo $aUserInfo->user_id; ?>'
                         }
@@ -260,7 +261,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
         * */  
          else if (selected_tab==3)
          {
-           $scope.active_tab = 5;     
+           $scope.active_tab = 4;     
 
          }
          
@@ -313,28 +314,19 @@ function ajax_call(request,selected_tab)
                                 { 
                                    
                                     
-                                    //$scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : data.tab;
+                                    $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : 2;
                                     $scope.batch_id    = data.batch_id;
                                     $scope.error_batch_lists  = false;
                                     $scope.error_campaign_id  = false;
-
                                     $scope.previous_button    = true;
                                     
-                                    
-                                     var request = {
-                                                    method: 'POST',
-                                                    url:    '<?php echo $sFormAction; ?>',
-                                                    data:   {
-                                                            method:'getTemplateFoldsData',
-                                                            template_id:$scope.selected_template_id,
-                                                            predefined_campaign_batch_id:$scope.predefined_campaign_batch_id
-                                                            }
-                                                  };
-                                                  
-                                    ajax_call(request,0);
-                                    
-                                                                        
-                                }
+                                    //ipload content html
+                                    var unSerializedJson = angular.fromJson(data.hUploadContentHTML);
+                                        //compling the html for angular
+                                        $scope.htmlUploadContent = $compile(unSerializedJson)($scope);
+                                        $scope.template_cuttoff_period = data.cuttOffPeriod;
+                                        console.log(data);
+                                 }
                              else
                                  {
                                   //showing error messages if received
@@ -348,18 +340,6 @@ function ajax_call(request,selected_tab)
                                                                     $scope.error_campaign_id = true;
                                                                 }
 
-                                                            //for batch name validation
-                                                           if(angular.equals(item,'<?php echo ERROR_NAME_REQUIRED; ?>'))
-                                                                {
-                                                                    $scope.error_batch_name = true;
-
-                                                                }
-
-                                                            //batch description validation
-                                                            if(angular.equals(item,'<?php echo ERROR_DESC_REQUIRED; ?>'))
-                                                                {
-                                                                    $scope.error_batch_desc = true;
-                                                                }
                                                             //batch lists validation
                                                             if(angular.equals(item,'<?php echo ERROR_CAMPAIGN_LIST_REQUIRED; ?>'))
                                                                 {
@@ -373,33 +353,13 @@ function ajax_call(request,selected_tab)
                                          }   
                                  }
                             }
-                  else if(selected_tab == 0)
-                            {
-                              
-                                //html reveived for upload content tab in {hUploadContentHTML} object
-                                //checking status
-                                if(angular.equals(data.status,true))
-                                    {
-//                                        $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : 2;
-//                                        //unserializing the json to get proper html
-//                                        var unSerializedJson = angular.fromJson(data.hUploadContentHTML);
-//                                        //compling the html for angular
-//                                        $scope.htmlUploadContent = $compile(unSerializedJson)($scope);
-//                                        $scope.template_cuttoff_period = data.cuttOffPeriod;
-                                        console.log(data);
-
-                                    }
-                                else{
-                                        console.log(data.message);
-                                    }      
-                            
-                            }
+                  
                   else if(selected_tab == 2)
                             {
                                 
                                 if(angular.equals(data.status,true))
                                     {
-                                        $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : data.tab;
+                                        $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : 3;
                                         //unserializing the json to get proper html
                                         var unSerializedJsonHtml = angular.fromJson(data.preview_url);
                                         //compling the html for angular
@@ -418,7 +378,7 @@ function ajax_call(request,selected_tab)
                                 
                             
                             }
-                  else if(selected_tab == 4)
+                  else if(selected_tab == 3)
                             {
                                 
                                  //html reveived for upload content tab in {hUploadContentHTML} object
@@ -633,9 +593,6 @@ app.service('tags', function($q) {
                         <a ><span>PREVIEW</span></a>
                     </li>
                     <li  ng-class="addClass('4')">
-                        <a ><span>SCHEDULE</span></a>
-                    </li>
-                    <li  ng-class="addClass('5')">
                         <a ><span>SUMMARY</span></a>
                     </li>
                 </ul>
@@ -670,7 +627,7 @@ app.service('tags', function($q) {
 <!-- tab 1 Create Batch end-->
                     
 <!-- tab 2 upload content start-->
-                    <div upload-content id="tab3" ng-class="addClass('3')" class="tab-pane padding-20  m-p-l-r-0 slide-left">
+                    <div upload-content id="tab3" ng-class="addClass('2')" class="tab-pane padding-20  m-p-l-r-0 slide-left">
                         
                     </div>
 <!-- tab 2 upload content end-->
@@ -687,39 +644,11 @@ app.service('tags', function($q) {
 <!-- tab 3 Preview End-->
 
 
-<!-- tab 4 schedule start-->
-                    <div  ng-class="addClass('4')" id="tab4" class="tab-pane p-t-20 p-b-20  m-p-l-r-0 slide-left">
 
-                  
-                  <div class="row">
-                    <div class="col-md-5">
-                    	<div class="form-group" ng-class="{ 'has-error':error_schedule_date }">
-		                    <label class="schedule_date" for="schedule_date">Schedule Date</label>
-		                    <div class="controls">
-		                    	<div class="input-group date datepicker-future-date-only">
-			                      <input readonly ng-model="schedule_date" type="text" id="schedule_date" required="" name="schedule" class="form-control">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			                    </div>
-                          <label ng-show="error_schedule_date"  class="error">Sorry ! At least {{template_cuttoff_period}} Days(required by printers).</label>
-		                    </div>
-		                  </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p class="m-t-10"><strong>Note</strong> Cutoff period will be <strong class="c-blue">{{template_cuttoff_period}} days</strong></p>
-                    </div>
-                  </div>
-                  
-
-                </div>
-<!-- tab 4 schedule end-->
+<!-- tab 4 Summary start-->                    
+                    <div summary id="tab5" ng-class="addClass('4')" class="tab-pane padding-20  m-p-l-r-0 slide-left"></div>
                     
-
-<!-- tab 5 Summary start-->                    
-                    <div summary id="tab5" ng-class="addClass('5')" class="tab-pane padding-20  m-p-l-r-0 slide-left"></div>
-                    
-<!-- tab 5 Summary end-->
+<!-- tab 4 Summary end-->
                     
                     <div class="padding-20 bg-white m-p-l-r-0">
                         <ul class="pager wizard">
