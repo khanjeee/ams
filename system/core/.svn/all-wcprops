@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core
+END
+Benchmark.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Benchmark.php
+END
+CodeIgniter.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/CodeIgniter.php
+END
+URI.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/URI.php
+END
+Input.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Input.php
+END
+Output.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Output.php
+END
+Model.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Model.php
+END
+Config.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Config.php
+END
+Loader.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Loader.php
+END
+Security.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Security.php
+END
+Router.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Router.php
+END
+Lang.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Lang.php
+END
+Exceptions.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Exceptions.php
+END
+Hooks.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Hooks.php
+END
+Controller.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Controller.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/index.html
+END
+Utf8.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Utf8.php
+END
+Common.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/ams/!svn/ver/4/branches/development/code/web/system/core/Common.php
+END

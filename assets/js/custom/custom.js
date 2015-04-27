@@ -1,0 +1,486 @@
+/*@Description:Custom javascript */
+
+/*jQuery( document ).ready(function()
+{
+    //console.log( "ready!" );
+
+});*/
+
+
+function cancelEdit(target) {
+    $('#'+target).removeClass('hide');
+    $('#'+target+'-target').addClass('hide');
+}
+
+
+/* ======================== */
+// Check if javascript Object is empty.    
+
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
+// END - Check if javascript Object is empty.
+/* ======================== */
+   
+
+
+
+/* ======================== */
+// Same Height Layout    
+
+function sameHeight() {
+    var maxHeight = -1;
+    $('.has-same-height > *').each(function() {
+        $(this).height('auto');
+    });
+    $('.has-same-height > *').each(function() {
+        maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+    });
+
+    $('.has-same-height > *').each(function() {
+        $(this).height(maxHeight);
+    });
+}
+
+sameHeight();
+
+$(window).resize(function() {
+    sameHeight();
+});
+
+// End -- Same Height Layout
+/* ======================== */
+
+$(document).ready(function () {
+
+    //Autonumeric plug-in - automatic addition of dollar signs,etc controlled by tag attributes
+    $('.autonumeric').autoNumeric('init');
+
+    $('form').submit(function(){
+        var form = $(this);
+        $('input').each(function(i){
+            var self = $(this);
+            try{
+                var v = self.autoNumeric('get');
+                self.autoNumeric('destroy');
+                self.val(v);
+            }catch(err){
+                console.log("Not an autonumeric field: " + self.attr("name"));
+            }
+        });
+        return true;
+    });
+    
+    /* ======================== */
+    // Editable Content
+
+    if($(".is-editable-section").get(0)){
+        $('.is-editable-section').click(function () {
+            var target = $(this).attr('data-target');
+            $('#'+target).addClass('hide');
+            $('#'+target+'-target').removeClass('hide');
+        });
+    }
+
+    // Editable Content
+    /* ======================== */
+    
+
+
+    /* ======================== */
+    // Removign Select Box Search field
+
+    $('select.select--no-search').select2({
+        minimumResultsForSearch: -1
+    });
+
+    // Removign Select Box Search field
+    /* ======================== */
+
+    
+    /* ======================== */
+    // Form Validate
+
+    $(".form-validate-1").validate({
+        ignore: '[type=hidden]',
+    });
+
+    // Form Validate
+    /* ======================== */
+    
+
+    /* ======================== */
+    // Data Tables
+
+    var responsiveHelper = undefined;
+    var breakpointDefinition = {
+        tablet: 1024,
+        phone: 480
+    };
+
+    // Initialize datatable showing a search box at the top right corner
+    var initTableWithSearch = function() {
+        var table = $('#tableWithSearch');
+
+        var settings = {
+            "sDom": "<'table-responsive't><'row'<p i>>",
+            "sPaginationType": "bootstrap",
+            "destroy": true,
+            "scrollCollapse": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": ""
+            },
+            "iDisplayLength": 5,
+            "bPaginate": false,
+            
+        };
+
+        table.dataTable(settings);
+
+        // search box for table
+        $('#search-table').keyup(function() {
+            table.fnFilter($(this).val());
+        });
+    }
+
+    // Initialize datatable with ability to add rows dynamically
+    var initTableWithDynamicRows = function() {
+        var table = $('#tableWithDynamicRows');
+
+
+        var settings = {
+            "sDom": "<'table-responsive't><'row'<p i>>",
+            "sPaginationType": "bootstrap",
+            "destroy": true,
+            "scrollCollapse": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+            },
+            "iDisplayLength": 5
+        };
+
+
+        table.dataTable(settings);
+
+        $('#show-modal').click(function() {
+            $('#addNewAppModal').modal('show');
+        });
+
+        $('#add-app').click(function() {
+            table.dataTable().fnAddData([
+                $("#appName").val(),
+                $("#appDescription").val(),
+                $("#appPrice").val(),
+                $("#appNotes").val()
+            ]);
+            $('#addNewAppModal').modal('hide');
+        });
+    }
+
+    // Initialize datatable showing export options
+    var initTableWithExportOptions = function() {
+        var table = $('#tableWithExportOptions');
+
+
+        var settings = {
+            "sDom": "<'exportOptions'T><'table-responsive't><'row'<p i>>",
+            "sPaginationType": "bootstrap",
+            "destroy": true,
+            "scrollCollapse": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+            },
+            "iDisplayLength": 5,
+            "oTableTools": {
+                "sSwfPath": "assets/plugins/jquery-datatable/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [{
+                    "sExtends": "csv",
+                    "sButtonText": "<i class='pg-grid'></i>",
+                }, {
+                    "sExtends": "xls",
+                    "sButtonText": "<i class='fa fa-file-excel-o'></i>",
+                }, {
+                    "sExtends": "pdf",
+                    "sButtonText": "<i class='fa fa-file-pdf-o'></i>",
+                }, {
+                    "sExtends": "copy",
+                    "sButtonText": "<i class='fa fa-copy'></i>",
+                }]
+            },
+            fnDrawCallback: function(oSettings) {
+                $('.export-options-container').append($('.exportOptions'));
+
+                $('#ToolTables_tableWithExportOptions_0').tooltip({
+                    title: 'Export as CSV',
+                    container: 'body'
+                });
+
+                $('#ToolTables_tableWithExportOptions_1').tooltip({
+                    title: 'Export as Excel',
+                    container: 'body'
+                });
+
+                $('#ToolTables_tableWithExportOptions_2').tooltip({
+                    title: 'Export as PDF',
+                    container: 'body'
+                });
+
+                $('#ToolTables_tableWithExportOptions_3').tooltip({
+                    title: 'Copy data',
+                    container: 'body'
+                });
+            }
+        };
+
+
+        table.dataTable(settings);
+
+    }
+
+    initTableWithSearch();
+    initTableWithDynamicRows();
+    initTableWithExportOptions();
+
+    // Data Tables
+    /* ======================== */
+
+    
+    /* ======================== */
+    // Cover Images
+
+    coverImg();
+
+    // END - Cover Images
+    /* ======================== */
+
+    /* ======================== */
+    // Date Picker
+
+    var dateToday = new Date();
+    $('.datepicker, #datepicker, #datepicker-range, #datepicker-component, #datepicker-component2').datepicker({
+        autoclose: true,
+    });
+    $('.datepicker-future-date-only').datepicker({
+        startDate: dateToday,
+        autoclose: true,
+    });
+    $('#schedule_time').timepicker();
+
+    // END - Date Picker
+    /* ======================== */
+
+    /* ======================== */
+    // Magnific Popup
+
+    $('.magnific-popup').magnificPopup({
+        items:
+        [
+          {
+            src: 'http://lorempixel.com/600/201',
+            title: 'Vertical Business Card - 1'
+          },
+          {
+            src: 'http://lorempixel.com/301/401',
+            title: 'Vertical Business Card - 2'
+          },
+        ],
+        gallery: {enabled: true},
+        type: 'image' // this is a default type
+    });
+
+    // END - Magnific Popup
+    /* ======================== */
+
+
+    // ============================================
+    // Carousels
+
+    /*var triggerCarouselBackup = [];*/
+    function triggerCarouselOn(target){
+        /*var i=0;
+        $(target).each(function () {
+            triggerCarouselBackup[i] = $(this).html();
+            $(this).attr('data-carousel-id',i);
+            i++;
+        });*/
+        
+        $(target).owlCarousel({
+            navigation : true,
+            slideSpeed : 300,
+            paginationSpeed : 1000,
+            items : 1
+        });
+    }
+
+    triggerCarouselOn(".template-preview");
+    triggerCarouselOn(".batch-preview");
+
+    // END - Carousels
+    // ============================================
+
+
+    // ============================================
+    // New Card
+
+
+    if($(".credit-card-selector").get(0)){
+        if (!$('#new-card').is(':checked')){
+            $('.new-card__form').stop().slideUp("slow", function () {
+                $(this).removeClass("active");
+            });
+        }
+
+        $('.credit-card-selector input[type="radio"]').click(function(){
+            if ($('#new-card').is(':checked')){
+                $('.new-card__form').stop().slideDown("slow", function () {
+                    $(this).addClass("active");
+                });
+            }else{
+                $('.new-card__form').stop().slideUp("slow", function () {
+                    $(this).removeClass("active");
+                });
+            }
+        });
+    };
+
+    // END - New Card
+    // ============================================
+
+    // ============================================
+    // Accordion
+
+    if($(".accordion").get(0)){
+        $('.accordion .accordion-header:first-child').addClass('active');
+        $('.accordion .accordion-header:first-child').next().addClass('active');
+
+        $('.accordion-body:not(.active)').slideUp('slow');
+
+        $('.accordion-header').click(function () {
+
+            if($(this).hasClass('active')){
+                $('.accordion-header').removeClass('active');
+                $('.accordion-body').removeClass('active');
+
+                $(this).next().slideUp('slow');
+            }else{
+                $('.accordion-body').slideUp('slow');
+
+                $('.accordion-header').removeClass('active');
+                $('.accordion-body').removeClass('active');
+
+                $(this).addClass('active');
+                $(this).next().addClass('active');
+
+                $(this).next().slideDown('slow');
+
+                if($(".template-preview").get(0)){
+                    /*window.dispatchEvent(new Event('resize'));*/
+                    
+                    var evt = document.createEvent('UIEvents');
+                    evt.initUIEvent('resize', true, false,window,0);
+                    window.dispatchEvent(evt);
+
+                    /*var carouselId = $(this).next().find(".template-preview").attr('data-carousel-id');
+                    $(this).next().find(".template-preview").html(triggerCarouselBackup[carouselId]);*/
+                    
+                    /* setInterval(function(){
+                        triggerCarouselOn(".template-preview");
+                    }, 1000);*/
+                }
+            }
+        });
+    }
+
+    // END - Accordion
+    // ============================================
+
+});
+
+function getBaseUrl()
+{
+    return $(".site_url").text();
+}
+
+function selectAll(action,className)
+{
+    if(action == 'all')
+    {
+        $('.'+className).attr('checked','checked');
+        $('.'+className).prop('checked',true);
+    }
+    else if(action == 'none')
+    {
+        $('.'+className).removeAttr('checked');
+        $('.'+className).prop('checked',false);
+    }
+    return false;
+}
+
+// Sort dropdown option alphabetically
+function sortDropDownListByText(selectId)
+{
+    var foption = $('#'+ selectId + ' option:first');
+    var soptions = $('#'+ selectId + ' option:not(:first)').sort(function(a, b) {
+        return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+    });
+    $('#' + selectId).html(soptions).prepend(foption);
+
+}
+
+// Global function called every where for delte confirmation
+function confirmDelete(callFrom,action)
+{
+    
+    var confirmation = confirm("Are you sure you want to continue ?");
+        if (confirmation == true) {
+            window.location.assign(action);
+        } else {
+            return false;
+        }
+    
+}
+
+// UI Toggle Switcher
+function switcher(thisElement){
+    if(!$(thisElement).hasClass("selected")){
+        $(thisElement).stop().slideDown("slow", function () {
+            $(thisElement).addClass("selected");
+        });
+    }else{
+        $(thisElement).stop().slideUp("slow", function () {
+            $(thisElement).removeClass("selected");
+        });
+    }
+}
+function switcher_NoPause(thisElement){
+    if(!$(thisElement).hasClass("selected")){
+        $(thisElement).addClass("selected");
+        $(thisElement).stop().slideDown("slow");
+    }else{
+        $(thisElement).removeClass("selected");
+        $(thisElement).stop().slideUp("slow");
+    }
+}
+
+    
+/* ======================== */
+// Cover Images
+
+function coverImg() {
+    $('.cover-img').each(function () {
+        var thisImg = $(this).attr('data-img');
+        $(this).css('background-image', 'url("'+thisImg+'")');
+    });
+}
+
+// END - Cover Images
+/* ======================== */

@@ -1,0 +1,32 @@
+		:: AMS ::
+		
+
+Create Package :
+----------------		
+		
+		
+Flow will be : Admin will login and redirected to his dashboard.
+From menu bar he clicks on Create Package.
+
+Actor : Super Admin
+
+Step 1 : 
+Enter 	Name
+Enter 	Description
+Enter 	Price
+Set 	Status : Active / Deactive
+Set		Type : WhiteLabel Package or Normal Package
+Select Multiple Products from Dropdown
+
+Step 2 : 
+Select Templates of each product from all available templates of those products.
+
+Step 4:
+Create Package and done.
+
+
+
+
+  
+
+		

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Shared/PCLZip
+END
+gnu-lgpl.txt
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Shared/PCLZip/gnu-lgpl.txt
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Shared/PCLZip/readme.txt
+END
+pclzip.lib.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Shared/PCLZip/pclzip.lib.php
+END

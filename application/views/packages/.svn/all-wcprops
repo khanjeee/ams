@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/ams/!svn/ver/674/branches/development/code/web/application/views/packages
+END
+view.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ams/!svn/ver/346/branches/development/code/web/application/views/packages/view.php
+END
+ajax_get_whitelabel_packages.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/ams/!svn/ver/674/branches/development/code/web/application/views/packages/ajax_get_whitelabel_packages.php
+END
+create.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/ams/!svn/ver/560/branches/development/code/web/application/views/packages/create.php
+END
+ajax_get_white_labels.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/ams/!svn/ver/486/branches/development/code/web/application/views/packages/ajax_get_white_labels.php
+END

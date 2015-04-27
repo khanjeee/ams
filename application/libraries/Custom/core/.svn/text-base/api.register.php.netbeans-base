@@ -1,0 +1,119 @@
+<?php
+
+class ApiRegister {
+	/*
+	 * Initializing Class Variables
+	 */
+
+	public $data = array();
+	public $result = array('status' => false, 'message' => MSG_INVALID_ATTEMPT);
+
+	function __construct($Data = array()) {
+		$this->data = $Data;
+	}
+
+   
+	public function addSubscriber($aData= array())
+        {
+        //d($aData);
+         $aPostedData   = $aData ;
+           
+
+        $CI = & get_instance();
+        $CI->load->model('user_model','users');
+
+      
+        
+        {
+            //$aDataToSave                = array('aData' => $aData,'isEditMode' => false);
+            // d($aDataToSave);
+            $iPackageId                 = $CI->users->addSubscriber(__FUNCTION__, $aPostedData);
+            
+                      
+
+            if($iPackageId)
+            {
+                $this->result['status']     = true;
+                $this->result['message']    = MSG_SUCCESS_SUBSCRBER_ADDED;
+            }
+        }
+          
+		return $this->result;
+	}
+        
+    function updateSubscriberStaus($aData= array())
+        {
+           
+         $CI = & get_instance();
+         $CI->load->model('user_model','users');
+         
+         if($CI->users->updateSubscriberStaus($aData))
+                {
+                 $this->result['status']     = true;
+                 $this->result['message']    = 'Subscriber successfully verified';
+                }
+         
+        return $this->result;   
+         
+        }
+
+    function UpdateBasicInfo($CoreBasicInfo = array())
+    {
+        $CI = & get_instance();
+        $CI->load->model('user_model','users');
+
+        $SessionData                = getLoggedInUserData();
+        $SessionData['first_name']  = $CoreBasicInfo['first_name'];
+        $SessionData['last_name']   = $CoreBasicInfo['last_name'];
+        $CI->session->set_userdata(SESS_USERDATA, $SessionData);
+        $SessionData = getLoggedInUserData();
+
+        return $CI->users->UpdateBasicInfo(__FUNCTION__, $CoreBasicInfo);
+    }
+
+
+    function SaveUserProfile($aData= array())
+    {
+        $CI = & get_instance();
+        $CI->load->model('user_model','users');
+
+        if($CI->users->SaveUserInfo(__FUNCTION__,$aData))
+        {
+            $this->result['status']     = true;
+            $this->result['message']    = lang('ApiAdmin_ProfileUpdateSuccessfully');
+        }
+
+        return $this->result;
+    }
+	
+	
+    function delete($aData= array())
+    {
+        $CI = & get_instance();
+        $CI->load->model('package_model','package');
+        
+        if($CI->package->deletePackagById($aData['iPackageId']))
+        {
+            $this->result['status']     = true;
+            $this->result['message']    = PACKAGES.' deleted successfully.';
+        }
+        else
+        {
+            $this->result['message']    = PACKAGES.' delete failed.';
+        }
+
+        return $this->result;
+    }
+    
+    
+    function getAll($aData= array())
+    {
+        $CI = & get_instance();
+        $CI->load->model('package_model','package');
+        
+        return $CI->package->getAllPackages($aData);
+        
+    }
+
+
+}

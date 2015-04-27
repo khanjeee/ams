@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation
+END
+Engineering.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Engineering.php
+END
+ExceptionHandler.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/ExceptionHandler.php
+END
+DateTime.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/DateTime.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Exception.php
+END
+Database.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Database.php
+END
+LookupRef.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/LookupRef.php
+END
+FormulaToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/FormulaToken.php
+END
+Functions.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Functions.php
+END
+functionlist.txt
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/functionlist.txt
+END
+Logical.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Logical.php
+END
+TextData.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/TextData.php
+END
+MathTrig.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/MathTrig.php
+END
+FormulaParser.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/FormulaParser.php
+END
+Statistical.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Statistical.php
+END
+Financial.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Financial.php
+END
+Function.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Calculation/Function.php
+END

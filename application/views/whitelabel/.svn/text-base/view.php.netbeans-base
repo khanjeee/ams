@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1 class="heading-sty-1"> <?php echo WHITE_LABEL_PLURAL; ?></h1>
+    </div>
+    <div class="col-md-6">
+        <div class="contact-search-n-actions-panel">
+            <a href="<?php echo site_url('whitelabel/create'); ?>" class="btn btn-complete btn-cons hidden-sm hidden-xs">Add New <?php echo WHITE_LABEL_SINGULAR; ?></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="c-box m-t-20 m-b-20">
+    <ul class="list-sty-3">
+       
+        <?php
+
+            if($aWhiteLabels)
+            {
+			
+				
+              #  global $gPackageStatus;
+
+                $this->load->helper('text');
+                $iTotalPackages = count($aWhiteLabels);
+	
+
+                for($p=0; $p < $iTotalPackages; $p++)
+                {
+                    $oWhiteLabelInfo  =   $aWhiteLabels[$p];
+                    $EditUrl        =   site_url('whitelabel/create/'.$oWhiteLabelInfo->whitelabel_id);
+                    $DeleteUrl      =   site_url('whitelabel/deletecompany/'.$oWhiteLabelInfo->whitelabel_id);    
+                    $WhiteLabelDetailUrl      =   site_url('whitelabel/show/'.$oWhiteLabelInfo->whitelabel_id);    
+        ?>
+                    <li>
+                        <div class="t-layout t-layout--cover">
+                            <div class="t-row">
+                                <div class="t-col">
+                                    <div class="name-and-actions">
+                                        <a href="<?php echo $WhiteLabelDetailUrl; ?>" class="name"><?php echo $oWhiteLabelInfo->title; ?></a>
+                                        <div class="actions">
+                                            <a href="<?php echo $EditUrl; ?>" class="fa edit"></a>
+                                            <a href="javascript:void(0);" class="fa delete" onclick="return confirmDelete('<?php echo $sCallFrom; ?>','<?php echo $DeleteUrl?>');"></a>
+                                        </div>
+                                    </div>
+                                    <p><?php echo word_limiter($oWhiteLabelInfo->description,8); ?></p>
+                                    <ul class="meta">
+                                        <li><strong>Promotion Code:</strong> <?php echo $oWhiteLabelInfo->promotion_code; ?></li>
+                                       
+                                        <li><strong>Created on:</strong> <?php echo displayDate($oWhiteLabelInfo->created_on); ?></li>
+                                    </ul>
+                                </div>
+                                <div class="t-col text-right t-col--mid">
+                                    <a href="#" class="fa arrow"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                <?php
+                }
+            }
+            else
+            {
+                ?>
+                <li>
+
+                    <p><?php echo MSG_NO_RECORD_FOUND; ?></p>
+
+                </li><?php
+            }
+        ?>
+    </ul>
+</div>
+
+<div class="custom-pagination text-center"><?php echo $this->pagination->create_links(); ?></div>

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style
+END
+Border.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Border.php
+END
+Alignment.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Alignment.php
+END
+Color.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Color.php
+END
+Borders.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Borders.php
+END
+NumberFormat.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/NumberFormat.php
+END
+Supervisor.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Supervisor.php
+END
+Conditional.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Conditional.php
+END
+Fill.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Fill.php
+END
+Font.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Font.php
+END
+Protection.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/ams/!svn/ver/62/branches/development/code/web/application/libraries/PHPExcel/Style/Protection.php
+END

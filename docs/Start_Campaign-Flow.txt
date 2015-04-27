@@ -1,0 +1,14 @@
+
+
+
+Start a Campaign
+----------------
+
+1.	Create Campagin 	(Name , Desc)
+2.	Choose a product  	(From his package)
+3.	Choose a template 	(From available templates of that product in his package)
+4.	Choose a list		(Already created in past by that user)
+5.	Set start date		(Pick a date from calendar)
+6. 	Upload Content of that template
+7.	Add content of fold elements 
+8.	Save Campaign

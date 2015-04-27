@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/ams/!svn/ver/705/branches/development/code/web
+END
+license.txt
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ams/!svn/ver/4/branches/development/code/web/license.txt
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/ams/!svn/ver/4/branches/development/code/web/.htaccess
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/ams/!svn/ver/338/branches/development/code/web/index.php
+END

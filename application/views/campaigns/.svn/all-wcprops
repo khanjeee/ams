@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ams/!svn/ver/637/branches/development/code/web/application/views/campaigns
+END
+view.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/ams/!svn/ver/617/branches/development/code/web/application/views/campaigns/view.php
+END
+admin_create.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/ams/!svn/ver/625/branches/development/code/web/application/views/campaigns/admin_create.php
+END
+designs.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ams/!svn/ver/401/branches/development/code/web/application/views/campaigns/designs.php
+END
+ajax_get_templates.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/ams/!svn/ver/500/branches/development/code/web/application/views/campaigns/ajax_get_templates.php
+END
+show.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/ams/!svn/ver/637/branches/development/code/web/application/views/campaigns/show.php
+END
+create.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/ams/!svn/ver/341/branches/development/code/web/application/views/campaigns/create.php
+END

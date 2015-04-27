@@ -1,0 +1,23 @@
+
+
+<?php if($aMessages)
+    {
+     echo getFormValidationErrorMessage($aMessages);
+    }
+    
+?> 
+
+<h1 class="heading-sty-1">Import Contacts</h1>
+
+<div class="c-box">
+    <form enctype="multipart/form-data" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-sty-1">
+        <div class="row">
+            <div class="col-md-2">
+                <input required type='file' name='userfile' size='20' class="d-ib m-t-7" />
+            </div>
+            <div class="col-md-10">
+                <input type="submit" class="btn btn-success tablet-m-t-10" value="Import" onclick="">
+            </div>
+        </div>
+    </form>
+</div>

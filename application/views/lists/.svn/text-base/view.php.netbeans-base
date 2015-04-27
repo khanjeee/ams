@@ -1,0 +1,86 @@
+<?php if(isset($aMessages))
+    {
+     echo getFormValidationSuccessMessage($aMessages);
+    }
+    
+?> 
+<div class="row">
+    <div class="col-md-2">
+        <h1 class="heading-sty-1"><?php  echo LIST_PLURAL; ?></h1>
+    </div>
+    <div class="col-md-10">
+        <div class="contact-search-n-actions-panel">
+            <a href="<?php echo site_url(); ?>lists/create" class="btn btn-primary btn--create"><i class="fa m-r-10"></i> <span>Create</span></a>
+            <!-- <input type="text" id="search-table" class="form-control pull-right search-field" placeholder="Search"> -->
+        </div>
+    </div>
+</div>
+
+
+
+<form action="<?php echo $sFormAction; ?>" method="post" role="form">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive-from-start">
+                <table class="table table-hover demo-table-search table-sty-1" id="tableWithSearch">
+                    <thead>
+                        <tr>
+                            <th>TITLE</th>
+                            <th>Description</th>
+                            <th>Contacts</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        if($aLists)
+                        {
+						   foreach($aLists as $list)
+                           {        
+							   
+								
+                                $EditUrl            =   $sEditAction.'/'.$list->list_id;
+								$DeleteUrl          =   $sDeleteAction.'/'.$list->list_id;
+                                $AddMemberUrl       =   $sAddMemberAction.'/'.$list->list_id;
+                                $ViewMembersUrl     =   $sViewMemberAction.'/'.$list->list_id;
+                                $ViewListDetailUrl     = site_url('lists/detail/'.$list->list_id);
+                       ?>
+                            <tr>
+                                <!-- <td><?php /*echo  $list->list_id; */?></td>-->
+                                <td><a href="<?php echo $ViewListDetailUrl; ?>"><?php echo  $list->title; ?></a></td>
+                                <td><?php echo  $list->description; ?></td>
+                                <td><?php echo  $list->total_contact; ?></td>
+                                <td><?php echo  displayDateTime($list->created_on); ?></td>
+                                <td>
+                                    <ul class="actions-sty-1 no-line-break">
+                                       
+                                        <li><a class="fa fa-user" href="<?php echo $AddMemberUrl; ?>"></a></li>
+                                       <?php if($list->title != MASTER_LIST): ?>
+										 <li><a class="fa" href="<?php echo $EditUrl; ?>"></a></li>
+										<li><a class="fa remove"  onclick="return confirmDelete('<?php echo $sCallFrom; ?>','<?php echo $DeleteUrl; ?>');" href="#"></a></li>   
+										<?php endif; ?>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                        }
+                        else
+                        { ?>
+                            <!-- <tr>
+                                <td colspan="4"><?php echo MSG_NO_RECORD_FOUND; ?></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr> -->
+                        <?php
+                        } 
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- <div style="margin-left: 50%;"><?php echo $this->pagination->create_links(); ?></div> -->
+</form>

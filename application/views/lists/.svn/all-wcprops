@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/ams/!svn/ver/691/branches/development/code/web/application/views/lists
+END
+view.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/ams/!svn/ver/691/branches/development/code/web/application/views/lists/view.php
+END
+add_members.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ams/!svn/ver/606/branches/development/code/web/application/views/lists/add_members.php
+END
+update.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ams/!svn/ver/547/branches/development/code/web/application/views/lists/update.php
+END
+detail.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ams/!svn/ver/691/branches/development/code/web/application/views/lists/detail.php
+END
+create.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ams/!svn/ver/577/branches/development/code/web/application/views/lists/create.php
+END
+view_members.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/ams/!svn/ver/342/branches/development/code/web/application/views/lists/view_members.php
+END

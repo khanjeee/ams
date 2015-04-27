@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/ams/!svn/ver/529/branches/development/code/web/application/config
+END
+migration.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/migration.php
+END
+doctypes.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/doctypes.php
+END
+database.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ams/!svn/ver/398/branches/development/code/web/application/config/database.php
+END
+config.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ams/!svn/ver/529/branches/development/code/web/application/config/config.php
+END
+autoload.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ams/!svn/ver/215/branches/development/code/web/application/config/autoload.php
+END
+foreign_chars.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/foreign_chars.php
+END
+mimes.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ams/!svn/ver/371/branches/development/code/web/application/config/mimes.php
+END
+constants.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/constants.php
+END
+layout.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/layout.php
+END
+user_agents.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/user_agents.php
+END
+routes.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ams/!svn/ver/407/branches/development/code/web/application/config/routes.php
+END
+profiler.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/profiler.php
+END
+hooks.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/hooks.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/index.html
+END
+smileys.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ams/!svn/ver/4/branches/development/code/web/application/config/smileys.php
+END

@@ -1,0 +1,25 @@
+<?php   if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+global $user;
+
+global $gPackageStatus;
+$gPackageStatus = array('Inactive','Active');
+
+global $aUserStatus;
+$aUserStatus = array('Inactive','Active');
+
+global $aRoles;
+$aRoles = array(
+                ROLE_ID_ADMINISTRATOR   =>  ROLE_Administrator,
+                ROLE_ID_SUBSCRIBER      =>  ROLE_Subscriber
+    
+                );
+
+global $aContactImportConfig;
+       $aContactImportConfig['upload_path']     = './media/import/';
+       $aContactImportConfig['allowed_types']   = CONTACT_IMPORT_ALLOWED_EXTENSIONS;
+       $aContactImportConfig['max_size']	    = CONTACT_IMPORT_MAX_FILE_SIZE;
+       //$aContactImportConfig['max_width']       = '1024';
+       //$aContactImportConfig['max_height']      = '768';
+
+
