@@ -15,7 +15,7 @@ class ApiPredefinedBatches
         $this->CI->load->model('predefined_campaign_model',        'campaign');
     }
 
-    function UploadBatchContentImage($sCallFrom ='',$aGivenData = array())
+    function UploadPredefinedBatchContentImage($sCallFrom ='',$aGivenData = array())
     {
         $aErrorMessages         = array();
         $aData                  = $aGivenData['aPostedData'];
@@ -50,8 +50,6 @@ class ApiPredefinedBatches
                 }
 
                 #In case of no error .. Save Data..!
-                
-                  
 
                 #Check for previous Entry
                 $isEditMode =   false;
@@ -122,7 +120,7 @@ class ApiPredefinedBatches
                     $isEditMode =   false;
                     $Exists     =   $this->CI->batch->CheckBatchElementData($aData);
 
-                    #$aData      =   $this->ImplementShortTags($aData,$iCampaignBatchId);
+                    $aData      =   $this->ImplementShortTags($aData,$iCampaignBatchId);
 
                     if($Exists) {$isEditMode = true;}
                     $iSuccess   =   $this->CI->batch->UploadBatchContent(__FUNCTION__,array('aData' => $aData,'isEditMode' => $isEditMode) );
@@ -199,7 +197,7 @@ class ApiPredefinedBatches
 
                 $aUploadedContent   = $this->CI->batch->getBatchUploadedContent($iFoldId,$iCampaignBatchId);
                 $aElementData       = $this->CI->batch->getElementDefaultData($iFoldId);
-                
+
                 if($aUploadedContent)
                 {
                     foreach($aUploadedContent as $iIndex  =>  $aContentData)
@@ -213,12 +211,10 @@ class ApiPredefinedBatches
                 {
                     foreach($aElementData as $iIndex  =>  $aValue)
                     {
-                        
                         $UploadedContent[$aValue['element_position']]['attr'] = json_decode($aValue['element_data'],TRUE);
                         $UploadedContent[$aValue['element_position']]['type'] = $aValue['element_name'];
                     }
                 }
-
 
                 //TODO : Add this html into View
                 $ApiImageRendering          = new ApiImageRendering();
@@ -426,7 +422,7 @@ HTML;
         exit;
     }
 
-    function getFoldElementsHTML ( $aTemplateFoldsData = array(),$iTemplateId=0,$iCampaignBatchId=0)
+    function getFoldElementsHTML ($aTemplateFoldsData = array(),$iTemplateId=0,$iCampaignBatchId=0)
     {
         /* =======================================================================
          * @author : Shoaib Ahmed Khan
@@ -486,7 +482,7 @@ HTML;
                         if($iTotalElements > 0 )
                         {
                             #Loading HTML View
-                            $hFoldHtml          .=      $this->CI->load->view('folds/elements_html',array('aElements'=>$aElements,'aFold' =>$aFolds[$f],'iTemplateId'=>$iTemplateId,'iCampaignBatchId'=>$iCampaignBatchId),TRUE);
+                            $hFoldHtml          .=      $this->CI->load->view('folds/elements_html',array('isPredefined'=>true,'aElements'=>$aElements,'aFold' =>$aFolds[$f],'iTemplateId'=>$iTemplateId,'iCampaignBatchId'=>$iCampaignBatchId),TRUE);
                         }
                     }
                 }

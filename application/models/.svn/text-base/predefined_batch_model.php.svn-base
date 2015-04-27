@@ -211,7 +211,7 @@ SQL;
     function CheckBatchElementData($aData = array())
     {
         #Handling Data
-        $iCampaignBatchId   =   $aData['predefined_campaign_batch_id'];
+        $iCampaignBatchId   =   $aData['campaign_batch_id'];
         $iTemplateId        =   $aData['template_id'];
         $iTemplateFoldId    =   $aData['template_fold_id'];
         $iTemplateElementId =   $aData['template_element_id'];
@@ -239,7 +239,7 @@ SQL;
     {
         #Handling Data
         $aData              =   $aGivenData['aData'];
-        $iCampaignBatchId   =   $aData['predefined_campaign_batch_id'];
+        $iCampaignBatchId   =   $aData['campaign_batch_id'];
         $iTemplateId        =   $aData['template_id'];
         $iTemplateFoldId    =   $aData['template_fold_id'];
         $iTemplateElementId =   $aData['template_element_id'];
@@ -683,7 +683,7 @@ SQL;
               FROM lists WHERE list_id IN
               (
                   SELECT list_id
-                  FROM  campaign_batches_lists
+                  FROM  predefined_campaign_batches_lists
                   WHERE predefined_campaign_batch_id='$iCampaignBatchId'
               )
 SQL;
@@ -752,24 +752,18 @@ SQL;
 
     function getBatchUploadedContent($iTemplateFoldId, $iCampaignBatchId)
     {
-//         $SQL = <<<SQL
-//
-//        SELECT
-//               element_position ,
-//               element_data
-//        FROM  predefined_template_content
-//        WHERE template_fold_id = '$iTemplateFoldId' AND predefined_campaign_batch_id='$iCampaignBatchId'
-        
-        
         $SQL = <<<SQL
 
         SELECT
-               e.element_position ,
-               e.element_data,
-               t.element_name
-        FROM        predefined_template_content e
+                       e.element_position ,
+                       e.element_data,
+                       t.element_name
+
+        FROM            predefined_template_content e
+
         INNER JOIN  template_elements t 
-        ON          t.template_element_id = e.template_element_id     
+        ON          t.template_element_id = e.template_element_id
+
         WHERE e.template_fold_id = '$iTemplateFoldId' AND e.predefined_campaign_batch_id='$iCampaignBatchId'
 
 SQL;
@@ -786,7 +780,7 @@ SQL;
 
             SELECT list_id FROM list_members WHERE list_id IN
             (
-              SELECT list_id FROM campaign_batches_lists WHERE predefined_campaign_batch_id = '$BatchId'
+              SELECT list_id FROM predefined_campaign_batches_lists  WHERE predefined_campaign_batch_id = '$BatchId'
             )
             LIMIT 1
 SQL;
@@ -874,7 +868,7 @@ SQL;
         {
             $SQL = <<<SQL
 
-            update  campaign_batches
+            update  predefined_user_batches
             set
                     last_preview_images  = '$Preview_Data'
 
@@ -893,7 +887,7 @@ SQL;
         {
             $SQL = <<<SQL
 
-           SELECT last_preview_images FROM campaign_batches where predefined_campaign_batch_id='$iCampaignBatchId'
+           SELECT last_preview_images FROM predefined_user_batches where predefined_campaign_batch_id='$iCampaignBatchId'
 SQL;
             $Result   =   $this->db->query($SQL);
             return $Result->row('last_preview_images');

@@ -256,29 +256,12 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
          } 
          
          
-         /*step 4     
+        /*step 3
         * Called when Scheduling a batch
         * */  
          else if (selected_tab==3)
          {
-           $scope.active_tab = 4;     
-
-         }
-         
-         /*step 5     
-        * Called when Scheduling a batch
-        * */  
-         else if (selected_tab==4)
-         {
-                $scope.error_schedule_date = false; 
-                
-                 if(angular.equals($scope.schedule_date,'') || angular.isUndefined($scope.schedule_date) )
-                         {
-                             $scope.error_schedule_date = true;
-                             return false;
-                         }
-
-                  
+                                 
              var request = 
              {
                  method: 'POST',
@@ -387,9 +370,9 @@ function ajax_call(request,selected_tab)
                                     {
                                         $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : data.tab;
                                          //disabling next button on last tab
-                                        $scope.next_button   = ($scope.active_tab == 6) ? false : true ; 
+                                        $scope.next_button   = ($scope.active_tab == 3) ? false : true ; 
                                         //showing finish button 
-                                        $scope.finish_button = ($scope.active_tab == 6) ? true : false ; 
+                                        $scope.finish_button = ($scope.active_tab == 3) ? true : false ; 
                                         
                                         //unserializing the json to get proper html
                                         var unSerializedJson = angular.fromJson(data.hSummary);

@@ -1,14 +1,14 @@
 10
 
 dir
-707
+718
 http://192.175.0.245/svn/ams/branches/development/code/web/application/views
 http://192.175.0.245/svn/ams
 
 
 
-2015-04-27T09:07:12.649762Z
-707
+2015-04-27T11:52:38.316868Z
+718
 shoaib.ahmed
 
 
@@ -35,13 +35,13 @@ dir
 email_template
 dir
 
-roles
+register
 dir
 
 crons
 dir
 
-register
+roles
 dir
 
 predefined_campaigns
@@ -59,10 +59,10 @@ dir
 flags
 dir
 
-predefined_batches
+lists
 dir
 
-lists
+predefined_batches
 dir
 
 users

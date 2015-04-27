@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-define('BATCH_UPLOAD_CONTENT', 'BatchUploadContent');
+define('BATCH_UPLOAD_CONTENT',          'BatchUploadContent');
+define('PD_BATCH_UPLOAD_CONTENT',       'PredefinedBatchUploadContent');
+
 class Ajax extends CI_Controller
 {
     public $aData       = array();
@@ -71,11 +73,24 @@ class Ajax extends CI_Controller
                 'encrypt_name'      =>  true,
                 'allowed_types'     =>  'gif|jpg|png|bmp',
                 'sizes'             =>  array
-                                        (
-                                            'small'     => array('width'=>250, 'height'=>250),
-                                            'medium'    => array('width'=>500, 'height'=>500),
-                                            'large'     => array('width'=>1000, 'height'=>1000),
-                                        )
+                (
+                    'small'     => array('width'=>250, 'height'=>250),
+                    'medium'    => array('width'=>500, 'height'=>500),
+                    'large'     => array('width'=>1000, 'height'=>1000),
+                )
+            ),
+            PD_BATCH_UPLOAD_CONTENT    =>  array
+            (
+                'upload_path'       =>  './media/fold_elements/',
+                'thumb_path'        =>  'thumbnail',
+                'encrypt_name'      =>  true,
+                'allowed_types'     =>  'gif|jpg|png|bmp',
+                'sizes'             =>  array
+                (
+                    'small'     => array('width'=>250, 'height'=>250),
+                    'medium'    => array('width'=>500, 'height'=>500),
+                    'large'     => array('width'=>1000, 'height'=>1000),
+                )
             ),
         );
 
@@ -114,6 +129,11 @@ class Ajax extends CI_Controller
             {
                 $ApiBatches     =   new ApiBatches();
                 $aResult        =   $ApiBatches->UploadBatchContentImage($sCallFrom, $aData);
+            }
+            else if($sCallFrom == PD_BATCH_UPLOAD_CONTENT)
+            {
+                $ApiBatches     =   new ApiPredefinedBatches();
+                $aResult        =   $ApiBatches->UploadPredefinedBatchContentImage($sCallFrom, $aData);
             }
         }
 

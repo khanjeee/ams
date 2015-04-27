@@ -90,7 +90,7 @@
                                                         }, 
                                 inputText           :   'Upload Image',
                                 fileName            :   '<?php echo FILE_UPLOAD_FIELD; ?>',
-                                formData            :   {   call_from:'BatchUploadContent',
+                                formData            :   {   call_from:'<?php echo (isset($isPredefined))? PD_BATCH_UPLOAD_CONTENT : BATCH_UPLOAD_CONTENT;  ?>',
                                                             campaign_batch_id:'<?php echo $iCampaignBatchId; ?>',
                                                             template_id:'<?php echo $iTemplateId; ?>',
                                                             template_fold_id:'<?php echo $aFold['fold_id']; ?>',
