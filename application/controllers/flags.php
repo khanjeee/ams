@@ -34,7 +34,7 @@ class Flags extends CI_Controller {
 		global $gPagination;
 		$config = $gPagination;
 		$config['base_url'] = site_url($this->controller . '/' . __FUNCTION__);
-		$config['total_rows'] = $this->flag->getAllLists($aParams);
+		$config['total_rows'] = $this->flag->getAllFlags($aParams);
 		$config['per_page'] = LISTING_PER_PAGE;
 		$this->pagination->initialize($config);
 
@@ -44,7 +44,7 @@ class Flags extends CI_Controller {
 		$aParams[ACTION_PAGE_OFFSET] = $iPage;
 
 		$data = array();
-		$aFlags = (array) $this->flag->getAllLists($aParams); // $this->package->getAllPackages($aParams);
+		$aFlags = (array) $this->flag->getAllFlags($aParams); // $this->package->getAllPackages($aParams);
 		
 		$data['aFlags'] = $aFlags;
 
@@ -57,7 +57,8 @@ class Flags extends CI_Controller {
 		$this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
 	}
 
-	public function update($iFlagId = 0) {
+	public function update($iFlagId = 0) 
+	{
 	
 		
 		$sFormAction = $this->controller . '/' . __FUNCTION__ . '/' . $iFlagId;
@@ -118,10 +119,9 @@ class Flags extends CI_Controller {
 		$this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
 	}
 
-	public function delete($iFlagId = 0) {
+	public function delete($iFlagId = 0) 
+	{
 		if ($iFlagId) {
-			
-			
 			$result = $this->flag->deleteFlagById($iFlagId);
 			
 			if ($result) {
@@ -134,5 +134,7 @@ class Flags extends CI_Controller {
 		}
 		
 	}
+	
+	
 
 }

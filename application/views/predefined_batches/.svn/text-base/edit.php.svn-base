@@ -15,8 +15,8 @@ app.controller('MainCtrl',function($scope,$http,$compile,$parse,$window)
   $scope.batch_id               = <?php echo $aBatchDetails['predefined_campaign_batch_id']; ?>;
   $scope.selected_template_id   = <?php echo $aBatchDetails['template_id']; ?>;;
   $scope.selected_product_id    = <?php echo $aBatchDetails['product_id']; ?>;
-  $scope.selected_package_id    = <?php echo $aBatchDetails['package_id']; ?>;
-  $scope.selected_whitelabel_id = '<?php echo $selectedPromoCode.'~~~'.$aBatchDetails['whitelabel_id']; ?>';
+  $scope.selected_package_id    = <?php echo isset($aBatchDetails['package_id'])? $aBatchDetails['package_id'] : 0 ; ?>;
+  $scope.selected_whitelabel_id = <?php echo (isset($selectedPromoCode)and isset($aBatchDetails['whitelabel_id'])) ? '"'.$selectedPromoCode.'~~~'.$aBatchDetails['whitelabel_id'].'"' : 0; ?>;
   
   $scope.aProducts              = <?php echo empty($aProducts)? '[]' : $aProducts ; ?>;
   
@@ -523,19 +523,25 @@ function ajax_call(request,selected_tab)
          $scope.selected_package_id = 0;
      } 
      
-     $scope.values = $scope.selected_whitelabel_id.split('~~~');
-     $scope.selected_promocode = $scope.values[0];
-     $scope.selected_whitelabel_id = $scope.values[1];
+      if($scope.selected_whitelabel_id) 
+        {
+            $scope.values = $scope.selected_whitelabel_id.split('~~~');
+            $scope.selected_promocode = $scope.values[0];
+            $scope.selected_whitelabel_id = $scope.values[1];
+            //console.log($scope.values); return;
      
-     //console.log($scope.values); return;
+            var request = 
+                   {
+                       method: 'POST',
+                       url:    '<?php echo site_url('ajax/package') ?>',
+                       data:   {method:'getWhiteLabelPackages',iPromotionCode:$scope.selected_promocode}
+                    };
+            ajax_call(request,'whiteLabelPackages');
+      
+        }
      
-      var request = 
-             {
-                 method: 'POST',
-                 url:    '<?php echo site_url('ajax/package') ?>',
-                 data:   {method:'getWhiteLabelPackages',iPromotionCode:$scope.selected_promocode}
-              };
-      ajax_call(request,'whiteLabelPackages');
+     
+     
   }
     
      

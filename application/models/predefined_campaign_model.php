@@ -452,7 +452,7 @@ QUERY;
         $aWhereClause[] = " ( is_deleted ='0' ) ";
         if(!isSuperAdmin())
         {
-            $aWhereClause[] = " ( user_id ='1' ) ";
+            $aWhereClause[] = " ( user_id ='".getLoggedInUserId()."' ) ";
         }
 
         $sWhereCondition = '';

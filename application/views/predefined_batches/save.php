@@ -22,8 +22,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
   
   $scope.selected_template_id = <?php echo $aBatchDetails['template_id']; ?>;
   $scope.selected_product_id = <?php echo $aBatchDetails['product_id']; ?>;
-  $scope.schedule_date      = '';
-  $scope.schedule_time      = '';
+    
   $scope.image_preview_html = '';
   $scope.template_cuttoff_period = 0; 
   
@@ -34,7 +33,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
   $scope.error_campaign_id    = false;
   $scope.error_template_id    = false;
   $scope.error_product_id     = false;
-  $scope.error_schedule_date  = false;
+  
   
   
   $scope.error_upload_content = [];
@@ -72,8 +71,8 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
        $scope.active_tab = $scope.active_tab - 1; 
        //hiding showing previous next  and finish buttons
        $scope.previous_button   = ($scope.active_tab == 1) ? false : true ; 
-       $scope.next_button   = ($scope.active_tab == 6) ? false : true ; 
-       $scope.finish_button = ($scope.active_tab == 6) ? true : false ;
+       $scope.next_button   = ($scope.active_tab == 4) ? false : true ; 
+       $scope.finish_button = ($scope.active_tab == 4) ? true : false ;
        
        
     }
@@ -266,7 +265,10 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
              {
                  method: 'POST',
                  url:    '<?php echo $sFormAction; ?>',
-                 data:   {method:'ScheduleBatch',campaign_batch_id:$scope.batch_id,schedule_date:$scope.schedule_date,schedule_time:$scope.schedule_time}
+                 data:   {  method:'getPredefinedBatchSummary',
+                            campaign_batch_id:$scope.batch_id,
+                            predefined_campaign_batch_id:$scope.predefined_campaign_batch_id
+                        }
               };
               
               
@@ -296,7 +298,7 @@ function ajax_call(request,selected_tab)
                              if(angular.equals(data.status,true))
                                 { 
                                    
-                                    
+                                   console.log(data); 
                                     $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : 2;
                                     $scope.batch_id    = data.batch_id;
                                     $scope.error_batch_lists  = false;
@@ -368,22 +370,27 @@ function ajax_call(request,selected_tab)
                                 //checking status
                                 if(angular.equals(data.status,true))
                                     {
-                                        $scope.active_tab  = (isNaN(data.tab)) ? $scope.active_tab : data.tab;
+                                        
+                                        $scope.active_tab = 4;
                                          //disabling next button on last tab
-                                        $scope.next_button   = ($scope.active_tab == 3) ? false : true ; 
+                                        $scope.next_button   = ($scope.active_tab == 4) ? false : true ; 
                                         //showing finish button 
-                                        $scope.finish_button = ($scope.active_tab == 3) ? true : false ; 
+                                        $scope.finish_button = ($scope.active_tab == 4) ? true : false ; 
                                         
                                         //unserializing the json to get proper html
-                                        var unSerializedJson = angular.fromJson(data.hSummary);
+                                        var unSerializedJson = angular.fromJson(data.data);
                                         //compling the html for angular
                                         $scope.htmlSummaryContent = $compile(unSerializedJson)($scope);
-                                        $scope.error_schedule_date = false;
+                                        
+                                        //console.log($scope.htmlSummaryContent);
+                                        //console.log(data.message);
+                                        
+                                        
 
                                     }
                                 else{
-                                        //console.log(data.message);
-                                        $scope.error_schedule_date = true;
+                                        console.log(data.message);
+                                        
                                     }  
                                 
                             

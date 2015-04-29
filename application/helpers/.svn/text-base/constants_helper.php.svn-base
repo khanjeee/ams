@@ -139,6 +139,7 @@ define('ERROR_EMAIL_REQUIRED','Email is Required');
 define('ERROR_SOLUTION_TYPE_REQUIRED','Solution Type is Required');
 
 define('ERROR_FLAG_ALREADY_EXISTS','Flag of title already exists.');
+define('ERROR_FLAG_CREATE_FLAG','First Create a Flag.');
 
 
 

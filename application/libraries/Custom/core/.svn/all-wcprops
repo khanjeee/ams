@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 85
-/svn/ams/!svn/ver/717/branches/development/code/web/application/libraries/Custom/core
+/svn/ams/!svn/ver/727/branches/development/code/web/application/libraries/Custom/core
 END
 api.register.php
 K 25
@@ -55,7 +55,7 @@ api.predefined.batches.php
 K 25
 svn:wc:ra_dav:version-url
 V 112
-/svn/ams/!svn/ver/717/branches/development/code/web/application/libraries/Custom/core/api.predefined.batches.php
+/svn/ams/!svn/ver/727/branches/development/code/web/application/libraries/Custom/core/api.predefined.batches.php
 END
 api.image.rendering.php
 K 25

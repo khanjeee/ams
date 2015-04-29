@@ -225,6 +225,26 @@ function getLoggedInUserId() {
     return $iId;
 }
 
+function getFlag($iFlagId)
+{
+	$Flag = 'N/A';
+	if($iFlagId)
+	{
+			$CI = & get_instance();
+			$CI->load->model('flag_model','flag');
+			$FlagTitle =  $CI->flag->getFlagId($iFlagId);
+			
+			if(is_array($FlagTitle))
+			{
+				$Flag =  $FlagTitle[0]->title;
+			}
+	}
+	return $Flag;
+
+	
+}
+
+
 function getLoggedInUserData()
 {
     $aLoggedInUserData = array();

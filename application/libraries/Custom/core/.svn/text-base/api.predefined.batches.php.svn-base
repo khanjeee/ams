@@ -168,7 +168,7 @@ class ApiPredefinedBatches
 
     function getPreviewImage($iTemplateId, $iCampaignBatchId, $FoldElementsData)
     {
-        $LastGeneratedPreview = array();
+        $LastGeneratedPreview   = array();
 
         $aTotalFoldsPreviews    = '';
         
@@ -244,7 +244,10 @@ HTML;
 
         if($LastGeneratedPreview)
         {
-            if($Preview_Data = json_encode($LastGeneratedPreview,true)){$this->CI->batch->saveLastGeneratedPreview($iCampaignBatchId, $Preview_Data);}
+            if($Preview_Data = json_encode($LastGeneratedPreview,true))
+            {
+                $this->CI->batch->saveLastGeneratedPreview($iCampaignBatchId, $Preview_Data);
+            }
         }
 
         return json_encode($aTotalFoldsPreviews,true);
@@ -542,7 +545,6 @@ HTML;
             $this->result['status']         =   TRUE;
             $this->result['rows_updated']   =   $this->CI->batch->ScheduleBatch(__FUNCTION__,array('aData' => $aData,'isEditMode' => false) );
             $this->result['message']        =   "Schedule successfully.";
-            //$this->result['hSummary']       =    json_encode($this->CI->load->view('batches/summary',array('aSummaryData'=>$this->CI->batch->getBatchSummary($CampaignBatchId)),TRUE),true);
             $this->result['tab']            =   '6';
             
             
@@ -552,6 +554,21 @@ HTML;
         exit;
     }
 
+    public function getPredefinedBatchSummary($aData = array())
+    {
+        $CampaignBatchId            = $aData['predefined_campaign_batch_id'];
+        $UserBatchId                = $aData['campaign_batch_id'];
+
+        $BatchData          = $this->CI->batch->getPredefinedBatchSummary($CampaignBatchId,$UserBatchId);
+        $sSummary           = $this->CI->load->view('batches/summary',array('aSummaryData'=>$BatchData),TRUE);
+
+        $this->result['status']         =   TRUE;
+        $this->result['data']           =   json_encode($sSummary,TRUE);
+        $this->result['message']        =   "Summary generated.";
+
+        echo json_encode($this->result);
+        exit;
+    }
 
     function downloadBatchContent($aData = array())
     {
@@ -894,6 +911,7 @@ HTML;
 
     function createUserBatch($aData = array())
     {
+
         $aErrorMessages             =   array();
         $CampaignId                 =   $iBatchId   =   $iUserId    =  0;
         $aList                      =   @json_decode($aData['list'],true);
@@ -939,31 +957,33 @@ HTML;
             $aData['isEditMode']        = ($iUserBatchId > 0) ? true : false;
 
             //Returns batch id in both create and update cases
-            $iBatchId = $this->CI->batch->createUserBatch($aData);
+            $iBatchId               = $this->CI->batch->createUserBatch($aData);
 
-            if($iBatchId)
+            $aData['user_batch_id'] = $iBatchId;
+
+            if($aData['isEditMode'])
             {
                 $this->CI->batch->deleteBatchList($iBatchId);
+            }
 
-                if($this->CI->batch->createBatchList($aData))
+            if($this->CI->batch->createBatchList($aData))
+            {
+                $aTemplateFoldsData             =   $this->CI->batch->getTemplateFoldsData($iTemplateId);
+
+                if($aTemplateFoldsData)
                 {
-                    $aTemplateFoldsData             =   $this->CI->batch->getTemplateFoldsData($iTemplateId);
-
-                    if($aTemplateFoldsData)
-                    {
-                        $aFieldHtml                 =   $this->getFoldElementsHTML($aTemplateFoldsData,$iTemplateId,$iBatchId);
-                        $Data['aTemplateFoldsData'] =   $aTemplateFoldsData;
-                        $Data['fieldHtml']          =   $aFieldHtml;
-                        $hAngularResponseHTML       =   $this->CI->load->view('batches/upload_content',$Data,TRUE);
-                    }
-
-                    $this->result['status']                     =   TRUE;
-                    $this->result['aFoldData']                  =   $aTemplateFoldsData['aFolds'];
-                    $this->result['message']                    =   'Lists Saved  successfully.';
-                    $this->result['tab']                        =   '3';
-                    $this->result['hUploadContentHTML']         =   json_encode($hAngularResponseHTML,true);
-                    $this->result['batch_id']                   =   "$iBatchId";
+                    $aFieldHtml                 =   $this->getFoldElementsHTML($aTemplateFoldsData,$iTemplateId,$iBatchId);
+                    $Data['aTemplateFoldsData'] =   $aTemplateFoldsData;
+                    $Data['fieldHtml']          =   $aFieldHtml;
+                    $hAngularResponseHTML       =   $this->CI->load->view('batches/upload_content',$Data,TRUE);
                 }
+
+                $this->result['status']                     =   TRUE;
+                $this->result['aFoldData']                  =   $aTemplateFoldsData['aFolds'];
+                $this->result['message']                    =   'Lists Saved  successfully.';
+                $this->result['tab']                        =   '3';
+                $this->result['hUploadContentHTML']         =   json_encode($hAngularResponseHTML,true);
+                $this->result['batch_id']                   =   "$iBatchId";
             }
         }
 

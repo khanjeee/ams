@@ -18,7 +18,8 @@ class Contacts extends CI_Controller {
 		global $aContactImportConfig;
 		$this->load->model('contact_model', 'contact');
 		$this->load->model('country_model', 'countries');
-		  $this->load->model('list_model','list');
+		$this->load->model('list_model','list');
+		$this->load->model('flag_model','flag');
 		$this->load->library('upload', $aContactImportConfig);
 		$this->load->library('phpexcel');
 		$this->load->library('PHPExcel/iofactory');
@@ -33,9 +34,36 @@ class Contacts extends CI_Controller {
 	public function view($iPage = 0)
     {
 		$aParams = array();
+		
+			if($aPostedData = $this->input->post())
+			{
+				if(isset($aPostedData['btnReset']))
+				{
+					$this->session->unset_userdata('search_query');
+					redirect($this->controller.'/'. __FUNCTION__);
+				}
+			
+            $sQuery     = $aPostedData['data']['flags'];
+            $this->session->set_userdata('search_query', $sQuery);
+            
+			redirect($this->controller.'/'. __FUNCTION__);
+		}
+		
+		$sQuery                 = $this->session->userdata('search_query');
+        $search                 = false;
+		 if(isset($sQuery) && $sQuery)
+        {
+            $search                        =   true;
+	        $aParams['search']['query']    =   $sQuery;
+        }
+		
+		
+		
 		$aParams[ACTION_RECORD_COUNT] = true;
 		$aParams['iUserId'] = getLoggedInUserId();
 
+		
+		
 		#   Pagination
 		global $gPagination;
 		$config = $gPagination;
@@ -51,15 +79,19 @@ class Contacts extends CI_Controller {
 
 		$data = array();
 		$aContacts = (array) $this->contact->getAllContacts($aParams); // $this->package->getAllPackages($aParams);
-
+		
 		$data['aContacts'] = $aContacts;
-
-		$sFormAction = $this->controller . '/' . __FUNCTION__;
-		$data['sFormAction'] = site_url($sFormAction);
-		$data['sDeleteAction'] = site_url($this->controller . '/delete');
-		$data['sEditAction'] = site_url($this->controller . '/update');
-		$data['sCallFrom'] = $sFormAction;
-
+		
+		$sFormAction			= $this->controller . '/' . __FUNCTION__;
+		$data['aFlag']		    = $this->flag->getFlagsByLoginUser();
+		$data['aList']			= $this->list->getAllListByUserId($aParams['iUserId']);
+		$data['sFormAction']    = site_url($sFormAction);
+		$data['sDeleteAction']  = site_url($this->controller . '/delete');
+		$data['sEditAction']	= site_url($this->controller . '/update');
+		$data['sCallFrom']		= $sFormAction;
+		$data['sQuery']         = $sQuery;
+        $data['bSearch']        = $search;
+		$this->session->unset_userdata('search_query');
 		$this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
 	}
 
@@ -147,15 +179,17 @@ class Contacts extends CI_Controller {
 			$aPostedData = $this->input->post('data');
 			$aPostedData['isEditMode'] = true;
 			$aPostedData['contact_id'] = $iContactId;
+			
 
 			$sFirstName = $aPostedData['first_name'];
-			$sLastName = $aPostedData['last_name'];
-			$sEmail = trim($aPostedData['email']);
-			$sAddress = $aPostedData['address'];
-			$sCountry = $aPostedData['country'];
-			$sCity = $aPostedData['city'];
-			$sState = $aPostedData['state'];
-			$sZipCode = $aPostedData['zip_code'];
+			$sLastName  = $aPostedData['last_name'];
+			$sEmail		= trim($aPostedData['email']);
+			$sAddress	= $aPostedData['address'];
+			$sCountry	= $aPostedData['country'];
+			$sCity		= $aPostedData['city'];
+			$sState		= $aPostedData['state'];
+			$sZipCode	= $aPostedData['zip_code'];
+			$iFlagId	= $aPostedData['flags'];	  
 
 			$aErrorMessages = array();
 
@@ -174,7 +208,8 @@ class Contacts extends CI_Controller {
 
 				return setMessage(false, array('message' => $aErrorMessages, 'redirectUrl' => $sFormAction));
 			}
-
+			
+			
 
 			$result = $this->ApiContact->createContact($aPostedData);
 
@@ -200,6 +235,7 @@ class Contacts extends CI_Controller {
 		$data['aCountries']    = $this->countries->getCountriesDropDown();
 		$data['aContact']	   = $this->contact->getContactById($iContactId);
 		$data['aList']		   = $this->list->getAllListByUserId($iUserId);
+		$data['aFlag']		   = $this->flag->getFlagsByLoginUser();
 		$data['aSelectedList'] = $this->list->getlistByContactId($iContactId);
 		
 		
@@ -223,7 +259,7 @@ class Contacts extends CI_Controller {
 			//$redirectUrlVerify 	= site_url($this->controller.'/verify');
 
 			$aPostedData = $this->input->post('data');
-
+		
 			$aPostedData['isEditMode'] = false;
 			$sFirstName = $aPostedData['first_name'];
 			$sLastName = $aPostedData['last_name'];
@@ -233,7 +269,7 @@ class Contacts extends CI_Controller {
 			$sCity = $aPostedData['city'];
 			$sState = $aPostedData['state'];
 			$sZipCode = $aPostedData['zip_code'];
-
+			$Flag	 = $aPostedData['flags'];
 			$aErrorMessages = array();
 
 			if (!$sAddress) {
@@ -242,11 +278,12 @@ class Contacts extends CI_Controller {
 			if (!filter_var($sEmail, FILTER_VALIDATE_EMAIL)) {
 				$aErrorMessages[] = ERROR_INVALID_EMAIL;
 			}
-
-
-
-
-
+			
+			if(!isset($Flag))
+			{
+				$aErrorMessages[] = ERROR_FLAG_CREATE_FLAG;
+			}
+			
 			if ($aErrorMessages) {
 
 				return setMessage(false, array('message' => $aErrorMessages, 'redirectUrl' => $sFormAction));
@@ -276,6 +313,7 @@ class Contacts extends CI_Controller {
 		$data['sFormAction'] = site_url($sFormAction);
 		$data['aCountries']  = $this->countries->getCountriesDropDown();
 		$data['aList']		 = $this->list->getAllListByUserId($iUserId);
+		$data['aFlag']		 = $this->flag->getFlagsByLoginUser();
 		$sCustomJsPath = getAssetsPath() . JS_CREATE_CONTACT;
 		$data['custom_js'] = $this->load->view('includes/js_includes.php', array('custom_js' => $sCustomJsPath), true);
 
@@ -300,5 +338,20 @@ class Contacts extends CI_Controller {
 
 		redirect(site_url($this->controller . '/view'));
 	}
+	
+	public function createlist()
+	{
+		if($aPostedData = $this->input->post('data'))
+		{
+			$result = $this->ApiContact->createList($aPostedData);
+			
+				if($result['status'])
+                {   
+						return setMessage($result['status'], array('message' => getFormValidationSuccessMessage($result['message']),
+                                                               'redirectUrl'  => site_url($this->controller.'/view')));
+                }
+		}
+	}
+	
 
 }

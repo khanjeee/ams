@@ -2,6 +2,9 @@
 
 <?php if($aContact) : 
     $Contact = $aContact[0];
+
+
+
 ?>
 
     <form id="formID" enctype="multipart/form-data" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-sty-1 form-validate-1">
@@ -133,14 +136,23 @@
                     </div>
                 </div>    
                 <div class="col-md-6 col-lg-4">
-                    <div class="form-group form-group-default form-group-default-select2">
-                        <label>Flag</label>
-                        <select required name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
-                            <option value='Important'>Important</option>
-                                <option value='Very Important'>Very Important</option>
-                        </select>
-                    </div>
+                <div class="form-group form-group-default form-group-default-select2">
+                    <label>Flag</label>
+                    <select required name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
+							<?php 
+      						if(is_array($aFlag) && !empty($aFlag)) :
+      							foreach($aFlag  as  $flag): 
+									$htmlSelected  = '';
+									if($Contact->flag_id == $flag->flag_id) :
+									 $htmlSelected = 'selected="selected" ';                           
+								   endif ;?>
+								
+      								<option <?php echo $htmlSelected; ?>  value='<?php echo $flag->flag_id; ?>'><?php echo $flag->title; ?></option>   
+      						<?php endforeach; ?>
+      						 <?php endif;  ?> 
+					</select>
                 </div>
+            </div>
             </div>
 			<div class="col-md-6 col-lg-4">
 				<div class="form-group form-group-default form-group-default-select2">

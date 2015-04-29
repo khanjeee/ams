@@ -49,7 +49,8 @@ SQL;
 		return false;
 	}
 	
-	public function getAllLists($aParams = array()) 
+	#this is for pagination
+	public function getAllFlags($aParams = array()) 
     {
         
          $iUserId            = getLoggedInUserId();
@@ -116,8 +117,8 @@ QUERY;
         }
     }	
 	
-	 public function getFlagId($iFlagId = 0) 
-     {
+	public function getFlagId($iFlagId = 0) 
+    {
         $this->db->where('flag_id', $iFlagId); 
         $result = $this->db->get('flags'); 
          if($result->result())
@@ -129,21 +130,42 @@ QUERY;
 	
 	public function getFlagByTitleAndUserId($iUserId = 0,$Title = '')
     {
+		
         if($iUserId)
         {
             $SQL = <<<SQL
 				 SELECT title FROM flags WHERE user_id = '$iUserId' AND title = '$Title'
 SQL;
+			
+			
+				if ($result = $this->db->query($SQL)) 
+				{
+					return $result->result_array();
+				}
         }
-        if ($result = $this->db->query($SQL)) 
-		{
-			return $result->result_array();
-		}
+		
+		
+		
+        
 			return array();
     }
 	
+	#this is for fill DropDown
+	public function getFlagsByLoginUser()
+	{
+		$iUserId      = getLoggedInUserId();
+		$this->db->where('user_id', $iUserId); 
+		$result = $this->db->get('flags'); 
+		
+		
+         if($result->result())
+         {
+             return $result->result();
+         }
+         return false;
+	}
 	
-	 public function deleteFlagById($iFlagId = 0) 
+	public function deleteFlagById($iFlagId = 0) 
     {
         $this->db->where('flag_id', $iFlagId); 
         $this->db->delete('flags'); 

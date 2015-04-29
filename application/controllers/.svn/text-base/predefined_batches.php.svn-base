@@ -109,9 +109,7 @@ class Predefined_Batches extends CI_Controller
         }
     }
 
-    
-
-     public function edit($iBatchId = 0)
+    public function edit($iBatchId = 0)
     {
         $bInvalid = false;
         $aBatches = array();
@@ -138,7 +136,11 @@ class Predefined_Batches extends CI_Controller
                     $data['aBatchLists']       =  $this->predefined_batch->getBatchListsFormated($iBatchId);
                     $data['aBatchDetails']     =  (array) $aBatches;
                     $data['selectedWhiteLabel']=  $this->whitelabel->getWhiteLabel($data['aBatchDetails']['whitelabel_id']);
-                    $data['selectedPromoCode'] =  $data['selectedWhiteLabel']['promotion_code'];
+
+                    if(isset($data['selectedWhiteLabel']['promotion_code']))
+                    {
+                        $data['selectedPromoCode'] =  $data['selectedWhiteLabel']['promotion_code'];
+                    }
 
                     $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
                 }
@@ -201,6 +203,59 @@ class Predefined_Batches extends CI_Controller
         }
     }
 
+     //predefined batches created by admin used by the whitelabel user here edit mode
+    public function edit_save($iBatchId = 0)
+    {
+        $bInvalid = false;
+        $aBatches = $aUserData = array();
+
+        if($iBatchId)
+        {
+            $iAdminBatchId = $this->predefined_batch->getAdminCampaignBatchId_From_UserBatchId($iBatchId);
+            $aBatches  = $this->predefined_batch->getPredefinedBatchSummary($iAdminBatchId,$iBatchId);
+            $aUserData = (object)getLoggedInUserData();
+            //d($aBatches);
+
+        }
+
+        if($aBatches)
+        {
+            
+            
+               // if(($aBatches->package_id == $aUserData->package_id) and ($aBatches->whitelabel_id == $aUserData->whitelabel_id) )
+                {
+                    $data['aSolutions']         =  $this->whitelabel->getAllWhiteLabel(array(ACTION_RECORD_COUNT=>0));
+                    $aProducts['products']      = $this->product->getAllProducts();
+                    $data['sFormAction']        = site_url('ajax/predefined_batches');
+                    $data['sGetTempaltesUrl']   = site_url('ajax/product');
+                    $data['aLists']             = $this->lists->getAllUserLists();
+                    $data['aProducts']          = json_encode($aProducts['products']) ;
+                    $data['iBatchId']           = $iBatchId;
+                    $data['aLists']             = $this->lists->getAllUserLists();
+                    $data['aBatchLists']        =  $this->predefined_batch->getBatchListsFormated($iBatchId);
+                    $data['aBatchDetails']      =  (array) $aBatches['BatchDetails'];
+                    $data['selectedWhiteLabel'] =  $this->whitelabel->getWhiteLabel($data['aBatchDetails']['whitelabel_id']);
+                     if(isset($data['selectedWhiteLabel']['promotion_code']))
+                    {
+                        $data['selectedPromoCode']  =  $data['selectedWhiteLabel']['promotion_code'];
+                    }
+                    
+                    $data['iUserBatchId'] = $iBatchId;
+                    $data['aUserInfo']           = $aUserData;
+                    
+                    $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
+                }
+               // else    {$bInvalid = true;}
+            
+            
+        }
+        
+
+        if($bInvalid)
+        {
+            redirect(site_url());
+        }
+    }
 
     public function uc()
     {

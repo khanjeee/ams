@@ -72,11 +72,11 @@
     <script src="<?php echo getAssetsPath(); ?>plugins/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script src="<?php echo getAssetsPath(); ?>plugins/jquery-migrate/jquery-migrate-1.2.1.js" type="text/javascript"></script>
     <script type="text/javascript">
-    window.onload = function() {
-        // fix for windows 8
-        if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
-            document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="<?php echo getAssetsPath(); ?>css/windows.chrome.fix.css" />'
-    }
+        window.onload = function() {
+            // fix for windows 8
+            if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
+                document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="<?php echo getAssetsPath(); ?>css/windows.chrome.fix.css" />'
+        }
     </script>
 
 
@@ -219,24 +219,19 @@
                         </li>
                     </ul>
                 </li>
-                
 
-                <?php /*
-                //for white label
-                if(!empty($aUser['predefined_campaigns_exists']))
-                    //if(false)
-                    {
-                */?><!--
-                     <li class="m-t-30">
-                    <a href="<?php /*echo site_url('whitelabel_campaigns/view'); */?>" class="detailed">
-                        <span class="title">Templates</span>
-                        <i class="c-icon icon-create-package c-icon--order-management"></i>
-                    </a>
-                     </li>
 
-            --><?php /*   }
-
-                */?>
+                    <li class="m-t-30">
+                        <a href="#" class="detailed">
+                            <span class="title">Templates</span>
+                            <i class="c-icon icon-create-package c-icon--order-management"></i>
+                        </a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="<?php echo site_url('predefined_campaigns/view'); ?>">View<span class="icon-thumbnail"></span></a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="m-t-30 has-submenu">
                     <a href="#" class="detailed">
@@ -389,9 +384,6 @@
 
         
         <!--ONLY FOR SUPER ADMIN END-->
-                     
-                
-
                 <?php
                 
                 }

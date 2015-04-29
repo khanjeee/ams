@@ -1,7 +1,7 @@
 10
 
 dir
-718
+736
 http://192.175.0.245/svn/ams/branches/development/code/web/assets/plugins
 http://192.175.0.245/svn/ams
 
@@ -72,10 +72,10 @@ dir
 jquery-datatable
 dir
 
-moment
+jquery-slider
 dir
 
-jquery-slider
+moment
 dir
 
 dropzone
@@ -91,6 +91,9 @@ font-awesome
 dir
 
 jquery-migrate
+dir
+
+d3
 dir
 
 hammer.min.js
@@ -126,9 +129,6 @@ shoaib.ahmed
 
 
 18358
-
-d3
-dir
 
 sly
 dir
@@ -270,16 +270,16 @@ dir
 bootstrap-tag
 dir
 
-masonry
-dir
-
 jquery-inputmask
 dir
 
-skycons
+masonry
 dir
 
 codrops-stepsform
+dir
+
+skycons
 dir
 
 noui-slider
@@ -334,10 +334,10 @@ dir
 mapplic
 dir
 
-bootstrap-datepicker
+jquery-lookingfor
 dir
 
-jquery-lookingfor
+bootstrap-datepicker
 dir
 
 animate.min.css
@@ -383,19 +383,19 @@ dir
 summernote
 dir
 
-jquery-scrollbar
+jquery-metrojs
 dir
 
-jquery-metrojs
+jquery-scrollbar
 dir
 
 ion-slider
 dir
 
-magnific-popup-master
+jquery-validation
 dir
 
-jquery-validation
+magnific-popup-master
 dir
 
 jquery-nestable

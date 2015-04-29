@@ -129,25 +129,24 @@
                 </div>
             </div>  
 			
-			
-            <div class="col-md-6 col-lg-4">
-                <div class="form-group form-group-default form-group-default-select2">
-                    <label>Flag</label>
+			<?php if(is_array($aFlag) && !empty($aFlag)): ?>
+		    <div class="col-md-6 col-lg-4">
+				<div class="form-group form-group-default form-group-default-select2">
+					  <label>Flag</label>
                     <select required name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
-						   
-							<?php global $gFlag;
-      						if(is_array($gFlag) && !empty($gFlag)) :
-      							foreach($gFlag  as $iKey  => $flag): ?>
-      								<option  value='<?php echo $iKey; ?>'><?php echo $flag; ?></option>   
-      						<?php endforeach; ?>
-      						 <?php endif;  ?> 
-						
-						
-						
-						
-                    </select>
-                </div>
+							<?php foreach($aFlag  as  $flag): ?>
+      								<option  value='<?php echo $flag->flag_id; ?>'><?php echo $flag->title; ?></option>        								<?php endforeach; ?>
+					</select>
+				</div>				
             </div>
+			<?php else : ?>	
+			<div class="col-md-6 col-lg-4">
+					 <div class="form-group form-group-default">
+						   <label>Flag</label>
+						   <a href="<?php echo site_url('flags/create'); ?>">Create a Flag</a>
+					 </div>
+				</div>
+			<?php endif;  ?> 
 			<div class="col-md-6 col-lg-4">
 				<div class="form-group form-group-default form-group-default-select2">
                     <label>List</label>
@@ -159,13 +158,8 @@
                 </div>
 			</div>
 		
-		
-        
-        <br>
-       
-       
-        
-        <div class="row">
+			<br>
+			<div class="row">
             <div class="col-md-12">
                 <input type="submit" class="btn btn-success btn-cons  m-btn-full" value="Create" onclick="">
             </div>    

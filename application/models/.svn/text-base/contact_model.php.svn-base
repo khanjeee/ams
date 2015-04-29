@@ -56,7 +56,7 @@ SQL;
     function createContact($aData = array())
     { 
          
-        // d($aData);
+        
         if ($aData)
         {
             $isEditMode         = $aData['isEditMode'];
@@ -74,6 +74,7 @@ SQL;
             $sPhone             = $aData['phone'];
             $sWebsite           = $aData['website'];
             $sNotes             = $aData['notes'];
+			$Flag				= $aData['flags'];
             $dDate              = date(DATE_FORMAT_MYSQL);
             $LoggedInUser       = getLoggedInUserId();
             
@@ -89,7 +90,7 @@ SQL;
 		UPDATE contacts SET
                 first_name='$sFirstName',last_name='$sLastName',printed_name='$sPrintedName',business_name='$sBusinessName', 
                 address='$sAddress',city='$sCity',state='$sState',zip='$sZip',country='$sCountry',email='$sEmail', dob='$sDob',
-                phone='$sPhone',website='$sWebsite',notes='$sNotes',user_id='$LoggedInUser',created_on='$dDate',created_by='$LoggedInUser' 
+                phone='$sPhone',website='$sWebsite',notes='$sNotes',user_id='$LoggedInUser',flag_id='$Flag',created_on='$dDate',created_by='$LoggedInUser' 
                 WHERE contact_id='$iContactId';        
 			
 				 
@@ -105,12 +106,12 @@ SQL;
                     (
                         first_name, last_name, printed_name, business_name, 
                         address,city,state,zip,country,email, dob, phone, 
-                        website, notes, user_id, created_on, created_by 
+                        website, notes, user_id,flag_id, created_on, created_by 
                         
                      )
 			VALUES (
                         '$sFirstName', '$sLastName', '$sPrintedName', '$sBusinessName','$sAddress','$sCity','$sState', 
-                        '$sZip','$sCountry','$sEmail','$sDob','$sPhone','$sWebsite','$sNotes','$LoggedInUser','$dDate','$LoggedInUser' )
+                        '$sZip','$sCountry','$sEmail','$sDob','$sPhone','$sWebsite','$sNotes','$LoggedInUser','$Flag','$dDate','$LoggedInUser' )
 				 
 SQL;
 				
@@ -171,9 +172,27 @@ SQL;
              $offset = $aParams[ACTION_PAGE_OFFSET];
          }
 
+		 $searchQuery = '';
+        if (isset($aParams['search'])) {
+            if (isset($aParams['search']['query'])) {
+                $searchQuery = $aParams['search']['query'];
+            }
+        }
+		 
+		 
         $aWhereClause   = array();
         $aWhereClause[] = " ( c.user_id ='$iUserId' ) AND c.first_name !='' AND c.last_name !=''";
 
+		
+		
+		// Search Query!
+        if ($searchQuery) {
+            $aWhereClause[] = " ( c.flag_id='$searchQuery') ";
+        }
+		
+		
+		
+		
         $sWhereCondition = '';
         if (is_array($aWhereClause) && count($aWhereClause) > 0) {
             $sWhereCondition = ' WHERE ' . implode(' AND ', $aWhereClause);
@@ -187,7 +206,7 @@ SQL;
         } else {
             $sSelect = 'c.contact_id, c.first_name, c.last_name, c.printed_name, c.business_name, 
                         c.address, c.country, c.state, c.city, c.zip, c.email, c.dob, c.phone, 
-                        c.website, c.notes';
+                        c.website,c.flag_id, c.notes';
 	
 
             if ($offset > -1) {
@@ -211,7 +230,7 @@ SQL;
 		 $sLimit 
 		
 QUERY;
-
+		
         if ($result = $this->db->query($sql))
         {
             if ($returnCount)
@@ -237,7 +256,8 @@ QUERY;
     {
         $this->db->where('contact_id', $iContactId); 
         $result = $this->db->get('contacts'); 
-         if($result->result())
+		
+		 if($result->result())
          {
              return $result->result();
          }
