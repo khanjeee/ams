@@ -44,15 +44,18 @@ class Contacts extends CI_Controller {
 				}
 			
             $sQuery     = $aPostedData['data']['flags'];
+			
             $this->session->set_userdata('search_query', $sQuery);
             
 			redirect($this->controller.'/'. __FUNCTION__);
 		}
 		
 		$sQuery                 = $this->session->userdata('search_query');
+		
         $search                 = false;
 		 if(isset($sQuery) && $sQuery)
         {
+			
             $search                        =   true;
 	        $aParams['search']['query']    =   $sQuery;
         }
@@ -91,13 +94,12 @@ class Contacts extends CI_Controller {
 		$data['sCallFrom']		= $sFormAction;
 		$data['sQuery']         = $sQuery;
         $data['bSearch']        = $search;
-		$this->session->unset_userdata('search_query');
+	
 		$this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
 	}
 
-	public function import() {
-
-
+	public function import() 
+	{
 		$aError = array();
 		$sFormAction = $this->controller . '/' . __FUNCTION__;
 
@@ -351,6 +353,31 @@ class Contacts extends CI_Controller {
                                                                'redirectUrl'  => site_url($this->controller.'/view')));
                 }
 		}
+	}
+	
+	public function contactassigntolist()
+	{
+		###################################
+        if($aPostedData = $this->input->post())
+        {
+			
+			
+            $aPostedData['iListId'] = $aPostedData['data']['list'];
+			
+			
+            $result = $this->ApiContact->addMembersToList($aPostedData);
+				$this->session->unset_userdata('search_query');
+            if($result['status'])
+            {
+                return setMessage($result['status'], array('message' => getFormValidationSuccessMessage($result['message']),
+                    'redirectUrl'  => site_url($this->controller.'/view')));
+            }
+            else
+            {
+                return setMessage($result['status'], array('message' => getFormValidationErrorMessage($result['message']),
+                    'redirectUrl'  => site_url($this->controller.'/view')));
+            }
+        }
 	}
 	
 

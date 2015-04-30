@@ -141,7 +141,8 @@ define('ERROR_SOLUTION_TYPE_REQUIRED','Solution Type is Required');
 define('ERROR_FLAG_ALREADY_EXISTS','Flag of title already exists.');
 define('ERROR_FLAG_CREATE_FLAG','First Create a Flag.');
 
-
+#generaic error messages for javascript 
+define('ERROR_FIELD_REQUIRED','This field is Required !');
 
 
 define('ERROR_PASSWORD_NEW_PASSWORD_REQUIRED','New Passwords Required.');

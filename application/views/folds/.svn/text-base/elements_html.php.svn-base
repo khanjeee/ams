@@ -57,7 +57,7 @@
                     );
                                                             
                     echo form_input($afieldData);
-                    echo "<label ng-show='error_{$ElementName}_{$jsArrayIndex}'  class='error'>This filed is Required ! </label>"; 
+                    echo "<label ng-show='error_{$ElementName}_{$jsArrayIndex}'  class='error'>".ERROR_FIELD_REQUIRED."</label>"; 
            //incrementing the varible after completion of the each iteration  
            $jsArrayIndex = $jsArrayIndex + 1 ; 
            ?>
@@ -74,10 +74,8 @@
                 <div class="form-group">
                     <div class="controls">
                         <label><?php echo $sElementLabel; ?></label>
-                        <div id="element_img_<?php echo $id; ?>">
-
-                        </div>
-                        <div id="element_<?php echo $id; ?>"></div>
+                        <div  id="element_img_<?php echo $id; ?>"></div>
+                        <div class="ajax_uploaded_image" id="element_<?php echo $id; ?>"></div>
                         <script type="text/javascript">
                             $('#element_<?php echo $id; ?>').JSAjaxFileUploader
                             ({
@@ -103,12 +101,17 @@
 								maxFileSize			:	52428800 ,
                                 success             :   function(response)
                                 {
-                                    console.log(response);
+                                    //console.log(response);
 
                                     //response was in string so converting it to json object
                                     response = JSON.parse(response);
 
-                                    $("#element_<?php echo $id; ?> .custom_upload").removeClass('custom_upload');
+                                    $("#element_<?php echo $id; ?>").removeClass('ajax_uploaded_image');
+                                    //removing error class in case of success
+                                    $("#element_<?php echo $id; ?>").removeClass('error');
+                                    $('#element_<?php echo $id; ?> .JSpreveiw').text('').removeClass('error');
+                                    
+                                    
 
                                     var imgUrl = response.data.image_thumb_small_url;
                                     $("#element_img_<?php echo $id; ?>").html('<img src="'+imgUrl+'" class="m-b-20 has-border">');
@@ -121,7 +124,8 @@
                             //removing custom_upload class if the image is present in edit mode
                             <?php if(!empty($ElementData)){ ?>
                             
-                            $("#element_<?php echo $id; ?> .custom_upload").removeClass('custom_upload');
+                            //$("#element_<?php echo $id; ?> .custom_upload").removeClass('custom_upload');
+                            $("#element_<?php echo $id; ?>").removeClass('ajax_uploaded_image');
                             $("#element_img_<?php echo $id; ?>").html('<img src="'+'<?php echo site_url('media/fold_elements/thumbnail/small_'.$ElementData) ?>'+'" class="m-b-20 has-border">');
                             $("#element_<?php echo $id; ?> .JSFileChoos .test_check")[0].nextSibling.data = 'Change Image';
                             

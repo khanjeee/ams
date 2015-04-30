@@ -45,6 +45,7 @@ class ApiContact
         
    public function addMembersToList($aData= array())
    {
+	  
        $CI = & get_instance();
        $CI->load->model('contact_model','contact');
 

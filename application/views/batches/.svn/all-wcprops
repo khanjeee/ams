@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 77
-/svn/ams/!svn/ver/624/branches/development/code/web/application/views/batches
+/svn/ams/!svn/ver/745/branches/development/code/web/application/views/batches
 END
 summary.php
 K 25
@@ -19,7 +19,7 @@ create.php
 K 25
 svn:wc:ra_dav:version-url
 V 88
-/svn/ams/!svn/ver/588/branches/development/code/web/application/views/batches/create.php
+/svn/ams/!svn/ver/745/branches/development/code/web/application/views/batches/create.php
 END
 whitelabel_create.php
 K 25
@@ -31,7 +31,7 @@ edit.php
 K 25
 svn:wc:ra_dav:version-url
 V 86
-/svn/ams/!svn/ver/577/branches/development/code/web/application/views/batches/edit.php
+/svn/ams/!svn/ver/745/branches/development/code/web/application/views/batches/edit.php
 END
 whitelabel_edit.php
 K 25

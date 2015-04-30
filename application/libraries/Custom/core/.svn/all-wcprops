@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 85
-/svn/ams/!svn/ver/727/branches/development/code/web/application/libraries/Custom/core
+/svn/ams/!svn/ver/741/branches/development/code/web/application/libraries/Custom/core
 END
 api.register.php
 K 25
@@ -43,7 +43,7 @@ api.contact.php
 K 25
 svn:wc:ra_dav:version-url
 V 101
-/svn/ams/!svn/ver/673/branches/development/code/web/application/libraries/Custom/core/api.contact.php
+/svn/ams/!svn/ver/741/branches/development/code/web/application/libraries/Custom/core/api.contact.php
 END
 api.package.php
 K 25

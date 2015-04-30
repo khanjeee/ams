@@ -280,12 +280,21 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
         * Called when Upload Content tab is selected
         * */  
          else if (selected_tab==3)
-         {
-             if ($(".test_check").hasClass("custom_upload"))
-             {
-                alert("Please upload a file.");
-                return false;
-             }
+         { 
+            
+           //image upload validations
+              var aUploadedImages = $(".ajax_uploaded_image");
+               
+                $.each( aUploadedImages, function( key, value ) 
+                {
+                    if($(value).find('.custom_upload'))
+                    {
+                        $(value).addClass('error');
+                        $( value ).find( '.JSpreveiw').text('<?php echo ERROR_FIELD_REQUIRED; ?>').addClass('error');
+                    }
+                 });
+                 
+            
          
          //console.log($scope.element_array); return;   
          //making ajax call only if validations are passed
@@ -321,9 +330,9 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
             
             
             //validation succedes if length of array is 0 else fails
-            if($scope.error_upload_content.length > 0  )
+             if($scope.error_upload_content.length > 0 || $('.ajax_uploaded_image').length > 0 )
                 {
-                    return;
+                    return false;
                 }
             
             

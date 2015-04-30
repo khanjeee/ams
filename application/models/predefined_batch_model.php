@@ -228,7 +228,7 @@ SQL;
                 predefined_template_content_id
         FROM    predefined_template_content
         WHERE
-                    predefined_campaign_batch_id        =     '$iCampaignBatchId'
+                    predefined_user_batch_id            =     '$iCampaignBatchId'
               AND   template_id                         =     '$iTemplateId'
               AND   template_fold_id                    =     '$iTemplateFoldId'
               AND   template_element_id                 =     '$iTemplateElementId'
@@ -260,7 +260,7 @@ SQL;
 
             INSERT INTO  predefined_template_content
             (
-                  predefined_campaign_batch_id ,
+                  predefined_user_batch_id ,
                   template_id ,
                   template_fold_id ,
                   template_element_id ,
@@ -296,7 +296,7 @@ SQL;
                   last_updated_by       = '$iUserId'
 
             WHERE
-                  predefined_campaign_batch_id    =     '$iCampaignBatchId'
+                  predefined_user_batch_id        =     '$iCampaignBatchId'
             AND   template_id                     =     '$iTemplateId'
             AND   template_fold_id                =     '$iTemplateFoldId'
             AND   template_element_id             =     '$iTemplateElementId'
@@ -759,7 +759,7 @@ SQL;
               (
                   SELECT list_id
                   FROM  predefined_campaign_batches_lists
-                  WHERE predefined_campaign_batch_id='$iCampaignBatchId'
+                  WHERE predefined_user_batch_id='$iCampaignBatchId'
               )
 SQL;
             $DbResult                           =   $this->db->query($SQL);
@@ -778,7 +778,9 @@ SQL;
 
               SELECT
                list_id,
-               title as list_title
+               title as list_title,
+               title as text
+
               FROM lists WHERE list_id IN
               (
                   SELECT list_id
@@ -839,7 +841,7 @@ SQL;
         INNER JOIN  template_elements t 
         ON          t.template_element_id = e.template_element_id
 
-        WHERE e.template_fold_id = '$iTemplateFoldId' AND e.predefined_campaign_batch_id='$iCampaignBatchId'
+        WHERE e.template_fold_id = '$iTemplateFoldId' AND e.predefined_user_batch_id='$iCampaignBatchId'
 
 SQL;
 
@@ -990,7 +992,7 @@ SQL;
                         element_data as provided_data
                   FROM  predefined_template_content
                   WHERE
-                              predefined_campaign_batch_id  = '$iCampaignBatchId'
+                              predefined_user_batch_id      = '$iCampaignBatchId'
                         AND   template_id                   = '$iTemplateId'
                         AND   template_fold_id              = '$iFoldId'
                         AND   template_element_id           = '$iElementId'

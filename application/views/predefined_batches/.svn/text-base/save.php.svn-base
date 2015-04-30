@@ -16,9 +16,9 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
   /*angular validation variables*/
   
   $scope.batch_list         = '';
-  $scope.campaign_id        = <?php echo $aBatchDetails['predefined_campaign_batch_id']; ?>;
+  $scope.campaign_id        = <?php echo $aBatchDetails['predefined_campaign_id']; ?>;
   $scope.batch_id           = 0;
-  $scope.predefined_campaign_batch_id      = <?php echo $aBatchDetails['predefined_campaign_id']; ?>;
+  $scope.predefined_campaign_batch_id      = <?php echo $aBatchDetails['predefined_campaign_batch_id']; ?>;
   
   $scope.selected_template_id = <?php echo $aBatchDetails['template_id']; ?>;
   $scope.selected_product_id = <?php echo $aBatchDetails['product_id']; ?>;
@@ -194,11 +194,17 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
         * */  
          else if (selected_tab==2)
          {
-             if ($(".test_check").hasClass("custom_upload"))
-             {
-                alert("Please upload a file.");
-                return false;
-             }
+            //image upload validations
+              var aUploadedImages = $(".ajax_uploaded_image");
+               
+                $.each( aUploadedImages, function( key, value ) 
+                {
+                    if($(value).find('.custom_upload'))
+                    {
+                        $(value).addClass('error');
+                        $( value ).find( '.JSpreveiw').text('<?php echo ERROR_FIELD_REQUIRED; ?>').addClass('error');
+                    }
+                 });
          
          //console.log($scope.element_array); return;   
          //making ajax call only if validations are passed
@@ -234,9 +240,9 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
             
             
             //validation succedes if length of array is 0 else fails
-            if($scope.error_upload_content.length > 0  )
+             if($scope.error_upload_content.length > 0 || $('.ajax_uploaded_image').length > 0 )
                 {
-                    return;
+                    return false;
                 }
             
             
