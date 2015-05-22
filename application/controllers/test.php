@@ -10,9 +10,20 @@ class Test extends CI_Controller {
 
         $this->controller = strtolower(__CLASS__);
         $this->load->helper('text');
+        $this->load->model('predefined_batch_model',           'batch');
 
 
         define('FONT_PATH',         './assets/fonts/arial.ttf');
+    }
+
+    function tester($iUserBatchId=0)
+    {
+        if($iUserBatchId)
+        {
+            $ApiPredefinedCampaigns = new ApiPredefinedCampaigns();
+            var_dump($ApiPredefinedCampaigns->makeDeepCopy($iUserBatchId));
+            exit;
+        }
     }
 
     function make()

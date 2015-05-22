@@ -1,7 +1,10 @@
 <?php
-if (isset($aMessages)) {
+
+if (isset($aMessages))
+{
 	echo getFormValidationSuccessMessage($aMessages);
 }
+
 ?>
 
 <form action="<?php echo $sFormAction; ?>" method="post"   role="form" class="form-sty-1">
@@ -13,54 +16,59 @@ if (isset($aMessages)) {
             <div class="contact-search-n-actions-panel">
                 <a href="<?php echo site_url(); ?>contacts/import" class="btn btn-primary btn--import"><i class="fa m-r-10"></i> <span>Import</span></a>
                 <a href="<?php echo site_url(); ?>contacts/create" class="btn btn-primary btn--create"><i class="fa m-r-10"></i> <span>Create</span></a>
-<!--                <input type="text" id="search-table" class="form-control pull-right search-field" placeholder="Search">-->
-				<div class="col-md-6 col-lg-4">
-					<div class="form-group form-group-default form-group-default-select2">
-						<label>Search by Flag</label>
-						<select required name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
-							<?php if (is_array($aFlag) && !empty($aFlag)) :
-								foreach ($aFlag as $flag):
-									?>
-									<option  value='<?php echo $flag->flag_id; ?>'><?php echo $flag->title; ?></option>   
-								<?php endforeach; ?>
-<?php endif; ?> 
-						</select>
-					</div>
-					<button name="btnSubmit" type="submit" class="btn btn-success">Search</button>
-					<?php
-					if ($bSearch) {
-						?>
-						<button name="btnReset" type="submit" class="btn btn-danger">Reset</button>
-						<?php }
-					?>
-				</div>
-
+				
+				
+				<?php if(isset($aUserData->PackageModule) && !empty($aUserData->PackageModule)){?>
+					 <a href="<?php echo site_url(); ?>crm/create" class="btn btn-primary btn--create"><span><?php echo CRM; ?> + </span></a>
+				<?php } ?>
+				<!--<input type="text" id="search-table" class="form-control pull-right search-field" placeholder="Search">-->
             </div>
         </div>
-
+    </div>
+    <div class="row">
+			<?php if (is_array($aFlag) && !empty($aFlag)) { ?>
+		<div class="col-md-5 col-lg-3">
+			<div class="form-group">
+				<label>Filter contacts by flags:</label>
+				<select  name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
+					<option selected="selected" value=''>-- Select --</option>
+						<?php foreach ($aFlag as $flag): 
+							 $htmlSelected           = '';
+							if($flag->flag_id == $sQuery) 
+							{
+							   $htmlSelected = ' selected="selected" ';
+							}
+							
+							?>
+							<option  <?php echo $htmlSelected;  ?>  value='<?php echo $flag->flag_id; ?>'><?php echo $flag->title; ?></option>   
+						<?php endforeach; ?>
+					
+				</select>
+			</div>
+		</div>
+		
+			<div class="col-md-7 col-lg-9">
+		<button name="btnSubmit" type="submit" class="btn btn-success m-t-26 m-m-t-0">Filter</button>	
+			<?php if ($bSearch) { ?>
+					<button name="btnReset" type="submit" class="btn btn-danger m-t-26 m-m-t-0">Reset</button>
+			<?php } ?>
+		</div>
+		<?php } ?> 
+		
     </div>
 
 </form>
-
 <div class="row">
     <div class="col-md-12">
 
 		<?php
-		if ($aContacts) {
-			?>
-
+		if ($aContacts) { ?>
+			
 			<div class="table-responsive-from-start">
 			<?php	if ($bSearch) { ?>
-						<p class="select_box">Select
-							   <a href="#" onclick="return selectAll('all','contacts');"><?php echo 'All'; ?></a> |
-							   <a href="#" onclick="return selectAll('none','contacts');"> <?php  echo 'None'; ?></a>
-						   </p>
-						   
-						
-						   
-						   
-					  		 <a href="#" class="btn btn-primary" id="createListModal">Create List</a>
-					       <!-- Modal -->
+							<hr>
+
+					       	<!-- Modal -->
 						    <div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
 						      <div class="modal-dialog ">
 						        <div class="modal-content-wrapper">
@@ -79,7 +87,7 @@ if (isset($aMessages)) {
 										                <div class="col-md-12">
 										                    <div class="form-group form-group-default">
 										                        <label for="title">Title</label>
-										                        <input  id="title" type="text" placeholder="Title" class="validate[required] form-control" name="data[title]" value="" >
+										                        <input  id="title" type="text" placeholder="Title"  class="validate[required] form-control" name="data[title]" value="" >
 										                    </div>
 										                </div>
 										            </div>
@@ -87,100 +95,121 @@ if (isset($aMessages)) {
 										                <div class="col-md-12">
 										                    <div class="form-group form-group-default">
 										                        <label for="description">Description</label>
-										                        <textarea id="description" required name="data[description]" value="" type="text" placeholder="Description" class="m-t-4 validate[required] form-control" ></textarea>
+										                        <textarea id="description"  name="data[description]" value="" type="text" placeholder="Description" class="m-t-4 validate[required] form-control" ></textarea>
 										                    </div>
 										                </div>
 										            </div>
-										            
+<!--									            <input type="hidden" name="data[buttontype]" id="buttontype" />-->
 										            <div class="row">
 										                <div class="col-md-12">
-										                    <input type="submit" class="btn btn-success m-t-20" value="Create" onclick="">
+													 <input type="submit" class="btn btn-success m-t-20" value="Create" id="createlist">
 										                </div>    
 										            </div>
 										    </div>
-
-										</form>
-						            </div>
+<!--										</form>-->																            
+									</div>
 						          </div>
 						        </div>
 						        <!-- /.modal-content -->
 						      </div>
 						    </div>
 						    <!-- /.modal-dialog -->
+
+<!--							<form  action="<?php #echo site_url('contacts/contactassigntolist'); ?>" method="post" class="form-sty-1">-->
+								<div class="row">
+									<div class="col-md-6 col-lg-5">
+										<div class="row">
+											<div class="col-md-5 col-lg-5">
+												<div class="form-group">
+													<label>Select Contacts:</label>
+													<a href="#" onclick="return selectAll('all','contacts');" 	class="btn btn-complete m-r-10"><?php echo 'All'; ?></a>
+													<a href="#" onclick="return selectAll('none','contacts');" 	class="btn btn-complete m-r-10"> <?php  echo 'None'; ?></a>
+												</div>
+												
+											</div>
+											
+											<a href="#" class="btn btn-primary m-t-26 m-m-t-10" id="createListModal" onclick="javascript:disableButton();">Create List</a>
+											
+<!--									List Drop down	
+										<div class="col-md-7 col-lg-7">
+												<div class="form-group">
+													<label>Add contacts to list:</label>
+													<select name="data[iListId]" class="full-width" data-init-plugin="select2" required id="listtag">
+														<?php #foreach($aList as $key => $list): ?>
+														<option value='<?php #echo $list['list_id']; ?>'><?php #echo $list['title']; ?></option>
+														<?php #endforeach; ?>
+													</select>
+												</div>
+											</div>
+
+<input type="submit" class="btn btn-success m-t-26 m-m-t-0" value="Add contact to list" >
+										<div class="txt-bw-btns">- OR -</div>
+												end list dropdown
+-->
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-7">
+									
+									</div>
+								</div>
 						
 						   <?php }?>
 					<div class="scroll-x">
 						<table class="table table-hover demo-table-search table-sty-1" id="">
-						<thead>
-							<tr>
-							<?php	if ($bSearch) { ?>	<th>List Option</th><?php }?>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Printed Name</th>
-								<th>Business Name</th>
-								<th>Address</th>
-								<!-- <th>City</th>
-								<th>State</th>
-								<th>Zip</th>
-								<th>Country</th> -->
-								<th>Email</th>
-								<th>DOB</th>
-								<th>Phone</th>
-								<th>Website</th>
-								<th>Notes</th>
-								<th>Flag</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
+							<thead>
+								<tr>
+								<?php	if ($bSearch) { ?>	<th>List Option</th><?php }?>
+									<th>Name </th>
+									<!--<th>Last Name</th>-->
+									<!--<th>Printed Name</th>
+									<th>Business Name</th>
+									<th>Address</th>-->
+									<!-- <th>City</th>
+									<th>State</th>
+									<th>Zip</th>
+									<th>Country</th> -->
+									<th>Email</th>
+									<!--<th>DOB</th>
+									<th>Phone</th>
+									<th>Website</th>-->
+									<th>Notes</th>
+									<th>Flag</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
 						<tbody>
-							<?php
-							
-								if ($bSearch) { ?>	
-							<form  action="<?php echo site_url('contacts/contactassigntolist'); ?>" method="post">
-						<div class="col-md-6 col-lg-4">
-							<div class="form-group form-group-default form-group-default-select2">
-								<label>List</label>
-								<select name="data[list]" class="full-width" data-init-plugin="select2" required>
-									<?php foreach($aList as $key => $list): ?>
-									<option value='<?php echo $list['list_id']; ?>'><?php echo $list['title']; ?></option>   
-									<?php endforeach; ?>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-									<div class="col-md-12">
-										<input type="submit" class="btn btn-success m-t-20" value="Add Contact to List" onclick="">
-									</div>    
-								</div>	
-						<?php }
+						<?php 
 							$this->load->helper('text');
 							foreach ($aContacts as $contacts) {
 
 								$EditUrl = $sEditAction . '/' . $contacts->contact_id;
 								$DeleteUrl = $sDeleteAction . '/' . $contacts->contact_id; ?>
 								<tr>
-									<?php	if ($bSearch) { ?>
-									
-						
+								<?php	if ($bSearch) { ?>
 									<td>
-										
-										<input  type="checkbox" name="contacts[]" checked="checked" value="<?php echo $contacts->contact_id; ?>" class="contacts" id="checkbox-<?php echo $contacts->contact_id; ?>">
+										<div class="checkbox ">
+					                      <input type="checkbox" name="contacts[]" checked="checked"  value="<?php echo $contacts->contact_id; ?>" class="contacts" id="checkbox-<?php echo $contacts->contact_id; ?>">
+					                      <label for="checkbox-<?php echo $contacts->contact_id; ?>">&nbsp;</label>
+					                    </div>
 									</td>
+								<?php } ?>
 								
-					
-					<?php }?>
-									
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->first_name; ?>   </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->last_name; ?>    </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->printed_name; ?> </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->business_name; ?></div></div></td>
+			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->first_name . ' '.$contacts->last_name; ?>   </div></div></td>
 
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->address; ?>, <?php echo $contacts->city; ?>, <?php echo $contacts->state; ?>, <?php echo $contacts->country; ?> - <?php echo $contacts->zip; ?></div></div></td>
+           <!--
+            <td><div class="td-wrap"><div class="td-wrap-inner"><?php /*echo $contacts->printed_name; */?> </div></div></td>
+			<td><div class="td-wrap"><div class="td-wrap-inner"><?php /*echo $contacts->business_name; */?></div></div></td>
+			<td><div class="td-wrap"><div class="td-wrap-inner"><?php /*echo $contacts->address; */?>, <?php /*echo $contacts->city; */?>, <?php /*echo $contacts->state; */?>, <?php /*echo $contacts->country; */?> - <?php /*echo $contacts->zip; */?></div></div></td>
+-->
 
 			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->email; ?>        </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->dob; ?>          </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->phone; ?>        </div></div></td>
-			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo $contacts->website; ?>      </div></div></td>
+
+<!--                                    -->
+<!--			<td><div class="td-wrap"><div class="td-wrap-inner">--><?php //echo $contacts->dob; ?><!--          </div></div></td>-->
+<!--			<td><div class="td-wrap"><div class="td-wrap-inner">--><?php //echo $contacts->phone; ?><!--        </div></div></td>-->
+<!--			<td><div class="td-wrap"><div class="td-wrap-inner">--><?php //echo $contacts->website; ?><!--      </div></div></td>-->
+<!--                                    -->
+
 			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo word_limiter($contacts->notes, 4); ?></div></div></td>
 			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo getFlag($contacts->flag_id); ?>      </div></div></td>
 			<td>
@@ -196,12 +225,13 @@ if (isset($aMessages)) {
 							?>
 						</tbody>
 					</table>
-				</div>
+				</div><!-- /.scroll-x -->
+				</form>
 			</div>
 			<?php
 		} else {
 			?>
-			<div class="no_record"><p>There are no contacts in your contact list, <a href="<?php echo site_url('contacts/import'); ?>">Add Contacts</a>.</p></div>
+			<div class="no_record"><p>There are no contacts in your contact list, <a href="<?php echo site_url('contacts/import'); ?>">Import Contacts</a>.</p></div>
 			<?php
 		}
 		?>
@@ -334,4 +364,11 @@ $('#createListModal').click(function() {
 		}
 	}
 });
+
+$.ready(function(){
+	function disableButton(){
+		$("#createlist").attr('disabled','disabled');
+	}	
+});
+
 </script>

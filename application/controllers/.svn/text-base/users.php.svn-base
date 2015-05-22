@@ -58,7 +58,7 @@ class Users extends CI_Controller
                 $sEmail             = trim($aPostedData['email']);
                 $sPassword          = $aPostedData['password'];
                 $sPromotionCode     = $aPostedData['promotion_code'];
-                d($sPromotionCode);
+                
                 
                 $sMailingAddress    = $aMailingData['address'];
                 $sMailingCountry    = $aMailingData['country'];

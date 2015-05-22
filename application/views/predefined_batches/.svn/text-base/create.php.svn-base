@@ -703,7 +703,7 @@ app.directive("whitelabelDropdown",function($compile){
                                 <?php endforeach; ?>
                                 
                                 </select> <br>
-                                <label ng-show="error_whitelabel"  class="error r-25">Please Select a White label!</label>  
+                                <label style='position:static !important;' ng-show="error_whitelabel"  class="error r-25">Please Select a White label!</label>  
                                 
                                 <!-- whitelabel drop down -->
                                 <div whitelabel-dropdown > </div>

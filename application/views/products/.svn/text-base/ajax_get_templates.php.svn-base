@@ -117,7 +117,7 @@
                         <div class="field">
                             Printing Price
                         </div>
-                        <div class="value">$<?php echo $aTemplate->printing_price; ?></div>
+                        <div class="value">$ <?php echo $aTemplate->printing_price; ?></div>
                     </li>
                 </ul>               
                 <input type="hidden" name="products[]" value="<?php echo $product_id; ?>" id="product_active_<?php echo $product_id; ?>" class="product_active">

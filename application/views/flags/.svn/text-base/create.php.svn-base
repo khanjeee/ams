@@ -1,5 +1,5 @@
-<h1 class="heading-sty-1">Create Flags</h1>
-<form id="formID" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-sty-1">
+<h1 class="heading-sty-1">Create a Flag</h1>
+<form id="formID" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-sty-1 form-validate-1">
 
     <div class="c-box">
         
@@ -7,7 +7,7 @@
                 <div class="col-md-3">
                     <div class="form-group form-group-default">
                         <label for="title">Title</label>
-                        <input  id="title" type="text" placeholder="Title" class="validate[required] form-control" name="data[title]" value="" >
+                        <input  id="title" required type="text" placeholder="Title" class="validate[required] form-control" name="data[title]" value="" >
                     </div>
                 </div>
             </div>

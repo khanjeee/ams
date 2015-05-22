@@ -104,7 +104,142 @@ class Predefined_Campaigns extends CI_Controller
         $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
     }
 
+
+    ## This is list of user predefined Campaigns by admin
+    public function display($iPage=0)
+    {
+        $data = $aParams = array();
+        $aParams[ACTION_RECORD_COUNT] = true;
+
+        #   Pagination
+        global $gPagination;
+        $config = $gPagination;
+        $config['base_url']             = site_url($this->controller.'/'. __FUNCTION__);
+        $config['total_rows']           = $this->predefined_campaign->getAllUserPredefinedCampaigns($aParams);
+        $config['per_page']             = LISTING_PER_PAGE;
+        $this->pagination->initialize($config);
+        #### ----------------- ####
+
+        $aParams[ACTION_RECORD_COUNT]   = false;
+        $aParams[ACTION_PAGE_OFFSET]    = $iPage;
+
+        $data                           =   array();
+        $aCampaigns                     =   (array)  $this->predefined_campaign->getAllUserPredefinedCampaigns($aParams);// $this->package->getAllPackages($aParams);
+
+        if($aCampaigns)
+        {
+            $iCampaignCount  = count($aCampaigns);
+            for($c=0; $c < $iCampaignCount ; $c++)
+            {
+                $oCampaign                  = $aCampaigns[$c];
+                $oCampaign->canBeDeleted    = 0;//$this->predefined_campaign->CampaignCanBeDeleted($oCampaign->predefined_campaign_id);
+
+                $iCampaignId                = $oCampaign->predefined_campaign_id;
+                $aBatches                   = $this->predefined_campaign->getCampaignBatches($iCampaignId,getLoggedInUserId());
+
+                if($BatchCount = count($aBatches))
+                {
+                    for($b=0; $b < $BatchCount; $b++)
+                    {
+                        $aBatch                     =       $this->batch->BatchInfo($aBatches[$b]['predefined_campaign_batch_id']);
+                        //$aBatch->BatchLists         =       $this->batch->getBatchListsFormated($aBatches[$b]['campaign_batch_id']);
+                        $oCampaign->aBatches[]      =       $aBatch;
+                    }
+                }
+                else
+                {
+                    $oCampaign->aBatches           =       array();
+                }
+                $aCampaigns[$c] = (array) $oCampaign;
+            }
+        }
+
+        $data['aCampaigns']             =   $aCampaigns;
+
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
+    }
+
+
+
+    ## This is list of user predefined Campaigns by admin
+    public function in_use($iPage=0)
+    {
+        $data = $aParams = array();
+        $aParams[ACTION_RECORD_COUNT] = true;
+
+        #   Pagination
+        global $gPagination;
+        $config = $gPagination;
+        $config['base_url']             = site_url($this->controller.'/'. __FUNCTION__);
+        $config['total_rows']           = $this->predefined_campaign->getAllUsedCampaigns($aParams);
+        $config['per_page']             = LISTING_PER_PAGE;
+        $this->pagination->initialize($config);
+        #### ----------------- ####
+
+        $aParams[ACTION_RECORD_COUNT]   = false;
+        $aParams[ACTION_PAGE_OFFSET]    = $iPage;
+
+        $data                           =   array();
+        $aCampaigns                     =   (array)  $this->predefined_campaign->getAllUsedCampaigns($aParams);// $this->package->getAllPackages($aParams);
+
+        if($aCampaigns)
+        {
+            $iCampaignCount  = count($aCampaigns);
+            for($c=0; $c < $iCampaignCount ; $c++)
+            {
+                $oCampaign                  = $aCampaigns[$c];
+                $oCampaign->canBeDeleted    = 0;//$this->predefined_campaign->CampaignCanBeDeleted($oCampaign->predefined_campaign_id);
+
+                $iCampaignId                = $oCampaign->predefined_campaign_id;
+                $aBatches                   = $this->predefined_campaign->getUsedCampaignBatches($iCampaignId,getLoggedInUserId());
+
+                if($BatchCount = count($aBatches))
+                {
+                    for($b=0; $b < $BatchCount; $b++)
+                    {
+                        $aBatch                                 =       $this->batch->BatchInfo($aBatches[$b]['predefined_campaign_batch_id']);
+                        $aBatch->predefined_user_batch_id       =       $aBatches[$b]['predefined_user_batch_id'];
+                        $oCampaign->aBatches[]                  =       $aBatch;
+                    }
+                }
+                else
+                {
+                    $oCampaign->aBatches           =       array();
+                }
+                $aCampaigns[$c] = (array) $oCampaign;
+            }
+        }
+
+        $data['aCampaigns']             =   $aCampaigns;
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
+    }
+
     public function show($iCampaignId=0)
+    {
+        $data                                   = $aBatches = array();
+        $aCampaign                              = $this->predefined_campaign->getCampaign($iCampaignId);
+        $data['aCampaignData']['aCampaign']     = $aCampaign;
+
+        if($aCampaign)
+        {
+            //$data['aCampaignData']['aCampaign']->is_predefined_campaign = $this->predefined_campaign->IsPredefinedCampaign($iCampaignId);
+
+            $aBatches   = $this->predefined_campaign->getCampaignBatches($iCampaignId,getLoggedInUserId());
+
+            if($aBatches)
+            {
+                for($b=0; $b < count($aBatches);$b++)
+                {
+                    $data['aCampaignData']['aBatches'][$aBatches[$b]['predefined_campaign_batch_id']]      =       (array) $this->batch->BatchInfo($aBatches[$b]['predefined_campaign_batch_id']);
+                    //$data['aCampaignData']['aBatches'][$aBatches[$b]['campaign_batch_id']] ['BatchLists']  =       $this->batch->getBatchLists($aBatches[$b]['predefined_campaign_batch_id']);
+                }
+            }
+        }
+
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.__FUNCTION__,$data);
+    }
+
+    public function details($iCampaignId=0)
     {
         $data                                   = $aBatches = array();
         $aCampaign                              = $this->predefined_campaign->getCampaign($iCampaignId);

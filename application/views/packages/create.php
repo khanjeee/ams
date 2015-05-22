@@ -149,25 +149,15 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="text-right m-t-20 m-b-20">
+            <div class="text-right m-t-0 m-b-20">
                 <input type="submit" class="create_pkg btn btn-success m-btn-full" value="CREATE PACKAGE" name="btnSubmit">
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <p>
-<!--                 <div id="final_products"></div> -->
-                <p></p>
-            </p>
-        </div>
-    </div>
-
 </form>
 
-
-    <br>
+<br>
     
 <div id="parent_products">
 

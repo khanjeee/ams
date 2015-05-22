@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/svn/ams/!svn/ver/608/branches/development/code/web/application/views/home
+/svn/ams/!svn/ver/834/branches/development/code/web/application/views/home
 END
 forgotpassword.php
 K 25
@@ -13,7 +13,7 @@ dashboard.php
 K 25
 svn:wc:ra_dav:version-url
 V 88
-/svn/ams/!svn/ver/608/branches/development/code/web/application/views/home/dashboard.php
+/svn/ams/!svn/ver/834/branches/development/code/web/application/views/home/dashboard.php
 END
 home.php
 K 25

@@ -172,16 +172,12 @@ class ApiAdmin
                             
             )
             {
-                /*$aUser['predefined_campaigns_exists'] = 0;
-
-                if(isset($aUser['whitelabel_id']) && $aUser['whitelabel_id'] > 0)
-                {
-                    $aUser['predefined_campaigns_exists'] = $CI->whitelabel->PredefinedCampaignsExists($aUser['whitelabel_id']);
-                }*/
-
+					
+                // Call User Login Hook
+                $aUser = $this->hook_login($aUser);
+			
                 if (setLoggedInUserSession($aUser))
                 {
-                    $CI->users->updateLastLoginTime($aUser);
                     $this->result['status'] = true;
                     $this->result['message'] =$aUser['first_name'].' '.$aUser['last_name'].' '. WELCOME_LOGIN ;
                 }
@@ -194,6 +190,33 @@ class ApiAdmin
         
 		return $this->result;
 	}
+
+
+    function hook_login($aUser)
+    {
+		
+        $CI = & get_instance();
+        $CI->load->model('user_model',           'users');
+        $CI->load->model('whitelabel_model',     'whitelabel');
+        $CI->load->model('package_model',        'package');
+
+        # Set Lat Login Time
+        $CI->users->updateLastLoginTime($aUser);
+		
+		#package modules
+		if(isset($aUser['package_id']) && $aUser['package_id'] > 0)
+		{
+				$aUser['PackageModule'] =  $CI->package->getPackagesModules($aUser['package_id']);
+		}
+		
+		
+        # Set boolean if any predefined campaign exists for this user
+        if(isset($aUser['whitelabel_id']) && $aUser['whitelabel_id'] > 0)
+        {
+            $aUser['predefined_campaigns_exists'] = $CI->whitelabel->PredefinedCampaignsExists($aUser['whitelabel_id']);
+        }
+        return $aUser;
+    }
 
 	/*
 	 * Sample static function just for learning

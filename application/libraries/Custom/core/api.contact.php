@@ -20,32 +20,37 @@ class ApiContact
             
          $aPostedData   = $aData ;
          $isEditMode    = $aData['isEditMode'];
-        
+       
 
         $CI = & get_instance();
         $CI->load->model('contact_model','contact');
+        $CI->load->model('crm_model','crm');
 
             //$aDataToSave                = array('aData' => $aData,'isEditMode' => false);
-            // d($aDataToSave);
-            $iContactId                 =  $CI->contact->createContact($aPostedData);
             
+            $iContactId                 =  $CI->contact->createContact($aPostedData);
+            	
             if($iContactId)
-            {
+            {                     
+                                    
 				  $aPostedData['isEditMode'] = $isEditMode;
 				  $aPostedData['contacts'] = $iContactId;
-				  if($CI->contact->addContactInListByContactId($aPostedData))
+                               
+                                  
+				  if($CI->contact->addContactInListByContactId($aPostedData) && $CI->crm->saveCrmUserMetaFields($aPostedData))
 				  {
+					  
 					  $this->result['status']     = true;
 					  $this->result['message']    = ($isEditMode) ? MSG_SUCCESS_CONTACT_UPDATED : MSG_SUCCESS_CONTACT_ADDED ;
 				  }
-			}
+            }
         
 		return $this->result;
 	}
         
    public function addMembersToList($aData= array())
    {
-	  
+	 
        $CI = & get_instance();
        $CI->load->model('contact_model','contact');
 
@@ -257,20 +262,16 @@ class ApiContact
     {
         $CI = & get_instance();
         $CI->load->model('list_model','list');
-                
-                    if($CI->list->deleteListById($iListId))
-                    {
-                        $this->result['status']     = true;
-                        $this->result['message']    = LIST_SINGULAR.' '.MSG_DELETE_SUCCESS;
-                    }
-                    else
-                    {
-                        $this->result['message']    = ERROR_DELETE_FAILURE;
-                    }
-            
-        
-        
-        return $this->result;
+			if($CI->list->deleteListById($iListId))
+			{
+				$this->result['status']     = true;
+				$this->result['message']    = LIST_SINGULAR.' '.MSG_DELETE_SUCCESS;
+			}
+			else
+			{
+				$this->result['message']    = ERROR_DELETE_FAILURE;
+			}
+         return $this->result;
     }
     
     

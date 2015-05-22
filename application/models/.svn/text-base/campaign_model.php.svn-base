@@ -33,7 +33,7 @@ class Campaign_Model extends CI_Model
                     '$iUserId','$sTitle','$sDescription','$iCreated','$iUserId'
                 )
 SQL;
-
+                //d($SQL);
                 if ($this->db->query($SQL))
                 {
                     if ($iCampaign = $this->db->insert_id())

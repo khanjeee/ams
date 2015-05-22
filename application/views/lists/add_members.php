@@ -164,12 +164,16 @@ if($aContacts)
 else
 {
 
-?>
-
-<div class="no_record"><p>There are no contacts in your contact list, <a href="<?php echo site_url('contacts/import'); ?>">Add Contacts</a>.</p></div>
-
-<?php
+    redirect('contacts/import');
 }
-?>
+
+/*
+*/?><!--
+
+<div class="no_record"><p>There are no contacts in your contact list, <a href="<?php /*echo site_url('contacts/import'); */?>">Add Contacts</a>.</p></div>
+
+--><?php
+/*}
+*/?>
 
 

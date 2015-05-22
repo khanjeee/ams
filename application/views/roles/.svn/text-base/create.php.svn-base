@@ -1,5 +1,5 @@
-<h1 class="heading-sty-1">Creaet Roles</h1>
-<form id="formID" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-validate-1">
+<h1 class="heading-sty-1">Create Roles</h1>
+<form id="formID" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-validate-1 form-sty-1">
     <div class="c-box">
         <div class="row">
             <div class="col-md-3">
@@ -23,5 +23,5 @@
    </div>
 </form>
 
-<!--javacript custom-->
+<!--javascript custom-->
 <?php //echo $custom_js;  ?>

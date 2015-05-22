@@ -993,10 +993,10 @@ body.dashboard .page-container {
 
 .page-container .page-content-wrapper .footer {
   /* Footer */
-  position: absolute;
+  /*position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0;*/
   -webkit-transition: left 0.3s ease;
   transition: left 0.3s ease;
 }

@@ -7,20 +7,14 @@
     <div class="col-md-6">
         <?php
 
-        /*if($i==0){
-            echo "<hr>";
-        }*/
-
         $iFoldId          = $aFold['fold_id'];
         $defaultFoldImage = $aFold['default_fold_image'];
-        
-        //d($aFold);
+
         for($e=0; $e < count($aElements); $e++)
         {
-            
-           // debug($aElements);
             # Single Element Entity
             $aElement               =   $aElements[$e];
+            $sElementDefaultValue   =   '';
             $ElementName            =   $aElement['element_name'];
             $ElementData            =   $aElement['provided_data'];            
             $sTitle                 =   $aElement['title'];
@@ -31,35 +25,35 @@
 
             if($HtmlControlType == 'textbox')
             {
-            // variable used as unique javascript array index in elements_html  view
-            global $jsArrayIndex;
-                   
-                
-                ?>
+                // variable used as unique javascript array index in elements_html  view
+                global $jsArrayIndex;
+            ?>
+
             <div class="form-group">
                 <div class="controls" ng-class="{'has-error':error_<?php echo $ElementName.'_'.$jsArrayIndex; ?>}">
                     <label for="content_1" class="content_1"><?php echo $sElementLabel; ?> </label>
                     <?php
 
-                    $afieldData               =  array   (
-                                                            'name'                  =>  $ElementName,
-                                                            'placeholder'           =>  $sElementLabel,
-                                                            'ng-change'             =>  "setElementDetails({$ElementName}_{$jsArrayIndex},'$ElementName','$iElementId','$iElementPosition','$iFoldId','$jsArrayIndex')",
-                                                            'element_id'            =>  "$iElementId",
-                                                            'fold_id'               =>  "$iFoldId",
-                                                            'position'              =>  "$iElementPosition",
-                                                            'index'                 =>  "$jsArrayIndex",    
-                                                            'value'                 =>  "$ElementData",          
-                                                            'class'                 =>  'form-control custom-elements',
-                                                            'ng-model'              =>  "{$ElementName}_{$jsArrayIndex}",
-                                                            'ng-init'               =>  "{$ElementName}_{$jsArrayIndex}='$ElementData'"        
-                                                                    
+                    $afieldData               =  array
+                    (
+                        'name'                  =>  $ElementName,
+                        'placeholder'           =>  $sElementLabel,
+                        'ng-change'             =>  "setElementDetails({$ElementName}_{$jsArrayIndex},'$ElementName','$iElementId','$iElementPosition','$iFoldId','$jsArrayIndex')",
+                        'element_id'            =>  "$iElementId",
+                        'fold_id'               =>  "$iFoldId",
+                        'position'              =>  "$iElementPosition",
+                        'index'                 =>  "$jsArrayIndex",
+                        'value'                 =>  "$ElementData",
+                        'class'                 =>  'form-control custom-elements',
+                        'ng-model'              =>  "{$ElementName}_{$jsArrayIndex}",
+                        'ng-init'               =>  "{$ElementName}_{$jsArrayIndex}='$ElementData'"
                     );
                                                             
                     echo form_input($afieldData);
-                    echo "<label ng-show='error_{$ElementName}_{$jsArrayIndex}'  class='error'>".ERROR_FIELD_REQUIRED."</label>"; 
-           //incrementing the varible after completion of the each iteration  
-           $jsArrayIndex = $jsArrayIndex + 1 ; 
+                    echo "<label ng-show='error_{$ElementName}_{$jsArrayIndex}'  class='error'>".ERROR_FIELD_REQUIRED."</label>";
+
+               //incrementing the varible after completion of the each iteration
+               $jsArrayIndex = $jsArrayIndex + 1 ;
            ?>
                 </div>
            </div>
@@ -68,6 +62,10 @@
             }
             else if($HtmlControlType == 'image')
             {
+                global $jsArrayIndexCheckBox;
+                
+                $sElementDefaultValue          =   $aElement['element_default_value'];
+
                 $id = rand(1,12312321);
                 ?>
 
@@ -126,15 +124,24 @@
                             
                             //$("#element_<?php echo $id; ?> .custom_upload").removeClass('custom_upload');
                             $("#element_<?php echo $id; ?>").removeClass('ajax_uploaded_image');
-                            $("#element_img_<?php echo $id; ?>").html('<img src="'+'<?php echo site_url('media/fold_elements/thumbnail/small_'.$ElementData) ?>'+'" class="m-b-20 has-border">');
+                            $("#element_img_<?php echo $id; ?>").html('<img width="250" height="250" src="'+'<?php echo site_url('media/fold_elements/thumbnail/small_'.$ElementData) ?>'+'" class="m-b-20 has-border">');
                             $("#element_<?php echo $id; ?> .JSFileChoos .test_check")[0].nextSibling.data = 'Change Image';
                             
                                                     <?php } ?>
                         </script>
+
+                        <input ng-init="use_default_image_<?php echo $jsArrayIndexCheckBox;?>=false" 
+                               ng-model="use_default_image_<?php echo $jsArrayIndexCheckBox;?>" 
+                               type="checkbox" 
+                               name="use_default_image" 
+                               ng-click="useDefaultImage(<?php echo $jsArrayIndexCheckBox;?>,use_default_image_<?php echo $jsArrayIndexCheckBox;?>,<?php echo $iFoldId;?>,<?php echo $iElementId;?>,'<?php echo $sElementDefaultValue;?>','<?php echo $iElementPosition; ?>','<?php echo $id; ?>');"/>Use Default Image
                     </div>
                 </div>
 
             <?php
+            
+            $jsArrayIndexCheckBox = $jsArrayIndexCheckBox + 1;
+            
             }
             else if($HtmlControlType == 'textarea')
             {

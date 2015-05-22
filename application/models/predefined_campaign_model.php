@@ -437,7 +437,6 @@ QUERY;
 
     function getAllCampaigns($aParams)
     {
-
         $recordsPerPage = LISTING_PER_PAGE;
 
         $offset = -1;
@@ -533,7 +532,27 @@ SQL;
         $this->db->update('predefined_campaigns', $data);
         return $this->db->affected_rows();
     }
+    
+    public function getCampaignByid($iCampaignId=1)
+    {
+        $aCampaignData = array();
 
+        if($iCampaignId)
+        {
+            $sSQL = <<<SQL
+
+            SELECT * FROM predefined_campaigns where predefined_campaign_id='$iCampaignId'
+            LIMIT 1
+SQL;
+
+                            $DbResult       =      $this->db->query($sSQL);
+            return          $DbResult->row_array();
+            
+
+           
+        }
+        return false;
+    }
 
     public function loadCampaign($iCampaignId=1)
     {
@@ -573,7 +592,24 @@ SQL;
               predefined_campaign_batch_id
         FROM  predefined_campaign_batches
         WHERE predefined_campaign_id='$iCampaignId'
-        AND   user_id='$iUserId'
+SQL;
+
+            $DbResult = $this->db->query($sSQL);
+            return $DbResult->result_array();
+        }
+        return array();
+    }
+
+    public function getUsedCampaignBatches($iCampaignId = 0,$iUserId = 0 )
+    {
+        if($iCampaignId && $iUserId)
+        {
+            $sSQL = <<<SQL
+
+           SELECT
+              predefined_user_batch_id,predefined_campaign_batch_id,predefined_campaign_id
+        FROM  predefined_user_batches
+        WHERE predefined_campaign_id='$iCampaignId'
 SQL;
 
             $DbResult = $this->db->query($sSQL);
@@ -806,5 +842,315 @@ SQL;
             }
         }
         return 0;
+    }
+
+
+
+    ############################### USER CAMPAIGNGS LISTING ##################################
+
+    function getAllUserPredefinedCampaigns($aParams)
+    {
+        $offset             =   -1;
+        $recordsPerPage     =   LISTING_PER_PAGE;
+        $returnCount        =   $aParams[ACTION_RECORD_COUNT];
+
+        if (isset($aParams[ACTION_PAGE_OFFSET])) $offset = $aParams[ACTION_PAGE_OFFSET];
+
+        $aWhereClause       =   array();
+        $aWhereClause[]     =   " ( is_deleted ='0' ) ";
+        $WhiteLabel         =   getWhiteLablelId();
+
+        $aWhereClause[]     =   <<<JOIN
+
+        c.predefined_campaign_id IN
+        (
+            SELECT DISTINCT predefined_campaign_id FROM predefined_campaign_batches WHERE whitelabel_id='$WhiteLabel'
+        )
+JOIN;
+
+        $sWhereCondition    = '';
+
+        if (is_array($aWhereClause) && count($aWhereClause) > 0)
+        {
+            $sWhereCondition = ' WHERE ' . implode(' AND ', $aWhereClause);
+        }
+
+
+        $sSelect = $CountSQL = '';
+        $sLimit = '';
+        $sOrderBy = '';
+        if ($returnCount)
+        {
+            $CountSQL = "SELECT COUNT(DISTINCT predefined_campaign_id) AS count FROM predefined_campaign_batches WHERE whitelabel_id='$WhiteLabel'";
+        }
+        else
+        {
+            $sSelect = 'c.predefined_campaign_id,c.title,c.description,c.created_on';
+
+            if ($offset > -1)
+            {
+                $sLimit = " LIMIT $offset, $recordsPerPage ";
+            }
+
+            $sOrderBy = ' ORDER BY c.predefined_campaign_id DESC ';
+        }
+
+            $sql = <<<QUERY
+
+		 SELECT
+				$sSelect
+		 FROM
+				predefined_campaigns c
+
+		 $sWhereCondition
+
+		 $sOrderBy
+
+		 $sLimit
+
+QUERY;
+
+        if ($returnCount) {$sql  = $CountSQL;}
+
+        if ($result = $this->db->query($sql))
+        {
+            if ($returnCount)
+            {
+                return $result->row('count');
+            }
+            else
+            {
+                return $result->result();
+            }
+        }
+    }
+
+
+    function getAllUsedCampaigns($aParams)
+    {
+        $recordsPerPage = LISTING_PER_PAGE;
+        $offset         = -1;
+        $returnCount    = $aParams[ACTION_RECORD_COUNT];
+
+        if (isset($aParams[ACTION_PAGE_OFFSET])) {$offset = $aParams[ACTION_PAGE_OFFSET];}
+
+        $iUserId = getLoggedInUserId();
+        $aWhereClause   = array();
+
+        if($returnCount)
+        {
+            $aWhereClause[] = " ( user_id ='".$iUserId."' ) ";
+        }
+        else
+        {
+
+            $aWhereClause[] = <<<JOIN
+
+            c.predefined_campaign_id IN
+            (
+                SELECT DISTINCT predefined_campaign_id
+                FROM predefined_user_batches
+                WHERE user_id='$iUserId'
+            )
+JOIN;
+        }
+
+        $sWhereCondition = '';
+
+        if (is_array($aWhereClause) && count($aWhereClause) > 0)
+        {
+            $sWhereCondition = ' WHERE ' . implode(' AND ', $aWhereClause);
+        }
+
+        $sSelect = '';
+        $sLimit = '';
+        $sOrderBy = '';
+        if ($returnCount)
+        {
+            $sSelect = ' COUNT( DISTINCT c.predefined_campaign_id) AS count ';
+        }
+        else
+        {
+            $sSelect = 'c.predefined_campaign_id,c.title,c.description,c.created_on';
+
+            if ($offset > -1)
+            {
+                $sLimit = " LIMIT $offset, $recordsPerPage ";
+            }
+
+            $sOrderBy = ' ORDER BY c.predefined_campaign_id DESC ';
+        }
+
+
+        if($returnCount)
+        {
+            $sql = <<<QUERY
+
+
+            SELECT
+				$sSelect
+		 FROM
+				predefined_user_batches c
+
+		 $sWhereCondition
+
+		 $sOrderBy
+
+		 $sLimit
+
+
+QUERY;
+        }
+        else
+        {
+            $sql = <<<QUERY
+
+
+
+		 SELECT
+				$sSelect
+		 FROM
+				predefined_campaigns c
+
+		 $sWhereCondition
+
+		 $sOrderBy
+
+		 $sLimit
+
+QUERY;
+        }
+
+        if ($result = $this->db->query($sql))
+        {
+            if ($returnCount)
+            {
+                return $result->row('count');
+            }
+            else
+            {
+                return $result->result();
+            }
+        }
+    }
+
+
+    function DeepCopy_CreateBatch($aData = array())
+    {
+        if($aData)
+        {
+            $SQL = <<<QUERY
+
+            INSERT INTO campaign_batches
+                        (
+                            campaign_id ,
+                            user_id ,
+                            product_id ,
+                            template_id ,
+                            title ,
+                            description ,
+                            schedule_date ,
+                            cut_off_date ,
+                            last_preview_images ,
+                            total_printing_cost ,
+                            current_status ,
+                            created_on ,
+                            created_by
+                        )
+            VALUES      (
+                            '$aData->campaign_id',
+                            '$aData->user_id',
+                            '$aData->product_id',
+                            '$aData->template_id',
+                            '$aData->batch_title',
+                            '$aData->batch_description',
+                            '$aData->schedule_date',
+                            '$aData->cut_off_date',
+                            '$aData->last_preview_images',
+                            '$aData->total_printing_cost',
+                            '$aData->current_status',
+                            '$aData->created_on',
+                            '$aData->created_by'
+                        );
+QUERY;
+
+            if ($this->db->query($SQL)) return $this->db->insert_id();
+        }
+        return 0;
+    }
+
+    function DeepCopy_getBatchUploadedContent($iUserBatchId=0)
+    {
+        $SQL = <<<SQL
+
+            SELECT
+                predefined_user_batch_id  ,
+                template_id  ,
+                template_fold_id  ,
+                template_element_id  ,
+                element_position  ,
+                element_data
+            FROM   predefined_template_content
+            WHERE  predefined_user_batch_id='$iUserBatchId'
+SQL;
+
+        $Result   =   $this->db->query($SQL);
+        return $Result->result_array();
+    }
+
+    function DeepCopy_setBatchUploadedContent($iNewBatchId,$aUploadedContent=array())
+    {
+        $aInnerValues = array();
+
+        if($aUploadedContent)
+        {
+            $dCreated   =   date(DATE_FORMAT_MYSQL);
+            $iUserId    =   getLoggedInUserId();
+
+            $sInnerKeys   =   "
+            (
+                campaign_batch_id,
+                template_id,
+                template_fold_id,
+                template_element_id,
+                element_position,
+                element_data,
+                created_on,
+                created_by
+            )" ;
+
+            foreach($aUploadedContent as $key => $data)
+            {
+                $data = (object) $data;
+
+                $aInnerValues[] = "
+                (
+                    '$iNewBatchId',
+                    '$data->template_id',
+                    '$data->template_fold_id',
+                    '$data->template_element_id',
+                    '$data->element_position',
+                    '$data->element_data',
+                    '$dCreated',
+                    '$iUserId'
+                )";
+            }
+
+
+            if(!empty($aInnerValues))
+            {
+                $sInnerValues = implode(',',$aInnerValues);
+                $sInsertSQL  = <<<SQL
+
+                    INSERT INTO template_content
+                      $sInnerKeys
+                     VALUES
+                      $sInnerValues
+SQL;
+
+                $this->db->query($sInsertSQL);
+                return $this->db->affected_rows();
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ define('USER_AGENT_MOBILE',         'Mobile');
 define('ROLE_Administrator',       'Administrator');
 define('ROLE_Subscriber',          'Subscriber');
 define('ROLE_ID_ADMINISTRATOR',                 1);
+define('USER_ID_ADMINISTRATOR',                 1);
 define('ROLE_ID_SUBSCRIBER',                    2);
 
 #System File Upload Limit
@@ -85,6 +86,7 @@ define('LIST_PLURAL',                   'Lists');
 define('LIST_SINGULAR',                 'List');
 define('ORDER_SINGULAR',                'Orders');
 define('ORDER_PLURAL',                  'Order');
+define('FLAGS',                      'Flags');
 define('WHITE_LABEL_SINGULAR',                   'White Label Solution');
 define('WHITE_LABEL_PLURAL',                   'White Label Solutions');
 define('FREE_TEMPLATES',                   'Templates');
@@ -92,6 +94,9 @@ define('TEMPLATE_SINGULAR',                   'Template');
 
 define('PREDEFINED_CAMPAIGN_SINGULAR',                      'Predefined Campaign');
 define('PREDEFINED_CAMPAIGNS_PLURAL',              'Predefined Campaigns');
+
+define('CRM',                           'Add Extra Information');
+define('UPDATE_CRM',                           'Update Extra Information');
 
 
 
@@ -246,3 +251,7 @@ define('FLAG_VERY_IMPORTANT',                 'Very Important');
 
 define('MASTER_LIST',      'Master List');
 define('IS_MASTER_LIST',   '1');
+
+
+define('CRM_TEXTBOX', '1');
+define('CRM_DROPDOWN',  '2');

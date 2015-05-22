@@ -1,13 +1,6 @@
 <script data-require="angular.js@1.2.x" src="<?php echo getAssetsPath(); ?>js/angular/angular.js" data-semver="1.2.15"></script>
 <script src="<?php echo getAssetsPath(); ?>js/custom/dashboard.js"></script>
 
-<!-- Code for Angular -->
-<!-- <link rel="stylesheet" href="<?php echo getAssetsPath(); ?>css/angular/ng-tags-input.min.css" />
-<script data-require="angular.js@1.2.x" src="<?php echo getAssetsPath(); ?>js/angular/angular.js" data-semver="1.2.15"></script>
-<script src="<?php echo getAssetsPath(); ?>js/angular/ng-tags-input.min.js"></script> -->
-<!-- END - Code for Angular -->
-
-
 <div class="row">
     <div class="col-md-12">
         <div class="dashboard-title">
@@ -15,6 +8,7 @@
         </div>
     </div>
 </div>
+
 <?php
 if(isSuperAdmin())
 {
@@ -44,7 +38,8 @@ if(isSuperAdmin())
                 <ul class="c-box__list">
 
                     <?php
-                    if($iTotalBatches > 0){
+                    if($iTotalBatches > 0)
+                    {
                         for($b=0; $b <$iTotalBatches; $b++ )
                         {
                             $aBatch                 = (object) $aCutOffBatches[$b];
@@ -135,7 +130,7 @@ DATA;
                                         <a href="#" class="btn btn-success m-t-10" ng-click="DownloadBatchContent('<?php echo $aBatch->campaign_batch_id; ?>')">Download Content</a>
                                     </div>
                                     <div class="t-col text-right t-col--mid col-3">
-                                        <a href= "#" class="fa arrow"></a>
+                                        <a href= "<?php echo site_url('orders/view'); ?>" class="fa arrow"></a>
                                     </div>
                                 </div>
                             </div>

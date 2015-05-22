@@ -238,50 +238,58 @@
     Pages.prototype.initValidatorPlugin = function() {
         $.validator && $.validator.setDefaults({
             ignore: "", // validate hidden fields, required for cs-select
-            showErrors: function(errorMap, errorList) {
-                var $this = this;
-                $.each(this.successList, function(index, value) {
-                    var parent = $(this).closest('.form-group-attached');
-                    if (parent.length) return $(value).popover("hide");
-                });
-                return $.each(errorList, function(index, value) {
+            // showErrors: function(errorMap, errorList) {
+            //     var $this = this;
+            //     $.each(this.successList, function(index, value) {
+            //         var parent = $(this).closest('.form-group-attached');
+            //         if (parent.length) return $(value).popover("hide");
+            //     });
+            //     return $.each(errorList, function(index, value) {
 
-                    var parent = $(value.element).closest('.form-group-attached');
-                    if (!parent.length) {
-                        return $this.defaultShowErrors();
-                    }
-                    var _popover;
-                    _popover = $(value.element).popover({
-                        trigger: "manual",
-                        placement: "top",
-                        html: true,
-                        container: parent.closest('form'),
-                        content: value.message
-                    });
-                    _popover.data("bs.popover").options.content = value.message;
-                    var parent = $(value.element).closest('.form-group');
-                    parent.addClass('has-error');
-                    $(value.element).popover("show");
-                });
-            },
-            onfocusout: function(element) {
+            //         var parent = $(value.element).closest('.form-group-attached');
+            //         if (!parent.length) {
+            //             return $this.defaultShowErrors();
+            //         }
+            //         var _popover;
+            //         _popover = $(value.element).popover({
+            //             trigger: "manual",
+            //             placement: "top",
+            //             html: true,
+            //             container: parent.closest('form'),
+            //             content: value.message
+            //         });
+
+            //         _popover.data("bs.popover").options.content = value.message;
+            //         var parent = $(value.element).closest('.form-group');
+            //         parent.addClass('has-error');
+            //         $(value.element).popover("show");
+            //     });
+            // },
+
+            onkeyup: function (element, event) {
                 var parent = $(element).closest('.form-group');
+                if(event.keyCode == 9){
+                    return false;
+                }
                 if ($(element).valid()) {
                     parent.removeClass('has-error');
                     parent.next('.error').remove();
                 }
+            
             },
-            onkeydown: function(element) {
-                var parent = $(element).closest('.form-group');
-                if ($(element).valid()) {
-                    $(element).removeClass('error');
-                    parent.removeClass('has-error');
-                    parent.next('label.error').remove();
-                    parent.find('label.error').remove();
-                } else {
-                    parent.addClass('has-error');
+
+            onfocusout: function(element) {
+                if($(element).hasClass('has-datepicker')){
+                    return false;
+                }else{
+                    var parent = $(element).closest('.form-group');
+                    if ($(element).valid()) {
+                        parent.removeClass('has-error');
+                        parent.next('.error').remove();
+                    }
                 }
             },
+
             errorPlacement: function(error, element) {
                 var parent = $(element).closest('.form-group');
                 if (parent.hasClass('form-group-default')) {

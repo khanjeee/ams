@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 78
-/svn/ams/!svn/ver/639/branches/development/code/web/application/views/products
+/svn/ams/!svn/ver/836/branches/development/code/web/application/views/products
 END
 ajax_get_templates.php
 K 25
 svn:wc:ra_dav:version-url
 V 101
-/svn/ams/!svn/ver/639/branches/development/code/web/application/views/products/ajax_get_templates.php
+/svn/ams/!svn/ver/836/branches/development/code/web/application/views/products/ajax_get_templates.php
 END
 create.php
 K 25

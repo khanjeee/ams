@@ -345,17 +345,21 @@ SQL;
     }
 
 
-    public function PredefinedCampaignsExists($iWhiteLabelId)
+    public function PredefinedCampaignsExists($iWhiteLabelId=0)
     {
+        $Row = array();
+
         $SQL = <<<SQL
-                        SELECT COUNT(campaign_id) AS has_predefined_campaigns FROM predefined_campaigns WHERE whitelabel_id='$iWhiteLabelId'
+
+        SELECT whitelabel_id AS has_predefined_campaigns FROM predefined_campaign_batches WHERE whitelabel_id='$iWhiteLabelId' LIMIT 1
 SQL;
 
         if ($result = $this->db->query($SQL))
         {
-            return $result->row('has_predefined_campaigns');
+            $Row =  $result->row('has_predefined_campaigns');
+            if($Row) return true;
         }
-        return 0;
+        return false;
     }
     
     function softDeleteWhiteLabel($whiteLabelId=0)

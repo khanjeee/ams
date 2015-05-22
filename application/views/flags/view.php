@@ -6,7 +6,7 @@
 ?> 
 <div class="row">
     <div class="col-md-2">
-        <h1 class="heading-sty-1"><?php  echo LIST_PLURAL; ?></h1>
+        <h1 class="heading-sty-1"><?php  echo FLAGS; ?></h1>
     </div>
     <div class="col-md-10">
         <div class="contact-search-n-actions-panel">
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-
+<?php  if($aFlags) { ?>
 
 <form action="<?php echo $sFormAction; ?>" method="post" role="form">
     <div class="row">
@@ -33,8 +33,7 @@
                     </thead>
                     <tbody>
                         <?php 
-                        if($aFlags)
-                        {
+                       
 						   foreach($aFlags as $flag)
                            {        
                                 $EditUrl            =   $sEditAction.'/'.$flag->flag_id;
@@ -55,14 +54,8 @@
                                 </td>
                             </tr>
                             <?php
-                            }
-                        }
-                        else
-                        { ?>
-                            <?php echo MSG_NO_RECORD_FOUND; ?>
-                       <?php
-                        } 
-                        ?>
+                            }?>
+                        
                     </tbody>
                 </table>
 			  
@@ -70,3 +63,11 @@
         </div>
     </div>
     <div style="margin-left: 50%;"><?php echo $this->pagination->create_links(); ?></div> 
+<?php 	}
+                        else
+                        { ?>
+                            <div class="no_record"><p>There are no Flags in your flag list, <a href="<?php echo site_url('flags/create'); ?>">Create a Flag</a>.</p></div>
+                       <?php
+                        } 
+                        ?>		
+			

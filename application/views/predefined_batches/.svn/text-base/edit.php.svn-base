@@ -321,18 +321,18 @@ app.controller('MainCtrl',function($scope,$http,$compile,$parse,$window)
                  $scope.error_whitelabel = false;
                  $scope.error_package = false;
                 
-                 if(angular.equals($scope.selected_whitelabel_id,0))
+                 if(angular.equals(parseInt($scope.selected_whitelabel_id),0))
                          {
                              $scope.error_whitelabel = true;
                              return false;
                          }
-                if(angular.equals($scope.selected_package_id,0))
+                if(angular.equals(parseInt($scope.selected_package_id),0))
                          {
                              $scope.error_package = true;
                              return false;
                          }         
                          
-
+                         
                   
              var request = 
              {
@@ -553,7 +553,7 @@ function ajax_call(request,selected_tab)
         $scope.getWhiteLabelPackages($scope.selected_package_id);
         
         //making the temlate selected
-        //console.log();
+        //console.log($scope.selected_whitelabel_id);
     });
 
 });
@@ -728,10 +728,10 @@ app.directive("whitelabelDropdown",function($compile){
 <!-- tab 4 select whitelabel start-->
                     <div id="tab1" ng-class="addClass('4')" class="tab-pane padding-20  m-p-l-r-0 slide-left">
                         <div class="row">
-                            <label for="batch-description" class="batch-description">Select a WhiteLabel</label>
+                            
                             <div class="col-md-2">
                                 <div class="form-group" > 
-                                          
+                                <label for="batch-description" class="batch-description">Select a WhiteLabel</label>          
                                 <select id="whitelabel" ng-change="getWhiteLabelPackages(0)" ng-model="selected_whitelabel_id"  required name="whitelabel" class="select--no-search full-width" data-init-plugin="select2">
                                 <option  value='0'>Select</option>
                                 

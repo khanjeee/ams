@@ -50,7 +50,7 @@ class List_Model extends CI_Model {
                 $sLimit = " LIMIT $offset, $recordsPerPage ";
             }
 
-            $sOrderBy = ' ORDER BY l.list_id asc ';
+            $sOrderBy = ' ORDER BY l.list_id DESC ';
         }
 
         $sql = <<<QUERY
@@ -167,14 +167,30 @@ SQL;
     
 	public function deleteListById($iListId = 0)
     {
-        $this->db->where('list_id', $iListId);
-        $this->db->delete('lists');
+//        $this->db->where('list_id', $iListId);
+//        $this->db->delete('lists');
+//
+//        $this->db->where('list_id', $iListId);
+//        $this->db->delete('list_members');
+		
+		// return $this->db->affected_rows();
+		
+		 $sql = <<<QUERY
+		
+		DELETE FROM lists
+WHERE list_id = '$iListId';
+QUERY;
 
-        $this->db->where('list_id', $iListId);
-        $this->db->delete('list_members');
+        if ($this->db->query($sql)) {
+            $sql = <<<QUERY
+		
+		 DELETE FROM list_members
+WHERE list_id = '$iListId';
+QUERY;
 
-        return $this->db->affected_rows();
-
+            return $this->db->query($sql);
+        }
+	
     }
 
     public function getListContacts($iListId = 0)
@@ -454,5 +470,50 @@ SQL;
              return $result->row();
          }
          return false;
+    }
+	
+	
+	function createListForContactAdd($aData = array())
+    { 
+         
+        // d($aData);
+        if ($aData)
+        {
+            $iUserId            = getLoggedInUserId();
+            
+            $sTitle             = $aData['title'];
+            $sDesc              = $aData['description'];
+            $dDate              = date(DATE_FORMAT_MYSQL);
+            
+            
+            
+  
+                # Insert!
+          
+                $SQL = <<<SQL
+
+				INSERT INTO lists
+                    (
+                        user_id, title,description,created_on, created_by
+                        
+                     )
+			VALUES (
+                        '$iUserId','$sTitle' ,'$sDesc','$dDate','$iUserId')
+				 
+SQL;
+                
+            
+            
+                if ($this->db->query($SQL))
+                {
+                   if ($iListId = $this->db->insert_id())
+					{
+						return $iListId;
+					}
+                }
+            }
+        
+
+        return false;
     }
 }

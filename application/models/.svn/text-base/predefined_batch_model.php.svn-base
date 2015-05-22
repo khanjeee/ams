@@ -9,7 +9,7 @@ class Predefined_Batch_Model extends CI_Model
     }
 
     function createBatch($aData = array())
-    { 
+    {
         if ($aData)
         {
             $isEditMode         = $aData['isEditMode'];
@@ -408,7 +408,9 @@ SQL;
                         te.html_control_type,
                         tfe.element_position,
                         tfe.element_label,
-                        tfe.template_fold_id
+                        tfe.template_fold_id,
+                        tfe.element_default_value
+
                 FROM
                                         template_elements te
                 INNER JOIN 		template_fold_elements tfe ON tfe.template_element_id= te.template_element_id
@@ -1023,6 +1025,41 @@ SQL;
     }
 
 
+    function deleteUserBatch($iBatchId = 0)
+    {
+        $SQL = <<<SQL
+
+                DELETE
+                FROM       predefined_user_batches
+                WHERE  predefined_user_batch_id  = '$iBatchId';
+
+SQL;
+        if ($this->db->query($SQL))
+        {
+            $SQL = <<<SQL
+
+            DELETE
+            FROM 	predefined_template_content
+            WHERE  predefined_user_batch_id  = '$iBatchId';
+SQL;
+            if ($this->db->query($SQL))
+            {
+                    $SQL = <<<SQL
+
+                        DELETE
+                        FROM 	predefined_campaign_batches_lists
+                        WHERE 	predefined_user_batch_id = '$iBatchId';
+SQL;
+                if ($this->db->query($SQL))
+                {
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
+
+
     function BatchInfo($iBatchId=0)
     {
         if($iBatchId)
@@ -1174,6 +1211,29 @@ SQL;
          return $query->result_array();
          
     }
+    
+    
+    
+    //RETRUNS CAMPAIGN ID IF EXITS ELSE 0
+     function checkCampaignMapping($iUserBatchId=0)
+    { 
+        $SQL = <<<SQL
+
+            SELECT      CM.campaign_id
+            FROM        predefined_user_batches PUB
+            INNER JOIN  campaign_mapping        CM
+            ON          PUB.predefined_campaign_id = CM.predefined_campaign_id
+            WHERE       PUB.predefined_user_batch_id ='$iUserBatchId'
+            LIMIT 1     
+            
+
+SQL;
+        $Result   =   $this->db->query($SQL);
+        
+            return  ($Result->num_rows > 0) ? $Result->row('campaign_id') : 0; 
+                
+         
+    }
 
     function getAdminCampaignBatchId_From_UserBatchId($iUserBatchId=0)
     {
@@ -1189,6 +1249,45 @@ SQL;
 SQL;
             $Result   =   $this->db->query($SQL);
             return $Result->row('predefined_campaign_batch_id');
+        }
+        return 0;
+    }
+    
+    
+     //RETRUNS CAMPAIGN ID IF EXITS ELSE 0
+     function createCampaignMapping($aData)
+    { 
+          $data = array(
+                        'predefined_campaign_id'    => $aData['predefined_campaign_id'] ,
+                        'campaign_id'               =>  $aData['campaign_id'] ,
+                        );
+            
+            $this->db->insert('campaign_mapping', $data); 
+            return ;
+            //return $this->db->insert_id();
+         
+    }
+
+    function getUserBatchById($iUserBatchId=0)
+    {
+        if($iUserBatchId)
+        {
+            $SQL = <<<SQL
+
+            SELECT
+            predefined_user_batch_id,
+            predefined_campaign_id,
+            predefined_campaign_batch_id,
+            user_id,
+            last_preview_images,
+            total_printing_cost
+            FROM  		predefined_user_batches
+            WHERE 		predefined_user_batch_id='$iUserBatchId'
+            LIMIT       1
+SQL;
+            $Result   =   $this->db->query($SQL);
+            
+            return $Result->row();
         }
         return 0;
     }

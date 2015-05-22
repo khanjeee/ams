@@ -221,17 +221,27 @@
                 </li>
 
 
-                    <li class="m-t-30">
-                        <a href="#" class="detailed">
-                            <span class="title">Templates</span>
-                            <i class="c-icon icon-create-package c-icon--order-management"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="<?php echo site_url('predefined_campaigns/view'); ?>">View<span class="icon-thumbnail"></span></a>
+                    <?php
+
+                    if(hasPreDefinedCampaigns())
+                    {
+                        ?>
+                            <li class="m-t-30">
+                                <a href="#" class="detailed">
+                                    <span class="title">Templates</span>
+                                    <i class="c-icon icon-create-package c-icon--order-management"></i>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="<?php echo site_url('predefined_campaigns/display'); ?>">View<span class="icon-thumbnail"></span></a>
+                                        <a href="<?php echo site_url('predefined_campaigns/in_use'); ?>">In-Use<span class="icon-thumbnail"></span></a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
+                        <?php
+                    }
+                    ?>
+
 
                     <li class="m-t-30 has-submenu">
                     <a href="#" class="detailed">
@@ -288,13 +298,17 @@
 				
                 
                 if(isSuperAdmin())
-                {
-
-                ?>
+                { ?>
+				
+				
+				
+				
+				
+				
                 <!--ONLY FOR SUPER ADMIN START-->
         
                 <li class="m-t-30 current">
-                    <a href="<?php echo site_url('campaigns/view'); ?>" class="detailed">
+                    <a href="<?php echo site_url('orders/view'); ?>" class="detailed">
                         <span class="title">Orders</span>
                         <i class="c-icon icon-create-package c-icon--email"></i>
                     </a>
@@ -381,7 +395,20 @@
                     </li>
                 </ul>
             </li>
-
+            <li class="m-t-30 has-submenu">
+                    <a href="#" class="detailed">
+                        <span class="title">Milestones</span>
+                        <i class="c-icon icon-create-package c-icon--white-label"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="<?php echo site_url('roles/create'); ?>">Create<span class="icon-thumbnail"></span></a>                                
+                        </li>
+                        <li>
+                            <a href="<?php echo site_url('roles/view'); ?>">View<span class="icon-thumbnail"></span></a>                                
+                        </li>                            
+                    </ul>
+                </li>
         
         <!--ONLY FOR SUPER ADMIN END-->
                 <?php
@@ -389,9 +416,24 @@
                 }
 
                 ?>
-
-               
-
+		
+		<?php 
+		$aUserData   = (object)getLoggedInUserData();
+		
+		if(isset($aUserData->PackageModule) && !empty($aUserData->PackageModule)){?>
+               <li class="m-t-30 has-submenu">
+                    <a href="#" class="detailed">
+                        <span class="title">CRM</span>
+                        <i class="c-icon icon-create-package c-icon--list"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="<?php echo site_url('crm/create'); ?>">Create<span class="icon-thumbnail"></span></a>						 </li>
+					   <li>
+                            <a href="<?php echo site_url('crm/view'); ?>">View<span class="icon-thumbnail"></span></a>						</li>
+                    </ul>
+                </li>
+		<?php } ?>
         
        
 	

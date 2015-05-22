@@ -24,15 +24,16 @@ if($aPackages)
     ?>
 
 <div class="row">
-    <div class="col-lg-12 ">
-        <div class="form-group ">
-            <label class="status">Choose a Package:</label>
-            <select required  name="package[package_id]"  ng-model="selected_package_id" class="full-width select--no-search">
+    <div class="col-md-12">
+        <label class="status">Choose a Package:</label>
+        <div class="form-group form-group-default">
+            
+            <select  required  name="package[package_id]"  ng-model="selected_package_id" class="full-width select--no-search">
                 
                     <?php echo $options; ?>
             </select>
-            <label ng-show="error_package"  class="error r-25">Please Select Package</label>  
-        </div>
+       </div>
+        <label style='position:static !important' ng-show="error_package"  class="error r-25">Please Select Package</label>  
     </div>
 </div>   
 

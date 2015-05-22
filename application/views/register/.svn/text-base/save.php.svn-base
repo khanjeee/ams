@@ -1,3 +1,7 @@
+<?php //d($aRegistrationInfo); ?>
+<div class="text-error">
+<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['message'] : '';  ?>    
+</div>
 <!-- Code for Angular -->
 <link rel="stylesheet" href="<?php echo getAssetsPath(); ?>css/angular/ng-tags-input.min.css" />
 <script data-require="angular.js@1.2.x" src="<?php echo getAssetsPath(); ?>js/angular/angular.js" data-semver="1.2.15"></script>
@@ -42,81 +46,84 @@ if(!isUserLoggedIn())
 
 				<div class="row">
 					<div class="col-md-12">
-						<div class="select-package">
-							<div class="title-with-checkbox">
-								<legend>Select Package</legend>
-								<div class="checkbox check-success checkbox--inline">
-									<input type="checkbox" value="havePromotionCode" name="havePromotionCode" id="havePromotionCode">
-									<label for="havePromotionCode">I have a promotion code.</label>
-								</div>
-							</div>
-							<hr class="m-t-0 m-b-10">
-							<div id="enterPromotion" style="display:none;">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group form-group-default">
-											<label class="promotion_code">Promotion Code</label>
-											<div class="controls">
-												<input name="data[promotion_code]" value="" type="text" placeholder="Promotion Code" class="form-control" id="promotion_code" onkeypress="return event.keyCode != 13;">
-											</div>											
-										</div>
-										<div class="promotion_code_error"></div>
-									</div>
-									<div class="col-md-6">
-										<a ng-click="JsPromoCodePackages()" href="#" class="btn btn-primary m-t-10 m-m-t-0">Submit Code</a>
+						<div class="select-package-outer">
+							<div class="select-package">
+								<div class="title-with-checkbox">
+									<legend>Select Package</legend>
+									<div class="checkbox check-success checkbox--inline">
+										<input type="checkbox" value="havePromotionCode" name="havePromotionCode" id="havePromotionCode">
+										<label for="havePromotionCode">I have a promotion code.</label>
 									</div>
 								</div>
-								<ul class="select-package__list m-b-5 selected" id="packagePromotionList">
-									<li ng-repeat="package in jsPromotionCodePackages">
-										<div class="wrap">
-											<div class="radio radio-success">
-											  <input type="radio" name="data[package_id]" id="select-promoted-package-id-{{ package.package_id }}" value="{{ package.package_id }}">
-											  <label for="select-promoted-package-id-{{ package.package_id }}">
-											  	<div class="cover-img package-img" style="background-image: url({{ package.image }}); "></div>
-											  	<div class="label-wrap">
-													<div class="title">
-														{{ package.title }}
-													</div>
-													<div class="description">
-														{{ package.description }}
-													</div>
-													<div class="price">
-														<Strong>Price:</Strong>
-														${{ package.price }}
-													</div>
-												</div>
-											  </label>
+								<hr class="m-t-0 m-b-10">
+								<div id="enterPromotion" style="display:none;">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group form-group-default">
+												<label class="promotion_code">Promotion Code</label>
+												<div class="controls">
+													<input name="data[promotion_code]" value="" type="text" placeholder="Promotion Code" class="form-control" id="promotion_code" onkeypress="return event.keyCode != 13;">
+												</div>											
 											</div>
+											<div class="promotion_code_error"></div>
 										</div>
-									</li>
-								</ul>
+										<div class="col-md-6">
+											<a ng-click="JsPromoCodePackages()" href="#" class="btn btn-primary m-t-10 m-m-t-0">Submit Code</a>
+										</div>
+									</div>
+									<ul class="select-package__list selected" id="packagePromotionList">
+										<li ng-repeat="package in jsPromotionCodePackages">
+											<div class="wrap">
+												<div class="radio radio-success">
+												  <input type="radio" name="data[package_id]" id="select-promoted-package-id-{{ package.package_id }}" value="{{ package.package_id }}" required>
+												  <label for="select-promoted-package-id-{{ package.package_id }}">
+													<div class="cover-img package-img" style="background-image: url({{ package.image }}); "></div>
+													<div class="label-wrap">
+														<div class="title">
+															{{ package.title }}
+														</div>
+														<div class="description">
+															{{ package.description }}
+														</div>
+														<div class="price">
+															<Strong>Price:</Strong>
+															${{ package.price }}
+														</div>
+													</div>
+												  </label>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<ul class="select-package__list selected" id="packageList">
+									<?php foreach ($aPackages as $data): ?>
+										<li>
+											<div class="wrap">
+												<div class="radio radio-success">
+												  <input type="radio" name="data[package_id]" id="select-package-id-<?php echo $data->package_id; ?>" value="<?php echo $data->package_id; ?>">
+												  <label for="select-package-id-<?php echo $data->package_id; ?>">
+													<div class="cover-img package-img" data-img="<?php echo $data->image; ?>"></div>
+													<div class="label-wrap">
+														<div class="title">
+															<?php echo $data->title; ?>
+														</div>
+														<div class="description">
+															<?php echo $data->description; ?>
+														</div>
+														<div class="price">
+															<Strong>Price:</Strong> $<?php echo $data->price; ?>
+														</div>
+													</div>
+												  </label>
+												</div>
+											</div>
+										</li>
+									<?php endforeach; ?>
+								</ul>					
 							</div>
-							<ul class="select-package__list selected m-b-5" id="packageList">
-								<?php foreach ($aPackages as $data): ?>
-									<li>
-										<div class="wrap">
-											<div class="radio radio-success">
-											  <input type="radio" name="data[package_id]" id="select-package-id-<?php echo $data->package_id; ?>" value="<?php echo $data->package_id; ?>">
-											  <label for="select-package-id-<?php echo $data->package_id; ?>">
-											  	<div class="cover-img package-img" data-img="<?php echo $data->image; ?>"></div>
-											  	<div class="label-wrap">
-													<div class="title">
-														<?php echo $data->title; ?>
-													</div>
-													<div class="description">
-														<?php echo $data->description; ?>
-													</div>
-													<div class="price">
-														<Strong>Price:</Strong> $<?php echo $data->price; ?>
-													</div>
-												</div>
-											  </label>
-											</div>
-										</div>
-									</li>
-								<?php endforeach; ?>
-							</ul>							
-						</div>                        
+							<label for="data[package_id]" class="error m-b-0 m-t-10"></label>
+						</div>
 					</div>
 				</div>
 				
@@ -132,7 +139,7 @@ if(!isUserLoggedIn())
 						<div class="form-group form-group-default">
 							<label class="first_name">First Name</label>
 							<div class="controls">
-								<input required type="text" placeholder="Name" class="form-control" name="data[first_name]" value="" id="first_name">
+								<input ng-model="first_name" required type="text" placeholder="Name" class="form-control" name="data[first_name]" value="" id="first_name">
 							</div>
 						</div>
 					</div>
@@ -140,7 +147,7 @@ if(!isUserLoggedIn())
 						<div class="form-group form-group-default">
 							<label class="last_name">Last Name</label>
 							<div class="controls">
-								<input required name="data[last_name]"   value="" type="text" placeholder="Last Name" class="form-control" id="last_name">
+								<input ng-model="last_name" required name="data[last_name]"   value="" type="text" placeholder="Last Name" class="form-control" id="last_name">
 							</div>
 						</div>
 					</div>
@@ -151,14 +158,14 @@ if(!isUserLoggedIn())
 						<div class="form-group form-group-default">
 							<label class="email">Email</label>
 							<div class="controls">
-								<input required name="data[email]"   value="" type="email" placeholder="Email" class="form-control" id="email">
+								<input ng-model="email" required name="data[email]"   value="" type="email" placeholder="Email" class="form-control" id="email">
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-group-default form-group-default-select2">
 							<label>Gender</label>
-							<select required name="data[gender]" class="select--no-search full-width" data-init-plugin="select2">
+							<select ng-model="gender" required name="data[gender]" class="select--no-search full-width" data-init-plugin="select2">
 								<?php global $gGender;
 									if(is_array($gGender) && !empty($gGender)) :
 										foreach($gGender  as $iKey  => $gender): ?>
@@ -221,14 +228,14 @@ if(!isUserLoggedIn())
 							<div class="form-group form-group-default">
 								<label class="address_mailing">Address</label>
 								<div class="controls">
-									<textarea required name="mailing[address]" value="" type="text" placeholder="Mailing Address" class="form-control h-90" id="address_mailing"></textarea>
+									<textarea ng-model="mailing_address" required name="mailing[address]" value="" type="text" placeholder="Mailing Address" class="form-control h-90" id="address_mailing"></textarea>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-group-default form-group-default-select2">
 								<label>Country</label>
-								<select required name="mailing[country]" class="full-width" data-init-plugin="select2" id="country_mailing">
+								<select ng-model="mailing_country"  required name="mailing[country]" class="full-width" data-init-plugin="select2" id="country_mailing">
 									<?php global $gCountries;
 									if(is_array($gCountries) && !empty($gCountries)) :
 										foreach($gCountries  as $iKey  => $country):  ?>
@@ -239,7 +246,7 @@ if(!isUserLoggedIn())
 							</div>
 							<div class="form-group form-group-default form-group-default-select2">
 								<label>State</label>
-								<select required name="mailing[state]" class="full-width" data-init-plugin="select2" id="state_mailing">
+								<select ng-model="mailing_state"  required name="mailing[state]" class="full-width" data-init-plugin="select2" id="state_mailing">
 										<?php global $gStates;
 									if(is_array($gStates) && !empty($gStates)) :
 										foreach($gStates  as $iKey  => $state): ?>
@@ -256,7 +263,7 @@ if(!isUserLoggedIn())
 							<div class="form-group form-group-default">
 								<label class="zip_code">Zip Code</label>
 								<div class="controls">
-									<input required name="mailing[zip_code]"   value="" type="text" placeholder="Zip Code" class="form-control" id="zip_code_mailing">
+									<input  ng-model="mailing_zip" required name="mailing[zip_code]"   value="" type="text" placeholder="Zip Code" class="form-control" id="zip_code_mailing">
 								</div>
 							</div>
 						</div>
@@ -283,7 +290,7 @@ if(!isUserLoggedIn())
 							<div class="title-with-checkbox">
 								<legend>Billing</legend>
 								<div class="checkbox check-success checkbox--inline">
-								  <input type="checkbox" checked="checked" value="1" id="billingMailingAddressSame">
+								  <input name="data[same_as_billing]" type="checkbox" ng-checked="same_as_billing"  id="billingMailingAddressSame">
 								  <label for="billingMailingAddressSame">Same as Mailing Address.</label>
 								</div>
 							</div>
@@ -291,20 +298,20 @@ if(!isUserLoggedIn())
 						</div>
 					</div>
 
-					<div class="billing-address-wrap disable" style="display: none;">
+					<div class="billing-address-wrap" >
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group form-group-default">
 									<label class="address_billing">Address</label>
 									<div class="controls">
-										<textarea required name="billing[address]" value="" type="text" placeholder="Billing Address" class="form-control h-90" id="address_billing" tabindex="-1"></textarea>
+										<textarea ng-model="billing_address" required name="billing[address]" value="" type="text" placeholder="Billing Address" class="form-control h-90" id="address_billing" tabindex="-1"></textarea>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-group-default form-group-default-select2">
 									<label>Country</label>
-									<select required name="billing[country]" class="full-width" data-init-plugin="select2" id="country_billing" tabindex="-1">
+									<select ng-model="billing_country" required name="billing[country]" class="full-width" data-init-plugin="select2" id="country_billing" tabindex="-1">
 										<?php global $gCountries;
 									if(is_array($gCountries) && !empty($gCountries)) :
 										foreach($gCountries  as $iKey  => $country):  ?>
@@ -315,7 +322,7 @@ if(!isUserLoggedIn())
 								</div>
 								<div class="form-group form-group-default form-group-default-select2">
 									<label>State</label>
-									<select required name="billing[state]" class="full-width" data-init-plugin="select2" id="state_billing" tabindex="-1">
+									<select ng-model="billing_state" required name="billing[state]" class="full-width" data-init-plugin="select2" id="state_billing" tabindex="-1">
 											<?php global $gStates;
 									if(is_array($gStates) && !empty($gStates)) :
 										foreach($gStates  as $iKey  => $state): ?>
@@ -332,7 +339,7 @@ if(!isUserLoggedIn())
 								<div class="form-group form-group-default">
 									<label class="zip_code">Zip Code</label>
 									<div class="controls">
-										<input required name="billing[zip_code]" value="" type="text" placeholder="Zip Code" class="form-control" id="zip_code_billing" tabindex="-1">
+										<input ng-model="billing_zip" required name="billing[zip_code]" value="" type="text" placeholder="Zip Code" class="form-control" id="zip_code_billing" tabindex="-1">
 									</div>
 								</div>
 							</div>
@@ -414,7 +421,28 @@ if(!isUserLoggedIn())
 <script>
 
 function registerController($scope,$http)
-{	
+{
+    $scope.first_name = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['data']['first_name'] : '';  ?>'
+    $scope.last_name = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['data']['last_name'] : '';  ?>'
+    $scope.email = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['data']['email'] : '';  ?>'
+    $scope.gender = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['data']['gender'] : 'male';  ?>'
+    
+    $scope.mailing_address = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['mailing']['address'] : '';  ?>'
+    $scope.mailing_country = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['mailing']['country'] : 'United States';  ?>'
+    $scope.mailing_state = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['mailing']['state'] : 'AL';  ?>'
+    $scope.mailing_zip = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['mailing']['zip_code'] : '';  ?>'
+    
+    $scope.billing_address = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['billing']['address'] : '';  ?>'
+    $scope.billing_country = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['billing']['country'] : 'United States';  ?>'
+    $scope.billing_state = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['billing']['state'] : 'AL';  ?>'
+    $scope.billing_zip = '<?php echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['billing']['zip_code'] : '';  ?>'
+    
+    $scope.same_as_billing =  '<?php echo (isset($aRegistrationInfo['data']['same_as_billing'])) ? $aRegistrationInfo['data']['same_as_billing'] : false;  ?>';
+    
+    
+    //$scope.package_id = '<?php //echo (!empty($aRegistrationInfo)) ? $aRegistrationInfo['data']['package_id'] : '';  ?>'
+    
+	
     $scope.JsPromoCodePackages = function()
     {
     	var PromoCode = $("#promotion_code").val();
@@ -500,23 +528,32 @@ $(function(){
 		  minlength: 8,
 		  maxlength: 10
 	   },
-	   /*'data[terms]': {
-			required: true
-	   }*/
-	 },
-	 /*errorPlacement: function(error, element) {
-		if (element.attr("name") == "data[terms]" ) {
-			error.appendTo("#termsError");
-		}else{
-			error.insertAfter(element);
-			element.parent().parent().toggleClass('has-error');
-		}
-	  },
-	  messages: {
-	    'data[terms]': {
-	      required: "You must accept Terms & Conditions to procced.",
+	   'data[package_id]': {
+		  required: true
+	   }
+	 },	
+	// highlight: function(element) {
+	//  	$(element).closest('.form-group').addClass('has-error');	 	
+	// },
+	// unhighlight: function(element) {		
+	// 	$(element).closest('.form-group').removeClass('has-error');
+	// },
+	// errorElement: 'label',
+	// errorClass: 'error',
+	// errorPlacement: function(error, element) {
+	// 	if (element.attr("name") == "data[package_id]" ) {
+	// 		error.appendTo("#package_error");
+	// 		// error.insertAfter(element.parent());
+	// 	}else{
+	// 		error.insertAfter(element);
+	// 	}
+	// }
+	 
+	 messages: {
+	    'data[package_id]': {
+	      required: "Please select a package.",
 	    }
-	  }*/
+	  }
 	};
 
 	$('#user_register').validate(userRegisterValidateRules);
@@ -546,10 +583,15 @@ $(function(){
 	// Switching between same address or not.
 
 	var tabindex = 1;
-
+        
+        toggleBillingMailingAddressTrigger();
+        
 	$('#billingMailingAddressSame').on('change', function () {
-
-		// Toggle Tabindex
+            toggleBillingMailingAddressTrigger();
+	});
+        
+        function toggleBillingMailingAddressTrigger(){
+            // Toggle Tabindex
 		if(tabindex == 0){
 			$('#billingAddress input, #billingAddress textarea, #billingAddress select').each(function () {
 				$(this).attr('tabindex', -1);
@@ -607,7 +649,7 @@ $(function(){
 			target = target.substr(target.indexOf("[") + 1);
 			$('#billingAddress [name="billing['+target+'"]').select2("val", $(this).val());
 		});
-	});
+        }
 
 	/* END - Mailing & Billing Address Same */
 	/* ============================== */

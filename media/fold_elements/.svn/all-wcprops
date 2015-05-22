@@ -1,5 +1,23 @@
 K 25
 svn:wc:ra_dav:version-url
 V 71
-/svn/ams/!svn/ver/236/branches/development/code/web/media/fold_elements
+/svn/ams/!svn/ver/807/branches/development/code/web/media/fold_elements
+END
+pc_back.jpg
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/ams/!svn/ver/799/branches/development/code/web/media/fold_elements/pc_back.jpg
+END
+pc_small_thmb.jpg
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/ams/!svn/ver/799/branches/development/code/web/media/fold_elements/pc_small_thmb.jpg
+END
+pc_front.jpg
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/ams/!svn/ver/799/branches/development/code/web/media/fold_elements/pc_front.jpg
 END

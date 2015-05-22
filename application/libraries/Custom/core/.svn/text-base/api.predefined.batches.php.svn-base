@@ -79,11 +79,23 @@ class ApiPredefinedBatches
 
     function  setBatchElementsData($aPostedData = array())
     {
-        $aErrorMessages             = array();
+        $aErrorMessages             = $aData    =   array();
 
         if($aPostedData)
         {
-            if($FoldElementsData = $aPostedData['fold_elements_data'])
+            $FoldElementsData = $aPostedData['fold_elements_data'];
+
+            if(isset($aPostedData['fold_images_data']) and $aPostedData['fold_images_data'])
+            {
+                $FoldElementsData = array_merge($FoldElementsData,$aPostedData['fold_images_data']);
+            }
+
+            if($FoldElementsData)
+            {
+                $FoldElementsData = array_values($FoldElementsData);
+            }
+
+            if($FoldElementsData)
             {
                 $iTotalRecords = count($FoldElementsData);
 
@@ -430,8 +442,8 @@ HTML;
         /* =======================================================================
          * @author : Shoaib Ahmed Khan
          * variable used as unique javascript array index in elements_html  view    */
-        global $jsArrayIndex;
-        $jsArrayIndex = 0;
+        global $jsArrayIndex,$jsArrayIndexCheckBox;
+        $jsArrayIndex = $jsArrayIndexCheckBox = 0;
         /* ========================================================================  */
 
         $hFoldHtml = '';
@@ -888,6 +900,20 @@ HTML;
     function delete($aData= array())
     {
         if($this->CI->batch->deleteBatch($aData['iBatchId']))
+        {
+            $this->result['status']     = true;
+            $this->result['message']    = CAMPAIGN.' deleted successfully.';
+        }
+        else
+        {
+            $this->result['message']    = CAMPAIGN.' delete failed.';
+        }
+        return $this->result;
+    }
+
+    function user_batch_delete($aData= array())
+    {
+        if($this->CI->batch->deleteUserBatch($aData['iBatchId']))
         {
             $this->result['status']     = true;
             $this->result['message']    = CAMPAIGN.' deleted successfully.';

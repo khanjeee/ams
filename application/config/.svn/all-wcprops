@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 70
-/svn/ams/!svn/ver/529/branches/development/code/web/application/config
+/svn/ams/!svn/ver/814/branches/development/code/web/application/config
 END
 migration.php
 K 25
@@ -62,6 +62,12 @@ K 25
 svn:wc:ra_dav:version-url
 V 84
 /svn/ams/!svn/ver/4/branches/development/code/web/application/config/user_agents.php
+END
+authorize_net.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/ams/!svn/ver/814/branches/development/code/web/application/config/authorize_net.php
 END
 routes.php
 K 25

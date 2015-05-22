@@ -84,7 +84,7 @@ SQL;
                 $sLimit = " LIMIT $offset, $recordsPerPage ";
             }
 
-            $sOrderBy = ' ORDER BY f.flag_id asc ';
+            $sOrderBy = ' ORDER BY f.flag_id DESC ';
         }
 
         $sql = <<<QUERY

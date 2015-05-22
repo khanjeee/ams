@@ -169,6 +169,12 @@ class Ajax extends CI_Controller
         $sMethod            =   $this->sMethod;
 
         $ApiPredefinedCampaigns    =   new ApiPredefinedCampaigns();
+        if($sMethod=="makeDeepCopy")
+            {
+                echo $ApiPredefinedCampaigns->$sMethod($aPostedData['user_batch_id']);
+                exit;
+            }
+            
         echo $ApiPredefinedCampaigns->$sMethod($aPostedData);
         exit;
     }

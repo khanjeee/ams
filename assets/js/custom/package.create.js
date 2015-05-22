@@ -36,12 +36,12 @@ function add_product_to_packg(element)
         $('#final_products #product-id-'+id+' .details__printing-price.editable .value').after('<div class="form-group form-group-default">'+
                                                                                                             '<label class="printing_price_'+id+'">PRINTING PRICE</label>'+
                                                                                                             '<div class="controls">'+
-                                                                                                                '<input value="'+printingPrice+'" data-a-sign="$ " placeholder="US Dollar" type="text" placeholder="Printing Price" class="form-control" id="printing_price_'+id+'" onkeypress="return event.keyCode != 13;">'+
+                                                                                                                '<input value="'+printingPrice+'" type="text" placeholder="Printing Price" class="form-control" id="printing_price_'+id+'" onkeypress="return event.keyCode != 13;">'+
                                                                                                             '</div>'+
                                                                                                       '</div>'+
                                                                                                       '<a href="#" class="btn btn-danger printing_price_cancel" data-target="'+id+'">Cancel</a> '+
                                                                                                       '<a href="#" class="btn btn-complete printing_price_done" data-target="'+id+'">Done</a>'+
-                                                                                                      '<input name="data[printing_price_'+id+']" value="'+printingPrice+'" data-a-sign="$ " type="text" placeholder="Printing Price" class="hide" id="printing_price_'+id+'_final" onkeypress="return event.keyCode != 13;">');
+                                                                                                      '<input name="template_price['+id+']" value="'+printingPrice+'" type="text" placeholder="Printing Price" class="hide" id="printing_price_'+id+'_final" onkeypress="return event.keyCode != 13;">');
         //Adding functionality to Cancel button.
         $('#final_products #product-id-'+id+' .details__printing-price.editable .printing_price_cancel').on('click', function(e) {
             e.preventDefault();
@@ -212,6 +212,11 @@ function CreatePackageFormSubmit()
             }
             
         });
+
+        $("input[data-a-sign]").each(function () {
+            $(this).val($(this).val().substring(2));
+        });
+        
         return true;
     }else{
         jQuery('.error_msg').text("Please add atleast one product");

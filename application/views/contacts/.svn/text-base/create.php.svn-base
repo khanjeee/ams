@@ -1,3 +1,19 @@
+<?php //d($aCrmFields); ?>
+<script>
+$(function() {
+    $('.datepicker__year').on('changeDate', function(ev) {
+        var parent = $(this).closest('.form-group');
+        if ($(this).valid()) {
+            parent.removeClass('has-error');
+            parent.next('.error').remove();
+        }
+    });
+    $('.datepicker__year').on('hide', function(ev) {
+        $('.datepicker__year').valid();
+    });
+});
+</script>
+
 <h1 class="heading-sty-1">Create Contact</h1>
 
 <form id="formID" enctype="multipart/form-data" action="<?php echo $sFormAction; ?>" method="post" accept-charset="utf-8"  role="form" class="form-sty-1 form-validate-1">
@@ -8,7 +24,7 @@
                 <div class="form-group form-group-default">
                     <label class="first_name">First Name</label>
                     <div class="controls">
-                        <input type="form-field text" placeholder="Name" class="validate[required] form-control" name="data[first_name]" value="" id="first_name" required>
+                        <input id="first_name" required type="text" placeholder="Name" class="validate[required] form-control" name="data[first_name]" value=""  >						
                     </div>
                 </div>
             </div>    
@@ -107,9 +123,9 @@
 
         <div class="row">
             <div class="col-md-6 col-lg-4">
-                <div class="form-group form-group-default is-readonly">
+                <div class="form-group form-group-default">
                     <label>Dob</label>
-                    <input  id="datepicker" name="data[dob]"   value="" type="text" placeholder="D.o.b" class="validate[required] form-control datepicker" required>
+                    <input id="dob_datepicker" type="text" placeholder="D.o.b" class="validate[required] form-control has-datepicker datepicker__year" name="data[dob]" value="" required>
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>    
@@ -133,22 +149,20 @@
 		    <div class="col-md-6 col-lg-4">
 				<div class="form-group form-group-default form-group-default-select2">
 					  <label>Flag</label>
-                    <select required name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
+                    <select  name="data[flags]" class="select--no-search full-width" data-init-plugin="select2">
 							<?php foreach($aFlag  as  $flag): ?>
       								<option  value='<?php echo $flag->flag_id; ?>'><?php echo $flag->title; ?></option>        								<?php endforeach; ?>
 					</select>
-				</div>				
-            </div>
+				</div>
 			<?php else : ?>	
 			<div class="col-md-6 col-lg-4">
 					 <div class="form-group form-group-default">
 						   <label>Flag</label>
 						   <a href="<?php echo site_url('flags/create'); ?>">Create a Flag</a>
 					 </div>
-				</div>
-			<?php endif;  ?> 
-			<div class="col-md-6 col-lg-4">
-				<div class="form-group form-group-default form-group-default-select2">
+			<?php endif;  ?>
+
+		<div class="form-group form-group-default form-group-default-select2">
                     <label>List</label>
                     <select name="data[list]" class="full-width" data-init-plugin="select2" required>
                         <?php foreach($aList as $key => $list): ?>
@@ -157,27 +171,71 @@
                     </select>
                 </div>
 			</div>
-		
+           <br>             
+        <?php if(!empty($aCrmFields))
+            {
+        foreach ($aCrmFields as $data)
+            {
+                if($data['field_type']== "textbox" )
+                    { ?>
+                    <div class="row">
+        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group form-group-default">
+                                <label><?php echo $data['field_label']; ?></label>
+                                <div class="controls">
+                                    <input id="first_name" 
+                                           type="text" 
+                                           placeholder="Name" 
+                                           class="validate[required] form-control" 
+                                           name="custom[<?php echo $data['field_id']; ?>]" 
+                                           required 
+                                           value=""  >						
+                                </div>
+                            </div>
+                        </div>    
+
+                    </div>    
+                    <?php 
+                    }
+                    else if($data['field_type']=="select")
+                    {
+                     $aOptions = explode(',', $data['field_default_value']);   
+                        ?>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">    
+                        <div class="form-group form-group-default form-group-default-select2">
+                        <label><?php echo $data['field_label']; ?></label>
+                        <select name="custom[<?php echo $data['field_id']; ?>]" class="full-width" data-init-plugin="select2" required>
+                            <?php foreach($aOptions as $key => $value): ?>
+                            <option value='<?php echo $value; ?>'><?php echo $value; ?></option>   
+                            <?php endforeach; ?>
+                        </select>
+                        </div>
+                        </div>
+                    </div>
+                    
+                        
+              <?php }     
+            }
+            ?>   
+           
+           
+	
+        <?php } ?>     
+
 			<br>
-			<div class="row">
+                        
+	<div class="row">
             <div class="col-md-12">
                 <input type="submit" class="btn btn-success btn-cons  m-btn-full" value="Create" onclick="">
             </div>    
         </div>
         
    </div>
+            
 </form>
 
 <!--javacript custom-->
 <!-- Commenting custom js, it was stoping left menu from working properly ~ Imran -->
-<?php echo $custom_js;  ?> 
-
-
-
-
-	
-
-
-
-
-
+<?php echo $custom_js;  ?>

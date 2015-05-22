@@ -16,8 +16,9 @@
     </div>
 </div>
 
-
-
+	
+	
+	<?php  if($aLists) { ?>
 <form action="<?php echo $sFormAction; ?>" method="post" role="form">
     <div class="row">
         <div class="col-md-12">
@@ -34,9 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        if($aLists)
-                        {
+                       <?php 
 						   foreach($aLists as $list)
                            {        
 							   
@@ -72,19 +71,8 @@
                                 </td>
                             </tr>
                             <?php
-                            }
-                        }
-                        else
-                        { ?>
-                            <!-- <tr>
-                                <td colspan="4"><?php echo MSG_NO_RECORD_FOUND; ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr> -->
-                        <?php
-                        } 
-                        ?>
+                            }?>
+                       
                     </tbody>
                 </table>
 			  
@@ -93,3 +81,11 @@
     </div>
     <!-- <div style="margin-left: 50%;"><?php echo $this->pagination->create_links(); ?></div> -->
 </form>
+
+ <?php }
+                        else
+                        { ?>
+                            <div class="no_record"><p>There are no Lists in your list, <a href="<?php echo site_url('lists/create'); ?>">Create a List </a>.</p></div>
+                        <?php
+                        } 
+                        ?>

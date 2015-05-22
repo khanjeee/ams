@@ -74,10 +74,14 @@ SQL;
             $sPhone             = $aData['phone'];
             $sWebsite           = $aData['website'];
             $sNotes             = $aData['notes'];
-			$Flag				= $aData['flags'];
+			
             $dDate              = date(DATE_FORMAT_MYSQL);
             $LoggedInUser       = getLoggedInUserId();
             
+			if(isset($aData['flags']) && !empty($aData['flags']))
+			{
+				$Flag				= $aData['flags'];
+			}
             
   
                 # Insert!
@@ -95,7 +99,7 @@ SQL;
 			
 				 
 SQL;
-               // d($SQL);
+               
                 
             }
             else
@@ -128,12 +132,15 @@ SQL;
                    
 						if ($this->db->query($SQL))
 						{
+						
+							
 							if(!$isEditMode)
 							{
 								return $this->db->insert_id();
 							}
 							else 
 							{
+								
 								return $iContactId;
 							}
 						} 
@@ -184,14 +191,10 @@ SQL;
         $aWhereClause[] = " ( c.user_id ='$iUserId' ) AND c.first_name !='' AND c.last_name !=''";
 
 		
-		
-		// Search Query!
-        if ($searchQuery) {
-            $aWhereClause[] = " ( c.flag_id='$searchQuery') ";
-        }
-		
-		
-		
+		if($searchQuery)
+		{
+			 $aWhereClause[] = " ( c.flag_id='$searchQuery') ";
+		}
 		
         $sWhereCondition = '';
         if (is_array($aWhereClause) && count($aWhereClause) > 0) {
@@ -230,7 +233,7 @@ SQL;
 		 $sLimit 
 		
 QUERY;
-		
+		#debug($sql);
         if ($result = $this->db->query($sql))
         {
             if ($returnCount)
@@ -268,9 +271,11 @@ QUERY;
     }
 
     function addMembersToList($aData= array())
-    {
+    { 
         if ($aData)
         {
+			
+			
             $iUserId                = getLoggedInUserId();
             $iListId                = $aData['iListId'];
 
@@ -298,7 +303,7 @@ QUERY;
                  )
                   $sInnerValue
 SQL;
-                    #d($sInsertSQL);
+                 
                     if($sInsertSQL)
                     {
                         if($this->db->query($sInsertSQL))
@@ -307,6 +312,8 @@ SQL;
                         }
                     }
                 }
+				 
+				
         }
         return false;
     }
@@ -322,18 +329,18 @@ SQL;
 			$dCreated				= getDatabaseDate();
 			$isEditMode				= $aData['isEditMode'];
 			
-			if($isEditMode)
-            {
-				$SQL = <<<SQL
-					UPDATE list_members
-						SET
-						  list_id = '$iListId',
-						  last_updated_on = '$dCreated'
-						WHERE contact_id = '$iContactId';
-SQL;
-			}
-			else
-			{
+//			if($isEditMode)
+//            {
+//				$SQL = <<<SQL
+//					UPDATE list_members
+//						SET
+//						  list_id = '$iListId',
+//						  last_updated_on = '$dCreated'
+//						WHERE contact_id = '$iContactId';
+//SQL;
+//			}
+//			else
+//			{
 				$SQL = <<<SQL
 					INSERT INTO list_members
 					(user_id,
@@ -345,11 +352,22 @@ SQL;
 						 '$iContactId',
 						 '$dCreated' );
 SQL;
-			}
+			//}
+			
+			
+			
 			if ($this->db->query($SQL))
 			{
-				return $this->db->affected_rows();
+				//if(!$isEditMode)
+				//{
+					return $this->db->insert_id();
+				//}
+//				else 
+//				{
+//					return $iContactId;
+//				}
 			}
+
 			
 	}
 	

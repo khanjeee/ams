@@ -112,7 +112,8 @@ SQL;
                 {
                     foreach($Template as $TemplateId)
                     {
-                        $aInnerValues[] = "('$iPackage','$iProductId','$TemplateId','".getDatabaseDate()."','$iUserId')";
+                        $TemplatePrice = trim($aData['template_price'][$TemplateId]);
+                        $aInnerValues[] = "('$iPackage','$iProductId','$TemplateId','$TemplatePrice', '".getDatabaseDate()."','$iUserId')";
                     }
                 }
 
@@ -126,6 +127,7 @@ SQL;
                       package_id,
                       product_id,
                       template_id,
+                      template_price,
                       created_on,
                       created_by
                      )
@@ -434,7 +436,7 @@ QUERY;
     
     
     public function getAllPackagesDropDown()
-     {
+    {
          $result    =       array();
 
          $SQL = <<<DATA
@@ -474,5 +476,29 @@ SQL;
         }
 
         return false;
+    }
+	
+	
+	
+	public function getPackagesModules($iPackageId)
+    {
+		 $Row = array();
+         $SQL = <<<DATA
+				SELECT pm.package_module_id, pm.module_id 
+				FROM   package_modules pm, modules m 
+				WHERE  pm.package_id = $iPackageId
+				AND    pm.module_id = m.module_id 
+				 
+DATA;
+         if ($result = $this->db->query($SQL))
+        {
+            $Row =  $result->row('module_id');
+            if($Row) return true;
+        }
+        return false;
+		
+//			SELECT package_module_id, module_id 
+//				FROM package_modules 
+//				WHERE package_id = $iPackageId
     }
 }

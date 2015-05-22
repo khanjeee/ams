@@ -312,4 +312,23 @@ class Predefined_Batches extends CI_Controller
         redirect($this->controller.'/view');
         exit;
     }
+
+    public function user_batch_delete($iBatchId=0)
+    {
+        $data                   =   array();
+        $data['iBatchId']       =   $iBatchId;
+        $result                 =   $this->ApiPredefinedBatches->user_batch_delete($data);
+
+        if($result['status'])
+        {
+            return setMessage($result['status'], array('message' =>  getFormValidationSuccessMessage(MSG_DELETE_SUCCESS), 'redirectUrl'  =>  site_url('predefined_campaigns/view')));
+        }
+        else
+        {
+            return  setMessage($result['status'], array('message' =>  getFormValidationErrorMessage(ERROR_DELETE_FAILURE), 'redirectUrl'  =>  site_url('predefined_campaigns/view')));
+        }
+
+        redirect('predefined_campaigns/in_use');
+        exit;
+    }
 }

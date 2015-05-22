@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 61
-/svn/ams/!svn/ver/639/branches/development/code/web/assets/js
+/svn/ams/!svn/ver/836/branches/development/code/web/assets/js
 END
 jquery-1.8.2.min.js
 K 25
@@ -27,17 +27,17 @@ svn:wc:ra_dav:version-url
 V 73
 /svn/ams/!svn/ver/534/branches/development/code/web/assets/js/calendar.js
 END
-jquery-ui.min.js
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/svn/ams/!svn/ver/89/branches/development/code/web/assets/js/jquery-ui.min.js
-END
 JSAjaxFileUploader.js
 K 25
 svn:wc:ra_dav:version-url
 V 83
 /svn/ams/!svn/ver/424/branches/development/code/web/assets/js/JSAjaxFileUploader.js
+END
+jquery-ui.min.js
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ams/!svn/ver/89/branches/development/code/web/assets/js/jquery-ui.min.js
 END
 bootstrap.js
 K 25
@@ -57,29 +57,29 @@ svn:wc:ra_dav:version-url
 V 76
 /svn/ams/!svn/ver/534/branches/development/code/web/assets/js/pages.email.js
 END
-bootstrap-datetimepicker.min.js
-K 25
-svn:wc:ra_dav:version-url
-V 92
-/svn/ams/!svn/ver/89/branches/development/code/web/assets/js/bootstrap-datetimepicker.min.js
-END
 scripts.js
 K 25
 svn:wc:ra_dav:version-url
 V 72
 /svn/ams/!svn/ver/255/branches/development/code/web/assets/js/scripts.js
 END
-npm.js
+bootstrap-datetimepicker.min.js
 K 25
 svn:wc:ra_dav:version-url
-V 66
-/svn/ams/!svn/ver/4/branches/development/code/web/assets/js/npm.js
+V 92
+/svn/ams/!svn/ver/89/branches/development/code/web/assets/js/bootstrap-datetimepicker.min.js
 END
 jquery-ui.js
 K 25
 svn:wc:ra_dav:version-url
 V 73
 /svn/ams/!svn/ver/89/branches/development/code/web/assets/js/jquery-ui.js
+END
+npm.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/ams/!svn/ver/4/branches/development/code/web/assets/js/npm.js
 END
 jquery-1.10.2.js
 K 25

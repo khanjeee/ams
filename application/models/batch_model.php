@@ -9,7 +9,7 @@ class Batch_Model extends CI_Model
     }
 
     function createBatch($aData = array())
-    { 
+    {
         if ($aData)
         {
             $isEditMode         = $aData['isEditMode'];
@@ -57,7 +57,7 @@ SQL;
 				 
 SQL;
             }
-            
+
             if ($this->db->query($SQL))
             {
                return ($isEditMode) ? $iBatchId : $this->db->insert_id() ;
@@ -105,11 +105,8 @@ SQL;
     
     function createBatchList($aData = array())
     {
-         
-         
         if ($aData)
         {
-            
             $bisEditMode = false;
             $aLists      = $aData['aList'];
             $iUserId     = getLoggedInUserId();
@@ -117,8 +114,6 @@ SQL;
             $iCampaignId = $aData['campaign_id'];
             $dDate       = date(DATE_FORMAT_MYSQL);
             
-            
-
             if($aLists)
             {
                 $aInnerValues = array();
@@ -133,25 +128,21 @@ SQL;
                 }
                 
                 //d($aInnerValues);
-               if(!empty($aInnerValues))
-                {   
+                if(!empty($aInnerValues))
+                {
                    $sInnerValues = implode(',',$aInnerValues);
                     $sInsertSQL  = <<<SQL
-                    
+
                     INSERT INTO campaign_batches_lists
-                      $sInnerKeys 
-                     VALUES     
+                      $sInnerKeys
+                     VALUES
                       $sInnerValues
 SQL;
-                   
-                        $this->db->query($sInsertSQL);        
-                return $this->db->affected_rows();
-                                
-                        
-                    
+
+                        $this->db->query($sInsertSQL);
+                        return $this->db->affected_rows();
                 }
            }
-           
         }
 
         return false;
@@ -360,7 +351,8 @@ SQL;
                         te.html_control_type,
                         tfe.element_position,
                         tfe.element_label,
-                        tfe.template_fold_id
+                        tfe.template_fold_id,
+                        tfe.element_default_value
                 FROM
                                         template_elements te
                 INNER JOIN 		template_fold_elements tfe ON tfe.template_element_id= te.template_element_id
@@ -1072,7 +1064,7 @@ SQL;
     
     function getBatchesForCuttOff()
     {
-         $this->db->select('campaign_batch_id');       
+         $this->db->select('campaign_batch_id,user_id,total_printing_cost');       
          $this->db->where('cut_off_date',date(DATE_ONLY_FORMAT_MYSQL,time()));
          $this->db->where('current_status',"".BATCH_IS_IN_EDIT_MODE);
          $query = $this->db->get('campaign_batches');

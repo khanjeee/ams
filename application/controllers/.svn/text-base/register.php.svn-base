@@ -36,6 +36,7 @@ class Register extends CI_Controller {
 
         if ($this->input->post())
         {
+            
             $redirectUrlVerify = site_url($this->controller . '/verify');
 
             $aPostedData = $this->input->post('data');
@@ -64,11 +65,14 @@ class Register extends CI_Controller {
             $sBillingState = $aBillingData['state'];
             $sBillingZipCode = $aBillingData['zip_code'];
 
-            $sPackageId = $aPostedData['package_id'];
+            $sPackageId = (isset($aPostedData['package_id'])) ? $aPostedData['package_id'] : 0;
             $sPromotionCode = $aPostedData['promotion_code'];
 
             $aErrorMessages = array();
-
+            
+            if (!is_numeric($sPackageId) or empty($sPackageId)) {
+                $aErrorMessages[] = ERROR_PACKAGE_REQUIRED;
+            }
             if (!$sMailingAddress) {
                 $aErrorMessages[] = ERROR_ADDRESS_MAILING_REQUIRED;
 
@@ -83,10 +87,6 @@ class Register extends CI_Controller {
 
             if ($sPassword != $sConfirmPassword) {
                 $aErrorMessages[] = ERROR_PASSWORD_DONOT_MATCH;
-            }
-
-            if (!is_numeric($sPackageId) or empty($sPackageId)) {
-                $aErrorMessages[] = ERROR_PACKAGE_REQUIRED;
             }
 
             if (!filter_var($sEmail, FILTER_VALIDATE_EMAIL)) {
@@ -106,9 +106,16 @@ class Register extends CI_Controller {
 			
             if ($aErrorMessages)
             {
-                return setMessage(false, array('message' => $aErrorMessages, 'redirectUrl' => $sFormAction));
+                $aRegistrationInfo['message']       =   getFormValidationErrorMessage($aErrorMessages);
+		$aRegistrationInfo['data']          =	$aPostedData;
+                $aRegistrationInfo['mailing']       =   $aMailingData;
+                $aRegistrationInfo['billing']       =   $aBillingData;
+                        
+                //return setMessage(false, array('message' => $aErrorMessages, 'redirectUrl' => $sFormAction));
             }
-
+            
+            else
+            {
             $aData['mailing'] = $aMailingData;
             $aData['billing'] = $aBillingData;
 
@@ -116,18 +123,18 @@ class Register extends CI_Controller {
 
             if ($aInsertedIds)
             {
-				
                 $aPostedData['inserted_values'] = $aInsertedIds;
-				$aPostedData['image']	= 	$aUploadImageResponce['file_name'];
+		$aPostedData['image']	= 	$aUploadImageResponce['file_name'];
 				
-			
-                $result = $this->ApiRegister->addSubscriber($aPostedData);
+		$result = $this->ApiRegister->addSubscriber($aPostedData);
 
                 if ($result['status'])
                 {
                     $aPostedData['hash'] = _encrypt_with_url_decode($aPostedData['email']);
                     SendEmail(__FUNCTION__, $aPostedData);
-                    return setMessage($result['status'], array('message' => getFormValidationSuccessMessage($result['message']), 'redirectUrl' => $redirectUrlVerify));
+                    return setMessage($result['status'],
+                                      array('message' => getFormValidationSuccessMessage($result['message']),
+                                            'redirectUrl' => $redirectUrlVerify));
                 }
                 else
                 {
@@ -135,8 +142,12 @@ class Register extends CI_Controller {
                     return setMessage($result['status'], array('message' => $htmlErrorMessages, 'redirectUrl' => $sFormAction));
                 }
             }
-
+            
             return setMessage(false, array('message' => $result['message'], 'redirectUrl' => $sFormAction));
+            }
+            
+
+            
 
         }
 
@@ -158,6 +169,8 @@ class Register extends CI_Controller {
 
         $data['sFormAction'] = site_url($sFormAction);
         $data['aPackages'] = $aPackages;
+        $data['aRegistrationInfo'] = isset($aRegistrationInfo) ? $aRegistrationInfo : null;
+        
         $this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
     }
 	

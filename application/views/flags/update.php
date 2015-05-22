@@ -1,4 +1,4 @@
-<h1 class="heading-sty-1">Edit Flags</h1>
+<h1 class="heading-sty-1">Edit Flag</h1>
 
 <?php if($aFlags) : 
     $flag = $aFlags[0];

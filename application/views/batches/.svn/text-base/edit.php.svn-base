@@ -44,7 +44,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
   $scope.next_button        = true;
   $scope.finish_button       = false;
   
-  //$scope.element_value      = '';
+  $scope.fold_default_images=  [];
   $scope.element_array      =  [];
   
   $scope.active_tab = 1;
@@ -205,6 +205,46 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
         
     });
     
+     $scope.useDefaultImage =function (index,element,fold_id,element_id,image_url,element_position,html_element_id)
+    {
+     $scope.arrIndex = parseInt(index);
+     $scope.default_image = '<?php echo site_url('media/fold_elements'); ?>/'+image_url;
+     
+     //removing item from array incae its false   
+     if(element)
+        {
+            
+            $scope.fold_default_images.splice($scope.arrIndex,1); 
+            $('#element_'+html_element_id).addClass('ajax_uploaded_image');
+            $('#element_img_'+html_element_id).html('');
+            //enable the upaod field incase default is unchecked
+            $('#element_'+html_element_id+' .JSFileChoos input').prop("disabled", false);
+        }
+      else
+        {
+            $('#element_'+html_element_id).removeClass('ajax_uploaded_image');
+            $('#element_img_'+html_element_id).html('<img width="250" height="250" src="'+$scope.default_image+'" class="m-b-20 has-border">');
+            
+            //removing error class in case dafault image
+            $('#element_'+html_element_id).removeClass('error');
+            $('#element_'+html_element_id+' .JSpreveiw').text('').removeClass('error');
+            //disable the upaod field incase default is selected
+            $('#element_'+html_element_id+' .JSFileChoos input').prop("disabled", true);
+            
+            $scope.imgObj = {};
+            $scope.imgObj.element_data         = image_url;
+            $scope.imgObj.template_element_id  = element_id;
+            $scope.imgObj.template_fold_id     = fold_id;
+            $scope.imgObj.element_position     = element_position;
+            $scope.imgObj.template_id          = $scope.selected_template_id;
+            $scope.imgObj.campaign_batch_id    = $scope.batch_id;
+
+            //$scope.element_array.splice(index,1, obj); 
+            $scope.fold_default_images[$scope.arrIndex]= $scope.imgObj ;   
+        }  
+     //console.log($scope.fold_default_images); 
+    }
+   
     
     //called when the next button is clicked
     $scope.submit_form = function(selected_tab) 
@@ -352,7 +392,7 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
             //nulling the validation array error_upload_content
             $scope.error_upload_content = [];
             
-            
+            var focus_animation = true;
             angular.forEach(models, function(value,key) 
                 {   
                     //client side validation for empty fileds on upload content
@@ -362,6 +402,14 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
                     //true if model is undefiend or empty
                     if(angular.isUndefined($scope[val_ng_model]) || angular.equals($scope[val_ng_model],'') )
                             {
+                                if(focus_animation)
+                                {
+                                    $('html, body').animate({ scrollTop: $(value).offset().top - 100 }, 
+                                                              'slow', function() { $(value).focus(); }
+                                                           );  
+                                    //disabling the animation for more errors
+                                    focus_animation =   false;
+                                }
                                 //making error_{model} true to show validation errors
                                 $scope['error_'+val_ng_model] = true ;
                                 //pushing random item in array to check validation on the basis of array
@@ -384,12 +432,22 @@ app.controller('MainCtrl',function(tags,$scope,$http,$compile,$parse)
                     return false;
                 }
             
+            $scope.temp = [];
+            //removing undefined values set by default image chakboxes 
+            angular.forEach($scope.fold_default_images, function(item) 
+            {
+                $scope.temp.push(item);
+            });
             
              var request = 
              {
                  method: 'POST',
                  url:    '<?php echo $sFormAction; ?>',
-                 data:   {method:'setBatchElementsData',fold_elements_data:$scope.element_array,meta_field:true}
+                 data:   {  method:'setBatchElementsData',
+                            fold_elements_data:$scope.element_array,
+                            fold_images_data:$scope.temp,
+                            meta_field:true
+                          }
               };
               
               

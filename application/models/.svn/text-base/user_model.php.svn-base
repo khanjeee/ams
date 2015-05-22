@@ -168,13 +168,13 @@ SQL;
      */
 
     private function _defaultUserLogin($sType = "", $aData = array()) {
-        if ($aData) {
-            $sLoginKey = trim($aData['login_key']);
-            $sLoginValue = trim($aData['key_value']);
-            $sLoginSecret = trim($aData['login_secret']);
-            $sSecretValue = md5(trim($aData['secret_value']));
+        if ($aData) 
+		{
+            $sLoginKey		= trim($aData['login_key']);
+            $sLoginValue	= trim($aData['key_value']);
+            $sLoginSecret	= trim($aData['login_secret']);
+            $sSecretValue	= md5(trim($aData['secret_value']));
 			
-
             $SQL = <<<SQL
 
                 SELECT

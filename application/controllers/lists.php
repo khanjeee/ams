@@ -272,7 +272,7 @@ class Lists extends CI_Controller
 
                 if($result)
                 {
-                   return setMessage($result['status'], array('message' =>  getFormValidationSuccessMessage($result['message']),
+                   return setMessage($result['status'], array('message' =>  getFormValidationErrorMessage($result['message']),
                                                  'redirectUrl'  =>  site_url($this->controller.'/view')));
                 }
                

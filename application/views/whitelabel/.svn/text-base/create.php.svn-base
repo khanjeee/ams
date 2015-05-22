@@ -217,7 +217,7 @@
         </div>
         
 	<div class="row">
-			<div class="col-md-12 m-t-20">
+			<div class="col-md-12 m-t-20 m-m-t-0">
         <input type="hidden" name="whitelabel[whitelabel_id]"   value="<?php echo (isset($aWhiteLabelInfo['whitelabel_id'])) ? $aWhiteLabelInfo['whitelabel_id'] : ''; ?>">
         <input type="submit" class="btn btn-success m-btn-full btn-cons" value="Save" name="btnSubmit">
 			</div>
