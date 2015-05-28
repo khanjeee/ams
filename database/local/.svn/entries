@@ -1,15 +1,15 @@
 10
 
 dir
-860
+861
 http://192.175.0.245/svn/ams/branches/development/code/web/database/local
 http://192.175.0.245/svn/ams
 
 
 
-2015-02-12T13:22:29.169439Z
-202
-umair.ahmed
+2015-05-28T16:13:49.845809Z
+861
+shoaib.ahmed
 
 
 
@@ -59,6 +59,40 @@ umair.ahmed
 
 
 23857
+
+ams_v2.2.sql
+file
+
+
+
+
+2015-05-28T16:17:51.517604Z
+99d1f4a1c8f0ae3d85588aa20a66226c
+2015-05-28T16:13:49.845809Z
+861
+shoaib.ahmed
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+466
 
 ams-v.2.0[Include-Campaign-Template-Elements-Schema].sql
 file

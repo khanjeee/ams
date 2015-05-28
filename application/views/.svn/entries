@@ -1,7 +1,7 @@
 10
 
 dir
-860
+861
 http://192.175.0.245/svn/ams/branches/development/code/web/application/views
 http://192.175.0.245/svn/ams
 
@@ -35,19 +35,19 @@ dir
 crm
 dir
 
-email_template
-dir
-
 milestones
 dir
 
-register
+email_template
+dir
+
+roles
 dir
 
 crons
 dir
 
-roles
+register
 dir
 
 tasks

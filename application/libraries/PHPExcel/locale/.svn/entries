@@ -1,7 +1,7 @@
 10
 
 dir
-860
+861
 http://192.175.0.245/svn/ams/branches/development/code/web/application/libraries/PHPExcel/locale
 http://192.175.0.245/svn/ams
 
@@ -38,13 +38,13 @@ dir
 ru
 dir
 
-sv
+bg
 dir
 
 de
 dir
 
-bg
+sv
 dir
 
 fi
@@ -56,10 +56,10 @@ dir
 cs
 dir
 
-fr
+es
 dir
 
-es
+fr
 dir
 
 nl
