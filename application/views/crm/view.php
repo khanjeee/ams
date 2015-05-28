@@ -35,8 +35,8 @@
 								$DeleteUrl          =   $sDeleteAction.'/'.$crm['user_crm_meta_field_id']; ?>
                             <tr>
                                 <td><?php echo  ucfirst($crm['html_control_type']); ?></td>
-                                <td><?php echo  $crm['field_label']; ?></td>
-                                <td><?php echo  $crm['field_default_value']; ?></td>
+                                <td><?php echo  ucfirst($crm['field_label']); ?></td>
+                                <td><?php echo  ($crm['field_default_value'])? $crm['field_default_value']:' -- '; ?></td>
                                 <td>
                                     <ul class="actions-sty-1 no-line-break">                                       
 										 <li><a class="fa" href="<?php echo $EditUrl; ?>"></a></li>

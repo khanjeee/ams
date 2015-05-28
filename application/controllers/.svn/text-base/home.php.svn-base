@@ -99,7 +99,21 @@ class Home extends CI_Controller
             }
         }
 
-        $Data['aCutOffBatches']             =   $aBatchDetails;
+        $Data['aCutOffBatches']                             =   $aBatchDetails;
+        $Data['aScheduledBatches']                          =   array();
+
+        $LoggedInUserData = getLoggedInUserData();
+
+        if($LoggedInUserData['role_id'] == ROLE_ID_SUBSCRIBER)
+        {
+            if($aBatches = $this->batch->getScheduledBatches($LoggedInUserData))
+            {
+                foreach($aBatches as $k => $v)
+                {
+                    $Data['aScheduledBatches'][]  = $this->batch->getBatchSummary($v['campaign_batch_id']);
+                }
+            }
+        }
 
         $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/dashboard',$Data);
 	}

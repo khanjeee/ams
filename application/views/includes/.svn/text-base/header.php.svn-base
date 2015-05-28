@@ -395,27 +395,48 @@
                     </li>
                 </ul>
             </li>
-            <li class="m-t-30 has-submenu">
+           
+
+			
+				
+				
+				
+				
+				
+        <!--ONLY FOR SUPER ADMIN END-->
+                <?php } ?>
+		 <li class="m-t-30 has-submenu">
                     <a href="#" class="detailed">
                         <span class="title">Milestones</span>
                         <i class="c-icon icon-create-package c-icon--white-label"></i>
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a href="<?php echo site_url('roles/create'); ?>">Create<span class="icon-thumbnail"></span></a>                                
+                            <a href="<?php echo site_url('milestones/create'); ?>">Create<span class="icon-thumbnail"></span></a>                                
                         </li>
                         <li>
-                            <a href="<?php echo site_url('roles/view'); ?>">View<span class="icon-thumbnail"></span></a>                                
+                            <a href="<?php echo site_url('milestones/view'); ?>">View<span class="icon-thumbnail"></span></a>                                
                         </li>                            
                     </ul>
                 </li>
-        
-        <!--ONLY FOR SUPER ADMIN END-->
-                <?php
-                
-                }
-
-                ?>
+		
+			 <li class="m-t-30 has-submenu">
+                    <a href="#" class="detailed">
+                        <span class="title">Tasks</span>
+                        <i class="c-icon icon-create-package c-icon--white-label"></i>
+                    </a>
+                    <ul class="sub-menu">
+<!--                        <li>
+                            <a href="<?php echo site_url('tasks/create'); ?>">Create<span class="icon-thumbnail"></span></a>                                
+                        </li>-->
+                        <li>
+                            <a href="<?php echo site_url('tasks/view'); ?>">View<span class="icon-thumbnail"></span></a>                                
+                        </li>                            
+                    </ul>
+                </li>
+		
+		
+		
 		
 		<?php 
 		$aUserData   = (object)getLoggedInUserData();

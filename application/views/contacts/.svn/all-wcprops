@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 78
-/svn/ams/!svn/ver/848/branches/development/code/web/application/views/contacts
+/svn/ams/!svn/ver/859/branches/development/code/web/application/views/contacts
 END
 import.php
 K 25
@@ -13,7 +13,7 @@ view.php
 K 25
 svn:wc:ra_dav:version-url
 V 87
-/svn/ams/!svn/ver/840/branches/development/code/web/application/views/contacts/view.php
+/svn/ams/!svn/ver/859/branches/development/code/web/application/views/contacts/view.php
 END
 update.php
 K 25
@@ -32,4 +32,16 @@ K 25
 svn:wc:ra_dav:version-url
 V 94
 /svn/ams/!svn/ver/553/branches/development/code/web/application/views/contacts/import_view.php
+END
+reminder.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/ams/!svn/ver/854/branches/development/code/web/application/views/contacts/reminder.php
+END
+add_milestone.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/ams/!svn/ver/859/branches/development/code/web/application/views/contacts/add_milestone.php
 END

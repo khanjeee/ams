@@ -1072,5 +1072,26 @@ SQL;
          return $query->result_array();
          
     }
-    
+
+    function getScheduledBatches($aUser = array())
+    {
+        $iUserId    =   $aUser['user_id'];
+        $dToday     =   date('Y-m-d');
+
+        $SQL = <<<SQL
+
+            SELECT
+                        campaign_batch_id
+                FROM
+                        campaign_batches
+                WHERE
+                              user_id='$iUserId'
+                        AND   schedule_date IS NOT NULL
+                        AND   schedule_date >= '$dToday'
+
+
+SQL;
+        $Result   =   $this->db->query($SQL);
+        return $Result->result_array();
+    }
 }

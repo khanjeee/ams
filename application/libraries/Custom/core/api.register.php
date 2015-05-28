@@ -14,7 +14,7 @@ class ApiRegister {
 
    
 	public function addSubscriber($aData= array())
-        {
+    {
         //d($aData);
          $aPostedData   = $aData ;
            
@@ -27,14 +27,16 @@ class ApiRegister {
         
         {
             //$aDataToSave                = array('aData' => $aData,'isEditMode' => false);
-            // d($aDataToSave);
-            $iPackageId                 = $CI->users->addSubscriber(__FUNCTION__, $aPostedData);
+          
+            $iUserId                 = $CI->users->addSubscriber(__FUNCTION__, $aPostedData);
             
-                      
-
-            if($iPackageId)
+			
+			
+			if($iUserId)
             {
-				 $CI->list->addMasterList($iPackageId);
+				$Milestone = $this->hook_milestone($iUserId);
+				
+				$CI->list->addMasterList($iUserId);
 				
                 $this->result['status']     = true;
                 $this->result['message']    = MSG_SUCCESS_SUBSCRBER_ADDED;
@@ -42,6 +44,34 @@ class ApiRegister {
         }
           
 		return $this->result;
+	}
+	
+	
+	function hook_milestone($iUserId)
+	{
+		 $CI = & get_instance();
+		 $CI->load->model('milestone_model','milestone');
+		
+		 $aMilestones =  $CI->milestone->getMilestoneByUserId(USER_ID_ADMINISTRATOR);
+		
+		 if(is_array($aMilestones) && !empty($aMilestones))
+		 {
+			foreach ($aMilestones as $key => $value) 
+			{
+				$task =   $CI->milestone->getMilestoneByMilestoneId($value->milestones_id);
+				  if($task)
+				  {
+					    $aMilestones[$key]->task = $task;
+				  }
+				
+			}
+		 }
+		 
+		
+		 if(is_array($aMilestones) && !empty($aMilestones))
+		 {
+			 return $CI->milestone->CopyMilestoneByNewUserId($aMilestones,$iUserId);
+		 }
 	}
         
     function updateSubscriberStaus($aData= array())

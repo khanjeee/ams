@@ -52,9 +52,9 @@
                             <div class="t-row">
                                 <div class="t-col">
                                     <div class="name-and-actions">
-                                        <a href="#" class="name"><?php echo word_limiter($oPackagesInfo->title,4); ?></a>
+                                        <a class="name"><?php echo word_limiter($oPackagesInfo->title,4); ?></a>
                                         <div class="actions">
-                                            <a href="#" class="fa edit"></a>
+                                            <!--<a href="#" class="fa edit"></a>-->
                                             <a href="javascript:void(0);" class="fa delete" onclick="return confirmDelete('<?php echo $sCallFrom; ?>','<?php echo $sDeleteAction.'/'.$oPackagesInfo->package_id; ?>');"></a>
                                         </div>
                                     </div>

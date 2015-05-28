@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 75
-/svn/ams/!svn/ver/847/branches/development/code/web/application/controllers
+/svn/ams/!svn/ver/860/branches/development/code/web/application/controllers
 END
 error.php
 K 25
@@ -21,11 +21,11 @@ svn:wc:ra_dav:version-url
 V 85
 /svn/ams/!svn/ver/723/branches/development/code/web/application/controllers/flags.php
 END
-predefined_batches.php
+orders.php
 K 25
 svn:wc:ra_dav:version-url
-V 98
-/svn/ams/!svn/ver/773/branches/development/code/web/application/controllers/predefined_batches.php
+V 86
+/svn/ams/!svn/ver/818/branches/development/code/web/application/controllers/orders.php
 END
 lists.php
 K 25
@@ -33,11 +33,11 @@ svn:wc:ra_dav:version-url
 V 85
 /svn/ams/!svn/ver/759/branches/development/code/web/application/controllers/lists.php
 END
-orders.php
+predefined_batches.php
 K 25
 svn:wc:ra_dav:version-url
-V 86
-/svn/ams/!svn/ver/818/branches/development/code/web/application/controllers/orders.php
+V 98
+/svn/ams/!svn/ver/773/branches/development/code/web/application/controllers/predefined_batches.php
 END
 users.php
 K 25
@@ -45,17 +45,17 @@ svn:wc:ra_dav:version-url
 V 85
 /svn/ams/!svn/ver/840/branches/development/code/web/application/controllers/users.php
 END
-whitelabel_campaigns.php
-K 25
-svn:wc:ra_dav:version-url
-V 100
-/svn/ams/!svn/ver/578/branches/development/code/web/application/controllers/whitelabel_campaigns.php
-END
 campaigns.php
 K 25
 svn:wc:ra_dav:version-url
 V 89
 /svn/ams/!svn/ver/637/branches/development/code/web/application/controllers/campaigns.php
+END
+whitelabel_campaigns.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/ams/!svn/ver/578/branches/development/code/web/application/controllers/whitelabel_campaigns.php
 END
 products.php
 K 25
@@ -75,23 +75,23 @@ svn:wc:ra_dav:version-url
 V 87
 /svn/ams/!svn/ver/595/branches/development/code/web/application/controllers/batches.php
 END
-contacts.php
-K 25
-svn:wc:ra_dav:version-url
-V 88
-/svn/ams/!svn/ver/843/branches/development/code/web/application/controllers/contacts.php
-END
 packages.php
 K 25
 svn:wc:ra_dav:version-url
 V 88
 /svn/ams/!svn/ver/540/branches/development/code/web/application/controllers/packages.php
 END
+contacts.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/ams/!svn/ver/859/branches/development/code/web/application/controllers/contacts.php
+END
 test.php
 K 25
 svn:wc:ra_dav:version-url
 V 84
-/svn/ams/!svn/ver/789/branches/development/code/web/application/controllers/test.php
+/svn/ams/!svn/ver/860/branches/development/code/web/application/controllers/test.php
 END
 whitelabel.php
 K 25
@@ -104,6 +104,12 @@ K 25
 svn:wc:ra_dav:version-url
 V 83
 /svn/ams/!svn/ver/847/branches/development/code/web/application/controllers/crm.php
+END
+milestones.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/ams/!svn/ver/859/branches/development/code/web/application/controllers/milestones.php
 END
 ajax.php
 K 25
@@ -135,6 +141,12 @@ svn:wc:ra_dav:version-url
 V 85
 /svn/ams/!svn/ver/817/branches/development/code/web/application/controllers/crons.php
 END
+tasks.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/ams/!svn/ver/850/branches/development/code/web/application/controllers/tasks.php
+END
 predefined_campaigns.php
 K 25
 svn:wc:ra_dav:version-url
@@ -145,5 +157,5 @@ home.php
 K 25
 svn:wc:ra_dav:version-url
 V 84
-/svn/ams/!svn/ver/824/branches/development/code/web/application/controllers/home.php
+/svn/ams/!svn/ver/856/branches/development/code/web/application/controllers/home.php
 END

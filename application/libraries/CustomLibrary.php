@@ -50,9 +50,13 @@ class CustomLibrary
         include('Custom/core/api.whitelabel.php');
         include('Custom/core/api.flag.php');
         include('Custom/core/api.predefined.campaigns.php');
-		include('Custom/core/api.predefined.batches.php');
-		include('Custom/core/api.payment.php');
-		include('Custom/core/api.crm.php');
+        include('Custom/core/api.predefined.batches.php');
+	include('Custom/core/api.payment.php');
+	include('Custom/core/api.crm.php');
+	include('Custom/core/api.milestone.php');
+	include('Custom/core/api.task.php');
+        include('Custom/core/api.authorizedotnet.php');
+        
 		
         
         

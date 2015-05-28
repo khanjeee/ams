@@ -494,8 +494,15 @@
     <script src="<?php echo getAssetsPath(); ?>plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="<?php echo getAssetsPath(); ?>plugins/jquery-actual/jquery.actual.min.js"></script>
     <script src="<?php echo getAssetsPath(); ?>plugins/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
     <script src="<?php echo getAssetsPath(); ?>plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
-    <script src="<?php echo getAssetsPath(); ?>plugins/bootstrap-datepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>    
+    <script src="<?php echo getAssetsPath(); ?>plugins/bootstrap-datepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+    
+    <!-- DateTime Picker -->
+    <script src="<?php echo getAssetsPath(); ?>plugins/moment/moment.min.js" type="text/javascript"></script>    
+    <script src="<?php echo getAssetsPath(); ?>plugins/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
+    
     <script src="<?php echo getAssetsPath(); ?>plugins/magnific-popup-master/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
     <script src="<?php echo getAssetsPath(); ?>plugins/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
     <script src="<?php echo getAssetsPath(); ?>plugins/bootstrap-select2/select2.min.js" type="text/javascript" ></script>

@@ -21,7 +21,8 @@ class Contacts extends CI_Controller {
 		$this->load->model('country_model', 'countries');
 		$this->load->model('list_model','list');
 		$this->load->model('flag_model','flag');
-                $this->load->model('crm_model','crm');
+		$this->load->model('crm_model','crm');
+		$this->load->model('milestone_model','milestone');
 		$this->load->library('upload', $aContactImportConfig);
 		$this->load->library('phpexcel');
 		$this->load->library('PHPExcel/iofactory');
@@ -32,7 +33,28 @@ class Contacts extends CI_Controller {
     {
         redirect($this->controller.'/view');
     }
-
+    
+    public function reminder($iContactId = 0)
+    {
+        $sFormAction = $this->controller . '/' . __FUNCTION__ . '/' . $iContactId;
+        
+        
+        $data['sFormAction']	= site_url($sFormAction);
+        
+        
+        if($aPostedData = $this->input->post())
+			{
+                          $aUserData = getLoggedInUserData();
+                          $aPostedData['aUserData'] = $aUserData;
+                           $ApiContact = new ApiContact();
+                           $eventId = $ApiContact->setReminder($aPostedData);
+                           d($eventId);
+                            
+            
+			}
+        
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
+    }
 	public function view($iPage = 0)
     {
 		$aParams = $sQuery = array();
@@ -378,39 +400,49 @@ class Contacts extends CI_Controller {
         }
 	}
 	
+	public function add_milestone($iContactId = 0)
+    {
+        $data               = $aContacts = array();
+        $sMethod            = strtolower(__FUNCTION__);
+        $sFormAction 	    = $this->controller.'/'. $sMethod.'/'.$iContactId ;
+
+        ###################################
+        if($aPostedData = $this->input->post())
+        {
+			$aPostedData['iContactId'] = $iContactId;
+			
+			$result = $this->ApiContact->addContactToMilestone($aPostedData);
+
+            if($result['status'])
+            {
+                return setMessage($result['status'], array('message' => getFormValidationSuccessMessage($result['message']),
+                    'redirectUrl'  => site_url($this->controller.'/view')));
+            }
+            else
+            {
+                return setMessage($result['status'], array('message' => getFormValidationErrorMessage($result['message']),
+                    'redirectUrl'  => site_url($this->controller.'/view')));
+            }
+        }
+
+        ###################################
+
+        if(is_numeric($iContactId) && $iContactId > 0 )
+        {
+            $aParams['iUserId'] = getLoggedInUserId();
+            $aMilestones = (array)  $this->milestone->getAllMilestones($aParams);
+        }
+		
+        $data['sFormAction']                = site_url($sFormAction);
+        $data['aMilestones']                = $aMilestones;
+        $data['aPreviousContacts']          = $this->milestone->getMilestoneContacts($iContactId);
+
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller.'/'.$sMethod,$data);
+    }
+
 	
 	
-//	public function createlist()
-//	{
-//		$result = 0;
-//		if($aPostedData = $this->input->post('data'))
-//		{	
-//		   $aContacts	= $this->input->post('contacts');
-//				
-//				if($aPostedData['buttontype'] == 'createlist')
-//				{
-//					
-//					$result = $this->list->createListForContactAdd($aPostedData);
-//				}
-//				elseif($aPostedData['buttontype'] == 'dropdown')
-//				{
-//				
-//					$result = $aPostedData['iListId'];
-//				}	 
-//				if($result)
-//                {   
-//					$aPostedData['iListId'] = $result;
-//					$aPostedData['contacts'] = $aContacts;
-//
-//					$result = $this->ApiContact->addMembersToList($aPostedData);
-//
-//					if($result)
-//					{
-//						return setMessage($result['status'], array('message' => getFormValidationSuccessMessage($result['message']),
-//												  'redirectUrl'  => site_url($this->controller.'/view'))
-//						);
-//					}
-//				}
-//		}
-//	}
+
+	
+	
 }

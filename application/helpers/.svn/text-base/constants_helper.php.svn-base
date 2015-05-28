@@ -51,6 +51,12 @@ define('DATE_FORMAT_BOOTSTRAP',		            'm/d/Y');
 define('TEMPLATE_ADMIN',	                    'admin');
 define('TEMPLATE_BASIC',	                    'basic');
 
+#authorize dot net constatnts 
+define('AUTHORIZE_DOT_NET_PROFILE_ID',	'PROFILE_ID');
+define('AUTHORIZE_DOT_NET_PAYMENT_ID',	'PAYMENT_ID');
+define('AUTHORIZE_DOT_NET_ADDRESS_ID',	'ADDRESS_ID');
+
+
 #System Session
 define('LOGIN_USER_DATA',	                    'LoggedInUserData');
 
@@ -95,9 +101,18 @@ define('TEMPLATE_SINGULAR',                   'Template');
 define('PREDEFINED_CAMPAIGN_SINGULAR',                      'Predefined Campaign');
 define('PREDEFINED_CAMPAIGNS_PLURAL',              'Predefined Campaigns');
 
-define('CRM',                           'Add Extra Information');
-define('UPDATE_CRM',                           'Update Extra Information');
+define('CRM',                      'Add Extra Information');
+define('UPDATE_CRM',               'Update Extra Information');
 
+
+define('MILESTONES',               'Milestones');
+define('CREATE_MILESTONES',        'Create Milestones');
+define('UPDATE_MILESTONES',        'Update Milestones');
+
+
+define('TASKS',               'Tasks');
+define('CREATE_TASKS',        'Add Task To ');
+define('UPDATE_TASKS',        'Update Tasks');
 
 
 
@@ -146,6 +161,12 @@ define('ERROR_SOLUTION_TYPE_REQUIRED','Solution Type is Required');
 define('ERROR_FLAG_ALREADY_EXISTS','Flag of title already exists.');
 define('ERROR_FLAG_CREATE_FLAG','First Create a Flag.');
 
+
+
+
+
+
+
 #generaic error messages for javascript 
 define('ERROR_FIELD_REQUIRED','This field is Required !');
 
@@ -178,6 +199,17 @@ define('MSG_SUCCESS_CRON',              'Cron Successfully Ran');
 
 define('MSG_SUCCESS_FLAG_ADDED',     ' Successfully Created.');
 define('MSG_SUCCESS_FALG_UPDATED',   ' Updated Successfully.');
+
+
+define('MSG_MILESTONE_CREATE','Milestone Create Successfully.');
+define('MSG_MILESTONE_UPDATE','Milestone Update Successfully.');
+
+
+
+define('MSG_TASKS_CREATE','Task Create Successfully.');
+define('MSG_TASKS_UPDATE','Task Update Successfully.');
+
+
 
 #update batch messages 
 define('MSG_SUCCESS_BATCH_UPDATED',     BATCH.' Updated Successfully');

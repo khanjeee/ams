@@ -183,7 +183,12 @@ if (isset($aMessages))
 							foreach ($aContacts as $contacts) {
 
 								$EditUrl = $sEditAction . '/' . $contacts->contact_id;
-								$DeleteUrl = $sDeleteAction . '/' . $contacts->contact_id; ?>
+                                $ReminderUrl = site_url("contacts/reminder/{$contacts->contact_id}");
+								$DeleteUrl = $sDeleteAction . '/' . $contacts->contact_id;
+								
+								$AddMilestones = site_url("contacts/add_milestone/{$contacts->contact_id}");
+								
+								?>
 								<tr>
 								<?php	if ($bSearch) { ?>
 									<td>
@@ -214,8 +219,10 @@ if (isset($aMessages))
 			<td><div class="td-wrap"><div class="td-wrap-inner"><?php echo getFlag($contacts->flag_id); ?>      </div></div></td>
 			<td>
 				<ul class="actions-sty-1 no-line-break">
+                    <li><a class="fa" href="<?php echo $ReminderUrl; ?>">Reminder</a></li>
 					<li><a class="fa" href="<?php echo $EditUrl; ?>"></a></li>
 					<li><a class="fa remove" onclick="return confirmDelete('<?php echo $sCallFrom; ?>', '<?php echo $DeleteUrl; ?>');" href="#"></a></li>
+					<li><a class="fa" href="<?php echo $AddMilestones; ?>">Assign Milestones</a></li>
 				</ul>
 			</td>
 								</tr>

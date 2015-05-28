@@ -10,7 +10,8 @@ class Test extends CI_Controller {
 
         $this->controller = strtolower(__CLASS__);
         $this->load->helper('text');
-        $this->load->model('predefined_batch_model',           'batch');
+        $this->load->model('predefined_batch_model', 'batch');
+        $this->load->model('payment_model',         'payments');
 
 
         define('FONT_PATH',         './assets/fonts/arial.ttf');
@@ -352,5 +353,143 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
         $zip->close();
 
     }*/
+	
+        function payment_info()
+	{
+	
+         $sFormAction = $this->controller . '/' . __FUNCTION__ . '/';
+        $data['sFormAction']	= site_url($sFormAction);  
+        $aUserData = getLoggedInUserData();
+        $ApiAuthorizeDotNet = new ApiAuthorizeDotNet();    
+            
+
+        if ($aPostedData = $this->input->post()) 
+           {
+            $aPostedData['first_name'] = $aUserData['first_name'];
+            $aPostedData['last_name'] = $aUserData['last_name'];
+
+            $aPaymentResult = $ApiAuthorizeDotNet->createCustomerPayment($aPostedData);
+            if ($aPaymentResult['status']) 
+                {
+                    $aUserData['payment_id'] = $aPaymentResult['payment_id'];
+                    if ($this->payments->savePaymentId($aUserData)) 
+                        {
+                        $aShippingResult = $ApiAuthorizeDotNet->createCustomerShipping($aPostedData);
+
+                            if ($aShippingResult['status']) 
+                                {
+                                    $AuthorizeDotNetShippingId = $aShippingResult['address_id'];
+                                    $aUserData['address_id'] = $AuthorizeDotNetShippingId;
+                                    
+                                    if ($this->payments->saveAddressId($aUserData)) 
+                                        {
+                                            d("card info successfully added {$AuthorizeDotNetShippingId}");
+                                        }
+                                }
+                        }
+                }
+
+            //d($aResult['payment_id']);
+        } 
+           else 
+            {
+            
+            
+        
+        $AuthorizeDotNetCustomerId  = $this->payments->getCustomerId($aUserData);
+        
+        if(empty($AuthorizeDotNetCustomerId))
+            {
+                
+                $aResult  = $ApiAuthorizeDotNet->createCustomerProfile($aUserData);
+                //if customer profile created 
+                if($aResult['status'])
+                    {
+                      $AuthorizeDotNetCustomerId = $aResult['profile_id'];
+                      $aUserData['profile_id'] =  $AuthorizeDotNetCustomerId; 
+                        
+                        $this->payments->saveCustomerId($aUserData);
+
+                    }
+                else
+                    {
+                        d($aResult);
+                    }   
+            }
+        
+        
+            
+          $data['profile_id'] = $AuthorizeDotNetCustomerId;
+            
+            }
+            
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
+            
+	}
+        
+        function test_payment()
+        {
+            
+            $aData = array();
+            $aData['amount'] = 10;
+            $aData['profile_id'] = 35251102;
+            $aData['payment_id'] = 32114527;
+            $aData['address_id'] = 33424758;
+            
+            $ApiAuthorizeDotNet = new ApiAuthorizeDotNet();
+            
+          $aResult =  $ApiAuthorizeDotNet->createTransaction($aData);
+          d($aResult);
+         
+            
+            
+        }
+	function cal()
+	{
+		require_once 'Google/autoload.php';
+	
+		$client_id 			= 	'712814309277-7udv71qm713kvpqr7b2ck601nrljg1ss.apps.googleusercontent.com';
+		$Email_address 		= 	'712814309277-7udv71qm713kvpqr7b2ck601nrljg1ss@developer.gserviceaccount.com';	 
+		$key_file_location 	= 	'Google/api_certificate/prj-calendar-93797d09a2ec.p12';	 	
+		$client 			= 	new Google_Client();	
+
+		$client->setApplicationName("AMS");
+
+		$key = file_get_contents($key_file_location);	 
+
+		// separate additional scopes with a comma	 
+		$scopes ="https://www.googleapis.com/auth/calendar";
+		$cred = new Google_Auth_AssertionCredentials(	 
+		$Email_address,	 	 
+		array($scopes),	 	
+		$key	 	 
+		);	 	
+		$client->setAssertionCredentials($cred);
+		if($client->getAuth()->isAccessTokenExpired()) {	 	
+		$client->getAuth()->refreshTokenWithAssertion($cred);	 	
+		}	 	
+
+		$service = new Google_Service_Calendar($client);
+		$event = new Google_Service_Calendar_Event();
+		$event->setSummary('Event  '.rand(1,100));
+		$event->setLocation('Location '.rand(1,100));
+		$start = new Google_Service_Calendar_EventDateTime();
+		$start->setDateTime('2015-05-26T10:00:00.000-07:00');
+		$event->setStart($start);
+		$end = new Google_Service_Calendar_EventDateTime();
+		$end->setDateTime('2015-05-26T10:25:00.000-07:00');
+		$event->setEnd($end);
+		$attendee1 = new Google_Service_Calendar_EventAttendee();
+		$attendee1->setEmail('ephluxqa87@gmail.com');
+		// ...
+		$attendees = array($attendee1,
+		// ...
+		);
+		$event->attendees = $attendees;
+        $event->sendNotifications = true;
+		$createdEvent = $service->events->insert('i5h5pnibtujm7r5qd26b0fr16s@group.calendar.google.com', $event);
+		debug($createdEvent);
+		echo $createdEvent->getId();
+	}
 
 }

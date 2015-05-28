@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 78
-/svn/ams/!svn/ver/812/branches/development/code/web/application/views/packages
+/svn/ams/!svn/ver/857/branches/development/code/web/application/views/packages
 END
 view.php
 K 25
 svn:wc:ra_dav:version-url
 V 87
-/svn/ams/!svn/ver/346/branches/development/code/web/application/views/packages/view.php
+/svn/ams/!svn/ver/857/branches/development/code/web/application/views/packages/view.php
 END
 ajax_get_whitelabel_packages.php
 K 25

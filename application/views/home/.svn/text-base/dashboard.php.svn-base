@@ -173,7 +173,7 @@ DATA;
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-lg-5">
+   <!-- <div class="col-md-4 col-lg-5">
         <div class="c-box">
             <div class="c-box__head">
                 <div class="fl">
@@ -189,14 +189,14 @@ DATA;
 
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 <?php
 }
 else
 {
 
-    if(false)
+    if(true)
     {
 
 ?>
@@ -267,20 +267,17 @@ else
                                             <li><strong>Campaign : </strong>
                                                 {{x.campaign}}
                                             </li>
-                                            <li><strong>Status : </strong>
+                                           <!-- <li><strong>Status : </strong>
                                                 {{x.status}}
                                             </li>
                                             <li><strong>Cut Off Date : </strong>
                                                 {{x.cutOff}}
-                                            </li>
+                                            </li>-->
                                             <li><strong>Created on : </strong>
                                                 {{x.createdOn}}
                                             </li>
                                             <li><strong>Schedule on : </strong>
                                                 {{x.scheduleOn}}
-                                            </li>
-                                            <li><strong>List : </strong>
-                                                {{x.list}}
                                             </li>
                                         </ul>
                                     </div>
@@ -299,14 +296,9 @@ else
                                             <li><strong>Template Cost: </strong> 
                                                 {{x.templateCost}}
                                             </li>
-                                            <li><strong>Printing Cost: </strong> 
-                                                {{x.printingCost}}
-                                            </li>
-                                            <li><strong>Total Cost: </strong> 
+
+                                            <li><strong>Total Printing Cost: </strong>
                                                 {{x.totalCost}}
-                                            </li>
-                                            <li><strong>Card: </strong> 
-                                                {{x.card}}
                                             </li>
                                         </ul>
                                     </div>
@@ -368,90 +360,52 @@ else
                 $('body').pagescalendar({
                     //Loading Dummy EVENTS for demo Purposes, you can feed the events attribute from 
                     //Web Service
-                    events: [{
-                        imgUrl: 'http://localhost/ams/assets/img/batch-default.jpg',
-                        name: 'Xyz Batch',
-                        description: 'Lorem ipsum dolor sit',
-                        campaign: 'Lorem',
-                        status: 'Lorem',
-                        cutOff: 'Lorem',
-                        createdOn: 'Lorem',
-                        scheduleOn: 'Lorem',
-                        list: 'Lorem',
-                        product: 'Lorem',
-                        template: 'Lorem',
-                        templateCost: 'Lorem',
-                        printingCost: 'Lorem',
-                        totalCost: 'Lorem',
-                        card: 'Lorem',
-                        editUrl: 'Lorem',
-                        deleteUrl: 'Lorem',
-                        start: '2015-10-07',
-                        end: '2015-10-07',
-                    },
-                    {
-                        imgUrl: 'http://localhost/ams/assets/img/batch-default.jpg',
-                        name: 'ABC Batch',
-                        description: 'Lorem ipsum dolor sit',
-                        campaign: 'Lorem',
-                        status: 'Lorem',
-                        cutOff: 'Lorem',
-                        createdOn: 'Lorem',
-                        scheduleOn: 'Lorem',
-                        list: 'Lorem',
-                        product: 'Lorem',
-                        template: 'Lorem',
-                        templateCost: 'Lorem',
-                        printingCost: 'Lorem',
-                        totalCost: 'Lorem',
-                        card: 'Lorem',
-                        editUrl: 'Lorem',
-                        deleteUrl: 'Lorem',
-                        start: '2015-10-07',
-                        end: '2015-10-07',
-                    },
-                    {
-                        imgUrl: 'http://localhost/ams/assets/img/batch-default.jpg',
-                        name: 'Xyz Batch',
-                        description: 'Lorem ipsum dolor sit',
-                        campaign: 'Lorem',
-                        status: 'Lorem',
-                        cutOff: 'Lorem',
-                        createdOn: 'Lorem',
-                        scheduleOn: 'Lorem',
-                        list: 'Lorem',
-                        product: 'Lorem',
-                        template: 'Lorem',
-                        templateCost: 'Lorem',
-                        printingCost: 'Lorem',
-                        totalCost: 'Lorem',
-                        card: 'Lorem',
-                        editUrl: 'Lorem',
-                        deleteUrl: 'Lorem',
-                        start: '2015-11-01',
-                        end: '2015-11-01',
-                    },
-                    {
-                        imgUrl: 'http://localhost/ams/assets/img/batch-default.jpg',
-                        name: 'ABC Batch',
-                        description: 'Lorem ipsum dolor sit',
-                        campaign: 'Lorem',
-                        status: 'Lorem',
-                        cutOff: 'Lorem',
-                        createdOn: 'Lorem',
-                        scheduleOn: 'Lorem',
-                        list: 'Lorem',
-                        product: 'Lorem',
-                        template: 'Lorem',
-                        templateCost: 'Lorem',
-                        printingCost: 'Lorem',
-                        totalCost: 'Lorem',
-                        card: 'Lorem',
-                        editUrl: 'Lorem',
-                        deleteUrl: 'Lorem',
-                        start: '2015-12-02',
-                        end: '2015-12-02',
-                    },
+                    events: [<?php
+
+                        if($aScheduledBatches)
+                        {
+                            foreach($aScheduledBatches as $aBatch)
+                            {
+                                $sTitle                     = $aBatch['BatchDetails']['batch_title'];
+                                $sDesc                      = $aBatch['BatchDetails']['batch_description'];
+                                $sCampaignTitle             = $aBatch['BatchDetails']['campaign_title'];
+                                $dScheduleDate              = $aBatch['BatchDetails']['schedule_date'];
+                                $dCreatedOn                 = $aBatch['BatchDetails']['created_on'];
+                                $sProductTitle              = $aBatch['BatchDetails']['product_title'];
+                                $sTemplateTitle             = $aBatch['BatchDetails']['template_title'];
+                                $sBatchTotalPrintingPrice   = formatAmount($aBatch['BatchTotalPrintingPrice']);
+                                $TemplatePrintingPrice      = formatAmount($aBatch['BatchDetails']['template_printing_price']);
+
+                                $EditUrl                    = site_url('batches/edit/'.$aBatch['BatchDetails']['campaign_batch_id']);
+                                $DeleteUrl                  = site_url('batches/delete/'.$aBatch['BatchDetails']['campaign_batch_id']);
+
+                               echo  $JS = <<<JS
+                                {
+                                    imgUrl: "http://localhost/ams/assets/img/batch-default.jpg",
+                                    name: "$sTitle",
+                                    description: "$sDesc",
+                                    campaign: "$sCampaignTitle",
+                                    status: "Lorem",
+                                    cutOff: "Lorem",
+                                    createdOn: "$dCreatedOn",
+                                    scheduleOn: "$dScheduleDate",
+                                    list: "Lorem",
+                                    product: "$sProductTitle",
+                                    template: "$sTemplateTitle",
+                                    templateCost: "$TemplatePrintingPrice",
+                                    printingCost: "$sBatchTotalPrintingPrice",
+                                    totalCost: "$sBatchTotalPrintingPrice",
+                                    card: "Lorem",
+                                    editUrl: "$EditUrl",
+                                    deleteUrl: "$DeleteUrl",
+                                    start: "$dScheduleDate"
+                                },
+JS;
+                            }
+                        }
+
+                        ?>
+
                     ],
                     onViewRenderComplete: function() {
                         //You can Do a Simple AJAX here and update 

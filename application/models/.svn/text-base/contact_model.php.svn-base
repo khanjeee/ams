@@ -382,6 +382,80 @@ SQL;
          return false;
             
 	}
+	
+	 public function getAllContactByMilestonesId($aParams = array()) 
+        {
+        
+        
+       
+		
+        $returnCount	 = false;
+         $recordsPerPage = LISTING_PER_PAGE;
+         $iUserId		 =  getLoggedInUserId(); 
+		   $iMilestoneId        = $aParams['iMilestoneId'];
+         $offset		 = -1;
+
+         if(isset($aParams[ACTION_RECORD_COUNT]))
+         {
+             $returnCount = $aParams[ACTION_RECORD_COUNT];
+         }
+
+         if (isset($aParams[ACTION_PAGE_OFFSET]))
+         {
+             $offset = $aParams[ACTION_PAGE_OFFSET];
+         }
+		 
+        $aWhereClause   = array();
+		$aWhereClause[] = " ( c.contact_id = mc.contact_id) ";
+		$aWhereClause[] = " ( mc.milestones_id ='$iMilestoneId' ) ";
+        $sWhereCondition = '';
+        if (is_array($aWhereClause) && count($aWhereClause) > 0) {
+            $sWhereCondition = ' WHERE ' . implode(' AND ', $aWhereClause);
+        }
+
+        $sSelect = '';
+        $sLimit = '';
+        $sOrderBy = '';
+        if ($returnCount) {
+            $sSelect = ' COUNT(c.contact_id) AS count ';
+        } else {
+            $sSelect = 'c.contact_id,mc.milestone_contact_id, c.first_name, c.last_name, c.printed_name, c.business_name, 
+						c.address, c.country, c.state, c.city, c.zip, c.email, c.dob, c.phone,c.website,c.notes';
+	
+            if ($offset > -1) {
+                $sLimit = " LIMIT $offset, $recordsPerPage ";
+            }
+
+            $sOrderBy = ' ORDER BY c.contact_id DESC ';
+        }
+
+         $sql = <<<QUERY
+		
+		 SELECT 
+				$sSelect 
+		 FROM 
+				contacts c, milestone_contacts mc 		
+		 
+		 $sWhereCondition 
+		 
+		 $sOrderBy
+		 
+		 $sLimit 
+		
+QUERY;
+		
+        if ($result = $this->db->query($sql))
+        {
+            if ($returnCount)
+            {
+                return $result->row('count');
+            }
+            else
+            {
+                return $result->result();
+            }
+        }
+    }
     
 
 }
