@@ -1,14 +1,14 @@
 10
 
 dir
-861
+862
 http://192.175.0.245/svn/ams/branches/development/code/web/database/local
 http://192.175.0.245/svn/ams
 
 
 
-2015-05-28T16:13:49.845809Z
-861
+2015-05-28T16:20:42.040165Z
+862
 shoaib.ahmed
 
 
@@ -25,6 +25,40 @@ shoaib.ahmed
 
 
 7e420179-5837-48de-a053-a4f13bff0ee8
+
+ams-v.2.1[authorixe_dot_net_integration].sql
+file
+
+
+
+
+2015-05-28T16:24:47.756411Z
+07cee9cd20b841820bd27c9c383a018e
+2015-05-28T16:20:42.040165Z
+862
+shoaib.ahmed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2507
 
 ams-v.1.1.1[Include-Package+Module-Schema].sql
 file
@@ -59,40 +93,6 @@ umair.ahmed
 
 
 23857
-
-ams_v2.2.sql
-file
-
-
-
-
-2015-05-28T16:17:51.517604Z
-99d1f4a1c8f0ae3d85588aa20a66226c
-2015-05-28T16:13:49.845809Z
-861
-shoaib.ahmed
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-466
 
 ams-v.2.0[Include-Campaign-Template-Elements-Schema].sql
 file

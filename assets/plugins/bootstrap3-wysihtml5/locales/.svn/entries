@@ -1,7 +1,7 @@
 10
 
 dir
-861
+862
 http://192.175.0.245/svn/ams/branches/development/code/web/assets/plugins/bootstrap3-wysihtml5/locales
 http://192.175.0.245/svn/ams
 
@@ -25,40 +25,6 @@ shoaib.ahmed
 
 
 7e420179-5837-48de-a053-a4f13bff0ee8
-
-bootstrap-wysihtml5.hu-HU.js
-file
-
-
-
-
-2015-03-17T10:07:21.273676Z
-47cdf2019d13d8ab31bdcfa120cba8fc
-2015-02-03T09:48:23.020810Z
-110
-shoaib.ahmed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1173
 
 bootstrap-wysihtml5.it-IT.js
 file
@@ -94,14 +60,14 @@ shoaib.ahmed
 
 1180
 
-bootstrap-wysihtml5.ca-CT.js
+bootstrap-wysihtml5.hu-HU.js
 file
 
 
 
 
-2015-03-17T10:07:21.275676Z
-dfdbe30d5a0f5a8f55dd2e94005293a3
+2015-03-17T10:07:21.273676Z
+47cdf2019d13d8ab31bdcfa120cba8fc
 2015-02-03T09:48:23.020810Z
 110
 shoaib.ahmed
@@ -126,7 +92,7 @@ shoaib.ahmed
 
 
 
-1317
+1173
 
 bootstrap-wysihtml5.en-US.js
 file
@@ -162,6 +128,40 @@ shoaib.ahmed
 
 1083
 
+bootstrap-wysihtml5.ca-CT.js
+file
+
+
+
+
+2015-03-17T10:07:21.275676Z
+dfdbe30d5a0f5a8f55dd2e94005293a3
+2015-02-03T09:48:23.020810Z
+110
+shoaib.ahmed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1317
+
 bootstrap-wysihtml5.sk-SK.js
 file
 
@@ -196,40 +196,6 @@ shoaib.ahmed
 
 1274
 
-bootstrap-wysihtml5.nb-NB.js
-file
-
-
-
-
-2015-03-17T10:07:21.277676Z
-f0954a1ba808d2b833f6e1cce5147bc6
-2015-02-03T09:48:23.020810Z
-110
-shoaib.ahmed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1197
-
 bootstrap-wysihtml5.lt-LT.js
 file
 
@@ -263,6 +229,40 @@ shoaib.ahmed
 
 
 1306
+
+bootstrap-wysihtml5.nb-NB.js
+file
+
+
+
+
+2015-03-17T10:07:21.277676Z
+f0954a1ba808d2b833f6e1cce5147bc6
+2015-02-03T09:48:23.020810Z
+110
+shoaib.ahmed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1197
 
 bootstrap-wysihtml5.sv-SE.js
 file
@@ -468,40 +468,6 @@ shoaib.ahmed
 
 1136
 
-bootstrap-wysihtml5.ua-UA.js
-file
-
-
-
-
-2015-03-17T10:07:21.284676Z
-fe331c2ef6b99dfe593376e833dfb82f
-2015-02-03T09:48:23.020810Z
-110
-shoaib.ahmed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1524
-
 bootstrap-wysihtml5.tr-TR.js
 file
 
@@ -535,6 +501,40 @@ shoaib.ahmed
 
 
 1197
+
+bootstrap-wysihtml5.ua-UA.js
+file
+
+
+
+
+2015-03-17T10:07:21.284676Z
+fe331c2ef6b99dfe593376e833dfb82f
+2015-02-03T09:48:23.020810Z
+110
+shoaib.ahmed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1524
 
 bootstrap-wysihtml5.mo-MD.js
 file
