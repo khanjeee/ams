@@ -1,7 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/svn/ams/!svn/ver/858/branches/development/code/web/application/views/home
+/svn/ams/!svn/ver/871/branches/development/code/web/application/views/home
+END
+add_card.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/ams/!svn/ver/871/branches/development/code/web/application/views/home/add_card.php
 END
 forgotpassword.php
 K 25

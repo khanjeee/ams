@@ -336,9 +336,9 @@
                                                             <ul class="meta">
                                                                 <li><strong>Template Cost : </strong>
                                                                     <?php
-                                                                    if($thisBatch ['template_printing_price'])
+                                                                    if($thisBatch ['pkg_template_cost'])
                                                                     {
-                                                                        echo formatAmount($thisBatch ['template_printing_price']);
+                                                                        echo formatAmount($thisBatch ['pkg_template_cost']);
                                                                     }
                                                                     else
                                                                     {

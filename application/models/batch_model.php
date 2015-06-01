@@ -483,6 +483,7 @@ SQL;
                    cb.current_status ,
                    cb.created_on ,
                    cb.template_id ,
+                   cb.user_id ,
                    cb.total_printing_cost ,
 
                    u.first_name,
@@ -516,14 +517,60 @@ SQL;
             LIMIT 1
 SQL;
 
-            $DbResult                               =   $this->db->query($SQL);
-            $aSummaryData['BatchDetails']           =   $DbResult->row_array();
-            $aSummaryData['BatchLists']             =   $this->getBatchLists($iCampaignBatchId);
-            $iTemplePrintingPrice                   =   $aSummaryData['BatchDetails']['template_printing_price']; 
-            $aSummaryData['BatchTotalPrintingPrice']=   $this->getTotalPrintingPrice($iCampaignBatchId,$iTemplePrintingPrice);
+            $DbResult                                       =   $this->db->query($SQL);
+            $aSummaryData['BatchDetails']                   =   $DbResult->row_array();
+            $aSummaryData['BatchLists']                     =   $this->getBatchLists($iCampaignBatchId);
+            $iTemplePrintingPrice                           =   $this->get_template_printing_price($aSummaryData['BatchDetails']);//$aSummaryData['BatchDetails']['template_printing_price'];
+            $aSummaryData['pkg_template_cost']              =   $iTemplePrintingPrice['template_price'];
+            $aSummaryData['BatchTotalPrintingPrice']        =   $this->getTotalPrintingPrice($iCampaignBatchId,$iTemplePrintingPrice['template_price']);
         }
 
         return $aSummaryData;
+    }
+
+    function get_template_printing_price($aData  = array())
+    {
+        if(!isSuperAdmin())
+        {
+            $iPackageId         = getLoggedInUserPackageId();
+        }
+        else
+        {
+            $iPackageId         = $this->getUserPackageId($aData['user_id']);
+            $iPackageId         = $iPackageId['package_id'];
+        }
+
+        $iTemplateId        = $aData['template_id'];
+
+
+        $SQL = <<<SQL
+
+            SELECT
+               template_price
+            FROM package_product_templates
+            where package_id  = '$iPackageId'
+            and template_id   = '$iTemplateId'
+            LIMIT 1
+SQL;
+
+        $DbResult =   $this->db->query($SQL);
+        return $DbResult->row_array('template_price');
+    }
+
+    function getUserPackageId($iUserId=0)
+    {
+        $SQL = <<<SQL
+
+            SELECT
+                      package_id
+                    FROM users
+                    where user_id='$iUserId'
+                    LIMIT 1
+
+
+SQL;
+        $DbResult =   $this->db->query($SQL);
+        return $DbResult->row_array('package_id');
     }
     
     function loadBatch($iCampaignBatchId = 0)
@@ -563,8 +610,9 @@ SQL;
             $DbResult                               =   $this->db->query($SQL);
             $aSummaryData['BatchDetails']           =   $DbResult->row_array();
             $aSummaryData['BatchLists']             =   $this->getBatchListsFormated($iCampaignBatchId);
-            $iTemplePrintingPrice                   =   $aSummaryData['BatchDetails']['template_printing_price'];    
+            $iTemplePrintingPrice                   =   $this->get_template_printing_price($aSummaryData['BatchDetails']);//$aSummaryData['BatchDetails']['template_printing_price'];
             $aSummaryData['BatchTotalPrintingPrice']=   $this->getTotalPrintingPrice($iCampaignBatchId,$iTemplePrintingPrice);
+            $aSummaryData['pkg_template_cost']      =   $iTemplePrintingPrice['template_price'];
         }
 
         return $aSummaryData;

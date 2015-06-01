@@ -277,13 +277,16 @@ define('GENDER_FEMALE',                 'female');
 
 
 #Flag 
-define('FLAG_IMPORTANT',	                'Important');
-define('FLAG_VERY_IMPORTANT',                 'Very Important');
+define('FLAG_IMPORTANT',	  'Important');
+define('FLAG_VERY_IMPORTANT', 'Very Important');
 
 
-define('MASTER_LIST',      'Master List');
-define('IS_MASTER_LIST',   '1');
+define('MASTER_LIST',     'Master List');
+define('IS_MASTER_LIST',  '1');
 
 
-define('CRM_TEXTBOX', '1');
-define('CRM_DROPDOWN',  '2');
+define('CRM_TEXTBOX',	  '1');
+define('CRM_DROPDOWN',	  '2');
+
+define('TASK_STATUS_YES', '1');
+define('TASK_STATUS_NO',  '0');

@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 85
-/svn/ams/!svn/ver/860/branches/development/code/web/application/libraries/Custom/core
+/svn/ams/!svn/ver/871/branches/development/code/web/application/libraries/Custom/core
 END
 api.crm.php
 K 25
@@ -13,7 +13,7 @@ api.register.php
 K 25
 svn:wc:ra_dav:version-url
 V 102
-/svn/ams/!svn/ver/853/branches/development/code/web/application/libraries/Custom/core/api.register.php
+/svn/ams/!svn/ver/871/branches/development/code/web/application/libraries/Custom/core/api.register.php
 END
 api.crons.php
 K 25
@@ -61,7 +61,7 @@ api.task.php
 K 25
 svn:wc:ra_dav:version-url
 V 98
-/svn/ams/!svn/ver/850/branches/development/code/web/application/libraries/Custom/core/api.task.php
+/svn/ams/!svn/ver/868/branches/development/code/web/application/libraries/Custom/core/api.task.php
 END
 api.predefined.campaigns.php
 K 25
@@ -73,7 +73,7 @@ api.batches.php
 K 25
 svn:wc:ra_dav:version-url
 V 101
-/svn/ams/!svn/ver/809/branches/development/code/web/application/libraries/Custom/core/api.batches.php
+/svn/ams/!svn/ver/866/branches/development/code/web/application/libraries/Custom/core/api.batches.php
 END
 api.flag.php
 K 25
@@ -115,5 +115,5 @@ api.product.php
 K 25
 svn:wc:ra_dav:version-url
 V 101
-/svn/ams/!svn/ver/187/branches/development/code/web/application/libraries/Custom/core/api.product.php
+/svn/ams/!svn/ver/866/branches/development/code/web/application/libraries/Custom/core/api.product.php
 END

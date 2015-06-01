@@ -603,10 +603,15 @@ HTML;
         }
         else
         {
+            $aViewData  = array (
+                                    'aSummaryData'  =>  $this->CI->batch->getBatchSummary($CampaignBatchId),
+                                );
+            $summary    = json_encode($this->CI->load->view('batches/summary',$aViewData,TRUE),true);
+
             $this->result['status']         =   TRUE;
             $this->result['rows_updated']   =   $this->CI->batch->ScheduleBatch(__FUNCTION__,array('aData' => $aData,'isEditMode' => false) );
             $this->result['message']        =   "Schedule successfully.";
-            $this->result['hSummary']       =    json_encode($this->CI->load->view('batches/summary',array('aSummaryData'=>$this->CI->batch->getBatchSummary($CampaignBatchId)),TRUE),true);
+            $this->result['hSummary']       =    $summary;
             $this->result['tab']            =   '6';
             
             

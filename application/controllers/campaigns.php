@@ -88,11 +88,12 @@ class Campaigns extends CI_Controller
 
                 if($BatchCount = count($aBatches))
                 {
-                    
                     for($b=0; $b < $BatchCount; $b++)
                     {
                         $aBatch                     =       $this->batch->BatchInfo($aBatches[$b]['campaign_batch_id']);
                         $aBatch->BatchLists         =       $this->batch->getBatchListsFormated($aBatches[$b]['campaign_batch_id']);
+                        $iTemplePrintingPrice       =       $this->batch->get_template_printing_price((array)$aBatch);
+                        $aBatch->pkg_template_cost  =       $iTemplePrintingPrice['template_price'];
                         $oCampaign->aBatches[]      =       $aBatch;
                     }
                 }

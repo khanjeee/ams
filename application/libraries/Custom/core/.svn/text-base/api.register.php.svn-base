@@ -15,13 +15,13 @@ class ApiRegister {
    
 	public function addSubscriber($aData= array())
     {
-        //d($aData);
-         $aPostedData   = $aData ;
+        $aPostedData   = $aData ;
            
 
         $CI = & get_instance();
         $CI->load->model('user_model','users');
         $CI->load->model('list_model','list');
+        
 
       
         
@@ -30,11 +30,9 @@ class ApiRegister {
           
             $iUserId                 = $CI->users->addSubscriber(__FUNCTION__, $aPostedData);
             
-			
-			
 			if($iUserId)
-            {
-				$Milestone = $this->hook_milestone($iUserId);
+            {                   $aPostedData['user_id'] = $iUserId;
+				$Milestone = $this->hook_userCreate($aPostedData);
 				
 				$CI->list->addMasterList($iUserId);
 				
@@ -47,24 +45,47 @@ class ApiRegister {
 	}
 	
 	
-	function hook_milestone($iUserId)
+	function hook_userCreate($aPostedData)
 	{
 		 $CI = & get_instance();
 		 $CI->load->model('milestone_model','milestone');
-		
+                 $CI->load->model('payment_model','payments');
+                 
+                 
+                  //authorize get net creating customer profile start
+                 //d($aPostedData);
+                 $AuthorizeDotNetCustomerId  = $CI->payments->getCustomerId($aPostedData);
+
+                   if(empty($AuthorizeDotNetCustomerId))
+                   {
+                       $ApiAuthorizeDotNet = new ApiAuthorizeDotNet();
+                       $aResult  = $ApiAuthorizeDotNet->createCustomerProfile($aPostedData);
+                       //if customer profile created
+                       if($aResult['status'])
+                           {
+                             $aPostedData['profile_id'] = $aResult['profile_id'];
+                             $CI->payments->saveCustomerId($aPostedData);
+
+                           }
+
+                   }
+                 
+                 //authorize get net creating customer profile end
+                   
+                   
+                 $$iUserId  = $aPostedData['user_id'];
 		 $aMilestones =  $CI->milestone->getMilestoneByUserId(USER_ID_ADMINISTRATOR);
 		
 		 if(is_array($aMilestones) && !empty($aMilestones))
 		 {
 			foreach ($aMilestones as $key => $value) 
 			{
-				$task =   $CI->milestone->getMilestoneByMilestoneId($value->milestones_id);
-				  if($task)
-				  {
-					    $aMilestones[$key]->task = $task;
-				  }
-				
-			}
+                $task =   $CI->milestone->getMilestoneByMilestoneId($value->milestones_id);
+                if($task)
+                {
+                    $aMilestones[$key]->task = $task;
+                }
+            }
 		 }
 		 
 		
@@ -72,6 +93,11 @@ class ApiRegister {
 		 {
 			 return $CI->milestone->CopyMilestoneByNewUserId($aMilestones,$iUserId);
 		 }
+                 
+          
+         
+                 
+                 
 	}
         
     function updateSubscriberStaus($aData= array())

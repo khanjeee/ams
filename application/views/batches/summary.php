@@ -97,7 +97,7 @@ $oSummary       = (object) $aSummaryData['BatchDetails'];
             <strong>Template Cost</strong>
         </div>
         <div class="t-col cost">
-            <span><?php echo formatAmount($oSummary->template_printing_price); ?></span>
+            <span><?php echo formatAmount($aSummaryData['pkg_template_cost']); ?></span>
         </div>
     </div>
     <div class="t-row total">

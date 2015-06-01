@@ -17,6 +17,20 @@ class ApiProduct
         $CI->load->model('product_model');
 
         $aTemplates         =   $CI->product_model->$aData['method']($aData['product_id']);
+
+        if($aTemplates)
+        {
+            for($t=0; $t<count($aTemplates);$t++)
+            {
+               $iTemplatePrice = $CI->product_model->getTemplatesPrice($aTemplates[$t]['template_id']);
+
+                if($iTemplatePrice)
+                {
+                    $aTemplates[$t]['printing_price'] = $iTemplatePrice['printing_price'];
+                }
+            }
+        }
+
         $hAjaxHTML          =   '';
 
         if(isset($aData['call_from']) && $aData['call_from'])

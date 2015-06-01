@@ -440,7 +440,7 @@ QUERY;
          $result    =       array();
 
          $SQL = <<<DATA
-             SELECT `package_id`, `title`, `description`, `price` FROM (`packages`) WHERE `is_deleted` = '0' AND promotion_code = ''
+             SELECT `package_id`, `title`, `description`, `price` FROM (`packages`) WHERE `is_deleted` = '0' AND promotion_code = '' ORDER BY  package_id DESC 
 DATA;
 
          $Query = $this->db->query($SQL);

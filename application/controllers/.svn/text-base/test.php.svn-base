@@ -399,23 +399,23 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
         $AuthorizeDotNetCustomerId  = $this->payments->getCustomerId($aUserData);
         
         if(empty($AuthorizeDotNetCustomerId))
-            {
-                
-                $aResult  = $ApiAuthorizeDotNet->createCustomerProfile($aUserData);
-                //if customer profile created 
-                if($aResult['status'])
-                    {
-                      $AuthorizeDotNetCustomerId = $aResult['profile_id'];
-                      $aUserData['profile_id'] =  $AuthorizeDotNetCustomerId; 
-                        
-                        $this->payments->saveCustomerId($aUserData);
+        {
 
-                    }
-                else
-                    {
-                        d($aResult);
-                    }   
-            }
+            $aResult  = $ApiAuthorizeDotNet->createCustomerProfile($aUserData);
+            //if customer profile created
+            if($aResult['status'])
+                {
+                  $AuthorizeDotNetCustomerId = $aResult['profile_id'];
+                  $aUserData['profile_id'] =  $AuthorizeDotNetCustomerId;
+
+                    $this->payments->saveCustomerId($aUserData);
+
+                }
+            else
+                {
+                    d($aResult);
+                }
+        }
         
         
             

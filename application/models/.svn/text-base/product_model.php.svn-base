@@ -27,8 +27,29 @@ class Product_Model extends CI_Model {
                                 $this->db->select('template_id,title,description,printing_price,width,height');
             $query      =       $this->db->get_where('templates', array('product_id' => $iProductId));
             $result     =       $query->result_array();
-        }
 
+        }
+        return $result;
+    }
+
+    public function getTemplatesPrice($iTemplateId = 0)
+    {
+        $result    =        array();
+
+        $iPackageId         = getLoggedInUserPackageId();
+
+
+        if($iTemplateId)
+        {
+            $SQL = <<<SQL
+
+            SELECT template_price AS printing_price FROM package_product_templates WHERE package_id='$iPackageId' AND template_id='$iTemplateId' LIMIT 1
+SQL;
+
+            $DbResult =   $this->db->query($SQL);
+            return $DbResult->row_array('printing_price');
+
+        }
         return $result;
     }
     

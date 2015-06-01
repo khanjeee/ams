@@ -33,7 +33,8 @@ class Register extends CI_Controller {
     {
         $sFormAction = $this->controller . '/' . __FUNCTION__;
         $aData = array();
-
+        $aUploadImageResponce = array('file_name'=>'','name'=>'');
+        
         if ($this->input->post())
         {
             
@@ -95,7 +96,8 @@ class Register extends CI_Controller {
             if ($this->users->emailAlreadyExist($sEmail)) {
                 $aErrorMessages[] = ERROR_EMAIL_ALREADY_EXISTS;
             }
-
+            
+            
 
 			if($_FILES[MEDIA_FILE_UPLOAD_FIELD]['name'] )
 			{

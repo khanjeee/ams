@@ -7,6 +7,7 @@ class Home extends CI_Controller
         parent::__construct();
         $this->controller  	= strtolower(__CLASS__);
         $this->load->model('batch_model','batch');
+        $this->load->model('payment_model','payments');
     }
 
     # This is Site Index
@@ -174,6 +175,77 @@ class Home extends CI_Controller
     function  testing()
     {
 
+    }
+
+    function  add_card()
+    {
+       $sFormAction = $this->controller . '/' . __FUNCTION__ . '/';
+       $data['sFormAction']	= site_url($sFormAction);  
+       $aUserData = getLoggedInUserData();
+       
+       $ApiAuthorizeDotNet = new ApiAuthorizeDotNet();    
+            
+
+        if ($aPostedData = $this->input->post()) 
+           {
+            $aPostedData['first_name'] = $aUserData['first_name'];
+            $aPostedData['last_name'] = $aUserData['last_name'];
+
+            $aPaymentResult = $ApiAuthorizeDotNet->createCustomerPayment($aPostedData);
+            
+            if ($aPaymentResult['status']) 
+                {
+                    $aUserData['payment_id'] = $aPaymentResult['payment_id'];
+                    if ($this->payments->savePaymentId($aUserData)) 
+                        {
+                        $aShippingResult = $ApiAuthorizeDotNet->createCustomerShipping($aPostedData);
+
+                            if ($aShippingResult['status']) 
+                                {
+                                    $AuthorizeDotNetShippingId = $aShippingResult['address_id'];
+                                    $aUserData['address_id'] = $AuthorizeDotNetShippingId;
+                                    
+                                    if ($this->payments->saveAddressId($aUserData)) 
+                                        {
+                                            d("Card successfully added {$AuthorizeDotNetShippingId}");
+                                        }
+                                }
+                              
+                        }
+                }
+           else 
+                {
+                    
+                    d($aPaymentResult);
+                 }       
+
+            //d($aResult['payment_id']);
+        } 
+        else 
+        {
+        $AuthorizeDotNetCustomerId  = $this->payments->getCustomerId($aUserData);
+        
+        if(empty($AuthorizeDotNetCustomerId))
+        {
+
+            $aResult  = $ApiAuthorizeDotNet->createCustomerProfile($aUserData);
+            //if customer profile created
+            if($aResult['status'])
+                {
+                  $AuthorizeDotNetCustomerId = $aResult['profile_id'];
+                  $aUserData['profile_id'] =  $AuthorizeDotNetCustomerId;
+
+                    $this->payments->saveCustomerId($aUserData);
+
+                }
+            
+        }
+        
+        $data['profile_id'] = $AuthorizeDotNetCustomerId;
+            
+        }
+            
+        $this->layout->template(TEMPLATE_BASIC)->show($this->controller . '/' . __FUNCTION__, $data);
     }
 
 
